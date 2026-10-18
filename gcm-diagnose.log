@@ -1,0 +1,98 @@
+﻿Diagnose log at 2026-10-18T17:39:18Z
+
+AppPath: C:\Program Files\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: C:\Program Files\Git\mingw64\bin\
+Version: 2.9.0+194ba290ce533465310d50f811684ab180536ae7
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 19045)
+Reading environment variables... OK
+ Variables:
+OneDriveConsumer=C:\Users\prana\OneDrive
+ProgramFiles(x86)=C:\Program Files (x86)
+MSYSTEM=MINGW64
+ProgramW6432=C:\Program Files
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 60 Stepping 3, GenuineIntel
+VBOX_MSI_INSTALL_PATH=C:\Program Files\Oracle\VirtualBox\
+TMP=C:\Users\prana\AppData\Local\Temp
+PROCESSOR_ARCHITECTURE=AMD64
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+VSCODE_CWD=C:\Users\prana\AppData\Local\Programs\Antigravity IDE
+PROCESSOR_REVISION=3c03
+ANTIGRAVITY_SOURCE_METADATA={"tool":{"conversationId":"aeba27a7-d9ab-423d-b41f-17180f57e4c6","stepIndex":824,"toolCall":{"id":"call_5690970","name":"run_command","argumentsJson":"{\"CommandLine\":\"git credential-manager diagnose\",\"Cwd\":\"c:\\\\Users\\\\prana\\\\OneDrive\\\\Desktop\\\\MIS NOIR\",\"IsDaemon\":false,\"WaitMsBeforeAsync\":5000,\"toolAction\":\"Running command\",\"toolSummary\":\"Check git credentials manager\"}","thinkingSignature":"EuMKCuAKAWkUfROHCmjcaOjlWwZNTJCo5/YDmbFK9fNcT024McxKD2ruraHPA2G3cG5Nj1tc9tg/JL+S/2tW/6x0SfHd6Z8y3NgZCqKzvGvU9imDjP7DWEkY13t9jiYJMO7/Nd0W+j45FcNp6n+ren1saFi/hsHehE6I+Ym6b/wymou4U5pvYFKwLJlHZBn6ViJZF8L5iMsPVJDolzzpO+ooSzfbdnA5Vr6FYOSN3+Ru3sboN4ODqFYAPEWZEkWi0GCXU08l8VwA5dd/GIqv/oCUd4OP+GAfNntC5jF03ZZnUvOv6nTtjN1KTMcgNaEkovZNjt4i3Ut5ef2KfElM/2Bq0zjPSxcTUB3s4JMPSgy+jL2+BFisNk+Vkc4wOeftO4ndXSbKcCFFUP3LOEoQlEr8W44Zvke9Cry+gN09baO6pW8gniFojY0yvTSqJ4dHFV/DVHTe9np7OeMm3qg8nb32x4kpF/O6y8OPz+nrzRKt9tcqp86Uq1XpFAkPV7zVgRMPtWBBjFTSMmANKzulM5tigFFZTdpfn5z2GcE1mK7sqMWb995hEhYjyRcMcPQaFiSYOZT8i1T52Eg/4NqOyQqbqAoSiawflB4j07fVfw1WkYVaXBK0muibh3CUptP8E1epigQZn8xFpDPBbO92V7B8teUokcnhXGH8vLHcK0o4OnZjmn02BhNQhVcsz2Kpdx0S7Ia6P7DEXU5IElokk/HVSXBnsk8MoqK0svrHvSFfgDbC+lA2n8MXL/Wav9xi9wjWgJ2kl5IuH2SQMQlOl9XbEyu5JrqpGgA/8yDMrhqIrOX3Uj35fX15RES/jmFe4wLBK3gearqt5pqdsgOOTQGSAm3U/WDgVLU6qxIxO4nySe7nISzF278QOGbXS7Kv98xRcqal0wMnpXm8K0yZSXQxR1FcZHpjnj37m1pfC6vaFFK/0UmUpU9Xbg0AW+ovWGXOYSjnwHD+wsijqOCJxcz/UfhrTTCpQurCtMfe9SC2z2WXVA7KZP2WF+lzI0ijSAOPoQcs+r5/GL7ZbD8df7nebUx0mgU2kUn5Ce+PXfmUvtKfhL/CxF0bQHzxDUQoYdzR/genvIlmOENC7OtGrrWl/0jjQE2TmrM7oO1HTVXCJF0MZ1jEc3NUJDMsnIB6xzpjplbRjvS08qUmygSpOW8S+pqSJRpBdfhb3Kl3pkaBZUakl7Gdz6MdLyoLVILL703SCIh/XaYfnpDzFAyKIarQUeneFAsAfZP/n4LUJ9GStCwHU06fbqanFOMFhaIbMiJGo5hY+C00VnYNbNtIkBalRbKwUo4jOOHG7ZS9epPIuhuwYJRFezX+lpU87ocwGLaPKSgiFJAIbc/Ie4cCax8qqwAdSPxejomUmz1mwvNXCEExTioMSwgtMKDKHUugfzfKHUxAAfdPyTjBCp1qmJMR93+VBEkbpOugT7GpF+OADFYqm7YtSira8HzmUiGOd1DDtUIRjD25/gqvDJc/OQnfib6dS3BrqTSjf+rletowc5T8hPFCR09yL6pvHKWPU0Mx9MGHuDQZc/pFLmOJuoJjOgpL5KYZjba/nKvst1HLoiElmze4GO7mJNQPp+elyf29dXjuLR4a9Zc7UP+Sr3poVmOsmqdWBjIIihFYpndi2zNvc1rPKqlPAMSKaBw9aL4bg6G5zblBQGJlB97fA0oCA+8y2MOmEbIg/8qXQRcWKIzGS805vomlIlSYHbwhevM4xtNSc07KIir6//jTFHqkC4MhwX8slMEWJoVZ/yzw8KoWTopDZzsocwLdn6nr801d5hwRkZQlesd4zaqtPVQwhfMZwDtQ89PIZg29PTPepigRvEQ=","originalName":"run_command"}}}
+TEMP=C:\Users\prana\AppData\Local\Temp
+USERPROFILE=C:\Users\prana
+LOGONSERVER=\\DESKTOP-S9EUUJL
+TERM=xterm-256color
+USERNAME=prana
+SystemRoot=C:\Windows
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_19724_PZEDTGJWFQCVDZKW
+GIT_EXEC_PATH=C:/Program Files/Git/mingw64/libexec/git-core
+PLINK_PROTOCOL=ssh
+PATH=C:/Program Files/Git/mingw64/libexec/git-core;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\prana\bin;C:/Users/prana/.gemini/antigravity-ide/bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\prana\AppData\Local\Microsoft\WindowsApps;C:\Users\prana\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\prana\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\prana\AppData\Roaming\npm;C:\Users\prana\AppData\Local\Programs\Antigravity IDE\bin
+OneDrive=C:\Users\prana\OneDrive
+ALLUSERSPROFILE=C:\ProgramData
+CommonProgramFiles=C:\Program Files\Common Files
+ANTIGRAVITY_TRAJECTORY_ID=b77c793b-6a09-40a5-b589-f8040c0aed77
+ANTIGRAVITY_LS_ADDRESS=localhost:50322
+ProgramData=C:\ProgramData
+LC_CTYPE=C.UTF-8
+HOMEPATH=\Users\prana
+COMPUTERNAME=DESKTOP-S9EUUJL
+ANTIGRAVITY_SAFECLIS_SOURCE=C:/Users/prana/.gemini/antigravity-ide/bin/safeclis/src
+ANTIGRAVITY_AGENT=1
+CommonProgramW6432=C:\Program Files\Common Files
+SESSIONNAME=Console
+VSCODE_IPC_HOOK=\\.\pipe\5d33acb7-1.107.0-main-sock
+DriverData=C:\Windows\System32\Drivers\DriverData
+HOMEDRIVE=C:
+VSCODE_PID=19724
+windir=C:\Windows
+GIT_TRACE2_PARENT_SID=3dfdf1ac-3722-4ac9-b02a-ebbe1a9b8405
+SystemDrive=C:
+NUMBER_OF_PROCESSORS=8
+OS=Windows_NT
+ProgramFiles=C:\Program Files
+ComSpec=C:\Windows\system32\cmd.exe
+USERDOMAIN_ROAMINGPROFILE=DESKTOP-S9EUUJL
+HOME=C:\Users\prana
+PSModulePath=C:\Users\prana\OneDrive\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules
+ANTIGRAVITY_CSRF_TOKEN=847c03d6-3d12-48fc-b8c9-dd01005b36f5
+ANTIGRAVITY_CONVERSATION_ID=aeba27a7-d9ab-423d-b41f-17180f57e4c6
+TMPDIR=C:\Users\prana\AppData\Local\Temp
+APPDATA=C:\Users\prana\AppData\Roaming
+USERDOMAIN=DESKTOP-S9EUUJL
+PROCESSOR_LEVEL=6
+ANTIGRAVITY_EDITOR_APP_ROOT=c:\Users\prana\AppData\Local\Programs\Antigravity IDE\resources\app
+LOCALAPPDATA=C:\Users\prana\AppData\Local
+VSCODE_NLS_CONFIG={"userLocale":"en-us","osLocale":"en-in","resolvedLanguage":"en","defaultMessagesFile":"C:\\Users\\prana\\AppData\\Local\\Programs\\Antigravity IDE\\resources\\app\\out\\nls.messages.json","locale":"en-us","availableLanguages":{}}
+ANTIGRAVITY_AGENTAPI_EXE=c:\Users\prana\AppData\Local\Programs\Antigravity IDE\resources\app\extensions\antigravity\bin\language_server_windows_x64.exe
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+COLORTERM=truecolor
+VSCODE_CODE_CACHE_PATH=C:\Users\prana\AppData\Roaming\Antigravity IDE\CachedData\ecfbad74d93962fc8ca485d93ab9b4f3d4cb6cf8
+PUBLIC=C:\Users\Public
+ANTIGRAVITY_LS_VERSION=ide-2.4.5
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\prana\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\prana\AppData\Local\Temp\85214d76811ba4fe92b6fcc8'... OK
+Reading from temporary file 'C:\Users\prana\AppData\Local\Temp\85214d76811ba4fe92b6fcc8'... OK
+Deleting temporary file 'C:\Users\prana\AppData\Local\Temp\85214d76811ba4fe92b6fcc8'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\prana
+UserDataDirectoryPath: C:\Users\prana\.gcm
+GetCurrentDirectory(): C:\Users\prana\OneDrive\Desktop\MIS NOIR
+
