@@ -28,15 +28,15 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, onTabChange })
         left: 0,
         right: 0,
         height: 64,
-        backgroundColor: 'rgba(9, 12, 19, 0.96)',
+        backgroundColor: 'rgba(255, 255, 255, 0.96)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderTop: '1px solid rgba(245, 158, 11, 0.2)',
+        borderTop: '1px solid #E2E8F0',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
         zIndex: 90,
-        boxShadow: '0 -4px 25px rgba(0, 0, 0, 0.6)',
+        boxShadow: '0 -2px 12px rgba(15, 23, 42, 0.06)',
         padding: '0 8px'
       }}
       className="mobile-bottom-nav-only"
@@ -60,16 +60,16 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, onTabChange })
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: isActive ? '#FBBF24' : '#64748B'
+              color: isActive ? '#2563EB' : '#64748B'
             }}
           >
-            <Icon size={20} color={isActive ? '#F59E0B' : '#64748B'} />
+            <Icon size={20} color={isActive ? '#2563EB' : '#64748B'} />
             <span
               style={{
                 fontSize: 10,
                 fontWeight: isActive ? 800 : 600,
                 letterSpacing: '0.04em',
-                color: isActive ? '#FBBF24' : '#64748B'
+                color: isActive ? '#2563EB' : '#64748B'
               }}
             >
               {item.label}

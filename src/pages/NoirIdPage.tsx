@@ -14,10 +14,10 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 680, margin: '0 auto' }}>
       {/* Page Title */}
       <div style={{ textAlign: 'center' }}>
-        <h1 style={{ fontSize: 28, fontWeight: 900, color: '#F8FAFC' }}>
+        <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F172A' }}>
           NEXORA ID Digital Identity
         </h1>
-        <p style={{ fontSize: 14, color: '#94A3B8', marginTop: 4 }}>
+        <p style={{ fontSize: 14, color: '#64748B', marginTop: 4 }}>
           Verified campus digital pass & cryptographically signed credentials
         </p>
       </div>
@@ -25,17 +25,17 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
       {/* Main NEXORA ID Card */}
       <div
         style={{
-          background: 'linear-gradient(135deg, rgba(16, 21, 32, 0.96) 0%, rgba(8, 11, 18, 0.98) 100%)',
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 55%, #EFF6FF 100%)',
           borderRadius: 24,
-          border: '2px solid rgba(245, 158, 11, 0.5)',
+          border: '2px solid #BFDBFE',
           padding: 32,
-          boxShadow: '0 25px 70px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.25)',
+          boxShadow: '0 20px 50px rgba(37, 99, 235, 0.12), 0 4px 12px rgba(15, 23, 42, 0.05)',
           position: 'relative',
           overflow: 'hidden'
         }}
       >
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', paddingBottom: 20, marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #E2E8F0', paddingBottom: 20, marginBottom: 24 }}>
           <NoirLogo size="sm" showSubtitle={true} />
           <span className="badge badge-success" style={{ padding: '6px 14px', fontSize: 12 }}>
             <CheckCircle2 size={14} style={{ marginRight: 6 }} /> VERIFIED STUDENT
@@ -54,8 +54,8 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
                 height: 100,
                 borderRadius: 16,
                 objectFit: 'cover',
-                border: '3px solid #F59E0B',
-                boxShadow: '0 0 16px rgba(245, 158, 11, 0.4)'
+                border: '3px solid #2563EB',
+                boxShadow: '0 4px 14px rgba(37, 99, 235, 0.2)'
               }}
             />
             <span
@@ -66,7 +66,8 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
                 backgroundColor: '#10B981',
                 color: '#FFFFFF',
                 borderRadius: '50%',
-                padding: 4
+                padding: 4,
+                boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
               }}
             >
               <ShieldCheck size={16} />
@@ -75,17 +76,17 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
 
           {/* Details */}
           <div style={{ flex: 1, minWidth: 200 }}>
-            <h2 style={{ fontSize: 24, fontWeight: 900, color: '#F8FAFC' }}>
+            <h2 style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>
               PRANAV BANSAL
             </h2>
-            <div style={{ fontSize: 15, fontWeight: 800, color: '#FBBF24', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 800, color: '#2563EB', marginTop: 2 }}>
               {student.program} • Semester {student.semester}
             </div>
 
-            <div style={{ marginTop: 12, fontSize: 13, color: '#CBD5E1', display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <div>Student ID: <strong style={{ color: '#F8FAFC' }}>{student.studentId}</strong></div>
-              <div>Department: <strong style={{ color: '#F8FAFC' }}>{student.department}</strong></div>
-              <div>Biometric Status: <strong style={{ color: '#34D399' }}>✓ Palm Biometrics Enrolled</strong></div>
+            <div style={{ marginTop: 12, fontSize: 13, color: '#475569', display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <div>Student ID: <strong style={{ color: '#0F172A' }}>{student.studentId}</strong></div>
+              <div>Department: <strong style={{ color: '#0F172A' }}>{student.department}</strong></div>
+              <div>Biometric Status: <strong style={{ color: '#059669' }}>✓ Palm Biometrics Enrolled</strong></div>
             </div>
           </div>
 
@@ -96,8 +97,8 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
               backgroundColor: '#FFFFFF',
               padding: 12,
               borderRadius: 14,
-              border: '1px solid rgba(245, 158, 11, 0.3)',
-              boxShadow: '0 0 20px rgba(245, 158, 11, 0.15)'
+              border: '1px solid #CBD5E1',
+              boxShadow: '0 2px 10px rgba(15, 23, 42, 0.08)'
             }}
           >
             <img
@@ -119,7 +120,7 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
           className="btn btn-secondary"
           style={{ flexDirection: 'column', padding: 16, gap: 8, fontSize: 13, fontWeight: 800 }}
         >
-          <Share2 size={20} color="#F59E0B" /> Share ID
+          <Share2 size={20} color="#2563EB" /> Share ID
         </button>
 
         <button
@@ -127,7 +128,7 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
           className="btn btn-secondary"
           style={{ flexDirection: 'column', padding: 16, gap: 8, fontSize: 13, fontWeight: 800 }}
         >
-          <FileText size={20} color="#FBBF24" /> Documents
+          <FileText size={20} color="#0284C7" /> Documents
         </button>
 
         <button
@@ -135,7 +136,7 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
           className="btn btn-secondary"
           style={{ flexDirection: 'column', padding: 16, gap: 8, fontSize: 13, fontWeight: 800 }}
         >
-          <Award size={20} color="#10B981" /> Certificates
+          <Award size={20} color="#059669" /> Certificates
         </button>
 
         <button
@@ -143,7 +144,7 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
           className="btn btn-secondary"
           style={{ flexDirection: 'column', padding: 16, gap: 8, fontSize: 13, fontWeight: 800 }}
         >
-          <Lock size={20} color="#EF4444" /> Privacy
+          <Lock size={20} color="#DC2626" /> Privacy
         </button>
       </div>
     </div>

@@ -24,48 +24,48 @@ export const StudentCampusPage: React.FC = () => {
       title: 'FOOD',
       desc: 'Canteen food court, daily specials & pre-orders',
       icon: UtensilsCrossed,
-      color: '#F59E0B',
-      bgColor: 'rgba(245, 158, 11, 0.15)'
+      color: '#D97706',
+      bgColor: '#FEF3C7'
     },
     {
       id: 'SHOPS',
       title: 'SHOPS',
       desc: 'Campus store, books, stationery & merchandise',
       icon: Store,
-      color: '#10B981',
-      bgColor: 'rgba(16, 185, 129, 0.15)'
+      color: '#059669',
+      bgColor: '#D1FAE5'
     },
     {
       id: 'LIBRARY',
       title: 'LIBRARY',
       desc: 'Book catalogue search, borrow history & renewal',
       icon: BookOpen,
-      color: '#38BDF8',
-      bgColor: 'rgba(56, 189, 248, 0.15)'
+      color: '#2563EB',
+      bgColor: '#EFF6FF'
     },
     {
       id: 'PRINTING',
       title: 'PRINTING',
       desc: 'Cloud document printing queue & kiosk status',
       icon: Printer,
-      color: '#FBBF24',
-      bgColor: 'rgba(251, 191, 36, 0.15)'
+      color: '#D97706',
+      bgColor: '#FEF3C7'
     },
     {
       id: 'MAP',
       title: 'MAP',
       desc: 'Interactive campus map, rooms & venue directory',
       icon: MapPin,
-      color: '#EC4899',
-      bgColor: 'rgba(236, 72, 153, 0.15)'
+      color: '#DB2777',
+      bgColor: '#FCE7F3'
     },
     {
       id: 'FACILITIES',
       title: 'FACILITIES',
       desc: 'Hostel gate passes, Shuttle GPS & Medical desk',
       icon: Building2,
-      color: '#F59E0B',
-      bgColor: 'rgba(245, 158, 11, 0.12)'
+      color: '#2563EB',
+      bgColor: '#EFF6FF'
     }
   ];
 
@@ -142,9 +142,9 @@ export const StudentCampusPage: React.FC = () => {
           <ArrowLeft size={16} /> Back to Campus Gateway
         </button>
         <div className="noir-card" style={{ padding: 28, textAlign: 'center' }}>
-          <Printer size={48} color="#F59E0B" style={{ margin: '0 auto 14px' }} />
-          <h2 style={{ fontSize: 24, fontWeight: 900, color: 'var(--text-main, #F8FAFC)' }}>NEXORA Cloud Printing Services</h2>
-          <p style={{ fontSize: 14, color: 'var(--text-secondary, #94A3B8)', maxWidth: 480, margin: '8px auto 20px' }}>
+          <Printer size={48} color="#2563EB" style={{ margin: '0 auto 14px' }} />
+          <h2 style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>NEXORA Cloud Printing Services</h2>
+          <p style={{ fontSize: 14, color: '#64748B', maxWidth: 480, margin: '8px auto 20px' }}>
             Upload PDFs from NEXORA Document Vault & release print jobs at any Campus Palm Terminal in Block A, B, or Library.
           </p>
           <div className="badge badge-success" style={{ padding: '8px 20px', fontSize: 13, border: '1px solid rgba(16, 185, 129, 0.3)' }}>
@@ -158,13 +158,13 @@ export const StudentCampusPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <div>
-        <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--brand-primary, #F59E0B)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+        <div style={{ fontSize: 12, fontWeight: 900, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
           CAMPUS SERVICES GATEWAY
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 900, color: 'var(--text-main, #F8FAFC)', marginTop: 4 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
           Campus Experience
         </h1>
-        <p style={{ fontSize: 14, color: 'var(--text-secondary, #94A3B8)', marginTop: 4 }}>
+        <p style={{ fontSize: 14, color: '#64748B', marginTop: 4 }}>
           Access food court orders, campus store, library catalogue, cloud printing, maps and facilities.
         </p>
       </div>
@@ -202,10 +202,10 @@ export const StudentCampusPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 style={{ fontSize: 18, fontWeight: 900, color: 'var(--text-main, #F8FAFC)' }}>
+                <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A' }}>
                   {cat.title}
                 </h3>
-                <p style={{ fontSize: 13, color: 'var(--text-secondary, #94A3B8)', marginTop: 4, lineHeight: 1.4 }}>
+                <p style={{ fontSize: 13, color: '#64748B', marginTop: 4, lineHeight: 1.4 }}>
                   {cat.desc}
                 </p>
               </div>

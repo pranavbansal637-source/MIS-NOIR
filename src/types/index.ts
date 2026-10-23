@@ -82,7 +82,12 @@ export interface WalletTransaction {
   status: 'SUCCESS' | 'PENDING' | 'FAILED';
   timestamp: string;
   receiptId: string;
+  title?: string;
+  referenceId?: string;
   itemsSummary?: string;
+  description?: string;
+  date?: string;
+  time?: string;
 }
 
 export interface EventItem {
@@ -132,7 +137,7 @@ export interface CampusOrder {
   shopName: string;
   items: { productId: string; name: string; quantity: number; price: number }[];
   totalAmount: number;
-  status: 'PLACED' | 'PREPARING' | 'READY' | 'COLLECTED' | 'CANCELLED';
+  status: 'PLACED' | 'CONFIRMED' | 'PREPARING' | 'READY' | 'COLLECTED' | 'CANCELLED';
   pickupCode: string;
   timestamp: string;
   paymentId: string;
@@ -169,6 +174,7 @@ export interface ComplaintTicket {
   ticketNo: string;
   userId: string;
   userName: string;
+  userRole?: string;
   category: 'Classroom' | 'Wi-Fi' | 'Electricity' | 'Washroom' | 'Canteen' | 'Security' | 'Transport' | 'Hostel' | 'Other';
   description: string;
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
@@ -182,12 +188,19 @@ export interface TerminalDevice {
   terminalCode: string;
   locationName: string;
   roomNumber: string;
-  type: 'CLASSROOM' | 'GATE' | 'LIBRARY' | 'CANTEEN' | 'MAIN_KIOSK';
+  building?: string;
+  scannerHardwareId?: string;
+  type: 'CLASSROOM' | 'GATE' | 'LIBRARY' | 'CANTEEN' | 'MAIN_KIOSK' | 'SHOP' | 'EVENT';
   status: 'ONLINE' | 'OFFLINE' | 'UPDATING' | 'MAINTENANCE';
   lastPing: string;
   firmwareVersion: string;
   ipAddress: string;
   macAddress: string;
+  photoUrl?: string;
+  assignedDept?: string;
+  department?: string;
+  isOperational?: boolean;
+  maintenanceHistory?: TerminalMaintenanceLog[];
 }
 
 export interface AuditLogItem {
@@ -354,3 +367,144 @@ export interface AssignmentItem {
     fileUrl?: string;
   }[];
 }
+
+export interface AppNotification {
+  id: string;
+  title: string;
+  message: string;
+  category: 'ACADEMIC' | 'FEES' | 'EXAM' | 'LIBRARY' | 'SYSTEM' | 'ATTENDANCE' | 'SHOP';
+  timestamp: string;
+  read: boolean;
+  targetTab?: string;
+}
+
+export interface LiveAttendanceSession {
+  id: string;
+  courseCode: string;
+  courseName: string;
+  facultyId: string;
+  facultyName: string;
+  room: string;
+  building: string;
+  status: 'NOT_STARTED' | 'LIVE' | 'CLOSED';
+  startTime: string;
+  endTime: string;
+  recordedStudentIds: string[];
+}
+
+export interface AttendanceSessionRecord {
+  id: string;
+  date: string;
+  time: string;
+  courseCode: string;
+  courseName: string;
+  facultyName: string;
+  room: string;
+  status: 'PRESENT' | 'ABSENT' | 'CANCELLED' | 'PENDING' | 'NOT_CONDUCTED' | 'EXCUSED';
+  verificationMethod?: 'Palm Biometrics' | 'Manual Override' | 'QR Optical Token' | 'N/A' | string;
+  verifiedVia?: string;
+  correctedBy?: string;
+  correctionReason?: string;
+}
+
+export interface TimetableEntry {
+  id: string;
+  day: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
+  courseCode: string;
+  courseName: string;
+  facultyName: string;
+  room: string;
+  building: string;
+  startTime: string;
+  endTime: string;
+  credits: number;
+  status?: 'NORMAL' | 'RESCHEDULED' | 'HOLIDAY';
+}
+
+export interface ShopOffer {
+  id: string;
+  code: string;
+  title: string;
+  discountPercentage: number;
+  minOrderAmount?: number;
+  validUntil: string;
+  isActive: boolean;
+  categoryLimit?: 'All' | 'Food' | 'Stationery' | 'Merchandise' | 'Printing';
+  targetCategory?: string;
+}
+
+export interface StockMovementRecord {
+  id: string;
+  productId: string;
+  productName: string;
+  type: 'SALE' | 'RESTOCK' | 'MANUAL_ADJUSTMENT' | 'RETURN';
+  quantityChange: number;
+  previousStock: number;
+  newStock: number;
+  timestamp: string;
+  reason?: string;
+  user: string;
+  changeQuantity?: number;
+  userName?: string;
+}
+
+export interface ShopProfile {
+  id: string;
+  name: string;
+  shopName?: string;
+  merchantId?: string;
+  managerName: string;
+  phone: string;
+  contactPhone?: string;
+  email: string;
+  contactEmail?: string;
+  location: string;
+  operatingHours: string;
+  category: string;
+  gstin: string;
+  fssaiNumber?: string;
+  upiVpa?: string;
+}
+
+export interface LibraryIssueRecord {
+  id: string;
+  bookId: string;
+  bookTitle: string;
+  userId: string;
+  userName: string;
+  userRole: 'STUDENT' | 'FACULTY';
+  issueDate: string;
+  dueDate: string;
+  returnDate?: string;
+  status: 'ISSUED' | 'RETURNED' | 'OVERDUE';
+  fineAmount: number;
+  finePaid: boolean;
+}
+
+export interface FacilityRecord {
+  id: string;
+  name: string;
+  type: 'HOSTEL_BOYS' | 'HOSTEL_GIRLS' | 'ACADEMIC_BLOCK' | 'LIBRARY' | 'SPORTS_COMPLEX' | 'CAFETERIA' | 'LAB' | 'HOSTEL' | 'ACADEMIC' | 'DINING' | 'ATHLETICS';
+  building: string;
+  location?: string;
+  capacity: number;
+  currentOccupancy: number;
+  inCharge?: string;
+  managerName?: string;
+  contactPhone: string;
+  status: 'OPERATIONAL' | 'MAINTENANCE' | 'PARTIAL';
+  amenities?: string[];
+}
+
+export interface TerminalMaintenanceLog {
+  id: string;
+  terminalId: string;
+  reportedTime: string;
+  reason: string;
+  assignedTechnician: string;
+  expectedRestorationDate: string;
+  status: 'REPORTED' | 'IN_PROGRESS' | 'RESTORED';
+  restoredAt?: string;
+  restorationNotes?: string;
+}
+

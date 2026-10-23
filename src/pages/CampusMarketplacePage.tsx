@@ -58,7 +58,7 @@ export const CampusMarketplacePage: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* Special Cloud Printing Section */}
           {(activeCategory === 'All' || activeCategory === 'Printing') && (
-            <div className="noir-card" style={{ background: 'rgba(16, 21, 32, 0.95)', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
+            <div className="noir-card" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.05)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
                 <Printer size={22} color="var(--brand-primary)" />
                 <h3 style={{ fontSize: 18, fontWeight: 800 }}>Instant Cloud PDF Printing</h3>

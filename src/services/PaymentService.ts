@@ -15,10 +15,20 @@ export interface PaymentResult {
   error?: string;
 }
 
+export interface GatewayTopupRequest {
+  userId: string;
+  amount: number;
+  method: 'UPI' | 'CARD' | 'NETBANKING';
+  upiVpa?: string;
+  cardLast4?: string;
+  cardHolder?: string;
+}
+
 export interface IPaymentService {
   createPayment(req: PaymentRequest, currentBalance: number): Promise<PaymentResult>;
   confirmPayment(transactionId: string): Promise<boolean>;
   refundPayment(transactionId: string): Promise<boolean>;
+  processGatewayTopup(req: GatewayTopupRequest, currentBalance: number): Promise<PaymentResult>;
   getTransactionHistory(userId: string): WalletTransaction[];
 }
 
@@ -55,6 +65,56 @@ class PaymentServiceImpl implements IPaymentService {
       success: true,
       transaction: newTx,
       newBalance: currentBalance - req.amount
+    };
+  }
+
+  async processGatewayTopup(req: GatewayTopupRequest, currentBalance: number): Promise<PaymentResult> {
+    // Simulate real gateway network latency and server verification webhook
+    await new Promise((res) => setTimeout(res, 1200));
+
+    if (req.amount <= 0 || req.amount > 50000) {
+      return {
+        success: false,
+        error: 'Invalid top-up amount. Limit is between ₹10 and ₹50,000 per transaction.'
+      };
+    }
+
+    if (req.method === 'UPI' && req.upiVpa && !req.upiVpa.includes('@')) {
+      return {
+        success: false,
+        error: 'Invalid UPI VPA address format (e.g. yourname@okhdfcbank).'
+      };
+    }
+
+    const gatewayRef = req.method === 'UPI'
+      ? `UPI-AUTH-${Date.now().toString().slice(-7)}`
+      : req.method === 'CARD'
+      ? `CARD-TX-${Date.now().toString().slice(-7)}`
+      : `NB-REF-${Date.now().toString().slice(-7)}`;
+
+    const newTx: WalletTransaction = {
+      id: `topup-${Date.now().toString().slice(-6)}`,
+      userId: req.userId,
+      merchantName: req.method === 'UPI' 
+        ? `NEXORA UPI Gateway (${req.upiVpa || 'Instant QR'})`
+        : req.method === 'CARD'
+        ? `Razorpay / Visa Gateway (Card •••• ${req.cardLast4 || '4242'})`
+        : 'Campus NetBanking Gateway',
+      category: 'TOPUP',
+      amount: req.amount,
+      type: 'CREDIT',
+      status: 'SUCCESS',
+      timestamp: 'Just now',
+      receiptId: `RCP-${gatewayRef}`,
+      itemsSummary: `Added ₹${req.amount} via verified ${req.method} gateway settlement`
+    };
+
+    this.history.unshift(newTx);
+
+    return {
+      success: true,
+      transaction: newTx,
+      newBalance: currentBalance + req.amount
     };
   }
 

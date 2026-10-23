@@ -19,15 +19,15 @@ export const MedicalPage: React.FC = () => {
       </div>
 
       {/* Emergency Health Badge Banner */}
-      <div className="noir-card" style={{ background: 'linear-gradient(135deg, rgba(35, 15, 18, 0.8) 0%, rgba(18, 12, 16, 0.95) 100%)', border: '1px solid rgba(239, 68, 68, 0.4)' }}>
+      <div className="noir-card" style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #FEF2F2 100%)', border: '1px solid #FECACA', boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.05)' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <div style={{ width: 54, height: 54, borderRadius: '50%', backgroundColor: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Heart size={30} color="#EF4444" />
+            <div style={{ width: 54, height: 54, borderRadius: '50%', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Heart size={30} color="#DC2626" />
             </div>
             <div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: '#F8FAFC' }}>
-                {student.name} • Blood Group: <span style={{ color: '#EF4444' }}>{medicalRecord.bloodGroup}</span>
+              <div style={{ fontSize: 20, fontWeight: 800, color: '#0F172A' }}>
+                {student.name} • Blood Group: <span style={{ color: '#DC2626' }}>{medicalRecord.bloodGroup}</span>
               </div>
               <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>
                 Policy No: {medicalRecord.insurancePolicyNo} • Student ID: {student.studentId}
@@ -37,7 +37,7 @@ export const MedicalPage: React.FC = () => {
 
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)' }}>EMERGENCY CONTACT</div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#EF4444' }}>{medicalRecord.emergencyContact}</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: '#DC2626' }}>{medicalRecord.emergencyContact}</div>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ export const MedicalPage: React.FC = () => {
 
         <div className="noir-card">
           <h4 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 8 }}>HEALTH INSURANCE</h4>
-          <div style={{ fontSize: 14, fontWeight: 700, color: '#F59E0B' }}>Star Health University Plan</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: '#2563EB' }}>Star Health University Plan</div>
         </div>
       </div>
 
@@ -69,15 +69,15 @@ export const MedicalPage: React.FC = () => {
         <h3 style={{ fontSize: 18, fontWeight: 800, marginBottom: 16 }}>Campus Clinic Consultations & Prescriptions</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {medicalRecord.recentVisits.map((visit, i) => (
-            <div key={i} style={{ padding: 14, backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)' }}>
+            <div key={i} style={{ padding: 14, backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 'var(--radius-md)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <strong style={{ fontSize: 15 }}>{visit.diagnosis}</strong>
+                <strong style={{ fontSize: 15, color: '#0F172A' }}>{visit.diagnosis}</strong>
                 <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{visit.date}</span>
               </div>
               <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
                 Attending Physician: {visit.doctorName}
               </div>
-              <div style={{ fontSize: 12, color: 'var(--brand-primary)', fontWeight: 600, marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: '#2563EB', fontWeight: 600, marginTop: 4 }}>
                 Prescription: {visit.prescription}
               </div>
               <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>

@@ -16,13 +16,13 @@ export const ReceiptModal: React.FC = () => {
         style={{ padding: 24, maxWidth: 440 }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-          <NoirLogo size="sm" />
+          <NoirLogo size="sm" theme="light" />
           <button onClick={() => setModal(null)} className="btn btn-ghost btn-icon btn-sm">
-            <X size={18} />
+            <X size={18} color="#64748B" />
           </button>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '16px 0', borderBottom: '1px dashed rgba(245, 158, 11, 0.3)' }}>
+        <div style={{ textAlign: 'center', padding: '16px 0', borderBottom: '1px dashed #E2E8F0' }}>
           <div
             style={{
               width: 54,

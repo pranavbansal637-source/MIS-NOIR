@@ -21,6 +21,10 @@ import { PrivacyCenterModal } from './components/PrivacyCenterModal';
 import { PayFeeModal } from './components/PayFeeModal';
 import { AuthModal } from './components/AuthModal';
 
+import { DocumentPreviewModal } from './components/DocumentPreviewModal';
+import { NotificationsModal } from './components/NotificationsModal';
+import { TimetablePage } from './pages/TimetablePage';
+
 // Redesigned Core Student Pages
 import { StudentHome } from './pages/StudentHome';
 import { StudentCampusPage } from './pages/StudentCampusPage';
@@ -219,6 +223,8 @@ const AppContent: React.FC = () => {
       // Sub-pages with Back Navigation
       case 'attendance':
         return renderSubPageWithBack(<AttendancePage />);
+      case 'timetable':
+        return renderSubPageWithBack(<TimetablePage />);
       case 'pay':
         return renderSubPageWithBack(<PaymentsPage />);
       case 'events':
@@ -285,6 +291,8 @@ const AppContent: React.FC = () => {
       <EmergencyModal />
       <ReceiptModal />
       <DocumentShareModal />
+      <DocumentPreviewModal />
+      <NotificationsModal />
       <TopupModal />
       <PrivacyCenterModal />
       <PayFeeModal />

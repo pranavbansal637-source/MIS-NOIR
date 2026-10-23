@@ -194,26 +194,26 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
         style={{
           maxWidth: 620,
           padding: 30,
-          background: 'rgba(10, 14, 22, 0.98)',
-          border: '1px solid rgba(245, 158, 11, 0.4)',
-          boxShadow: '0 25px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(245, 158, 11, 0.2)'
+          background: '#FFFFFF',
+          border: '1px solid #E2E8F0',
+          boxShadow: '0 25px 80px rgba(15, 23, 42, 0.15), 0 0 40px rgba(37, 99, 235, 0.08)'
         }}
       >
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <NoirLogo size="sm" showSubtitle={false} />
+            <NoirLogo size="sm" showSubtitle={false} theme="light" />
             <div>
-              <div style={{ fontSize: 11, fontWeight: 900, color: '#F59E0B', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 11, fontWeight: 900, color: '#D97706', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
                 SECURITY ACCESS GATEWAY
               </div>
-              <h2 style={{ fontSize: 20, fontWeight: 900, color: '#F8FAFC' }}>
+              <h2 style={{ fontSize: 20, fontWeight: 900, color: '#0F172A' }}>
                 Role-Isolated Portal Sign In
               </h2>
             </div>
           </div>
           <button onClick={onClose} className="btn btn-ghost btn-icon btn-sm">
-            <X size={18} />
+            <X size={18} color="#64748B" />
           </button>
         </div>
 
@@ -221,18 +221,18 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
         <div
           style={{
             padding: '12px 16px',
-            backgroundColor: 'rgba(245, 158, 11, 0.08)',
-            border: '1px solid rgba(245, 158, 11, 0.25)',
+            backgroundColor: '#EFF6FF',
+            border: '1px solid #BFDBFE',
             borderRadius: 12,
             marginBottom: 20,
             fontSize: 12,
-            color: '#CBD5E1',
+            color: '#1E40AF',
             display: 'flex',
             alignItems: 'center',
             gap: 10
           }}
         >
-          <Lock size={16} color="#F59E0B" style={{ flexShrink: 0 }} />
+          <Lock size={16} color="#2563EB" style={{ flexShrink: 0 }} />
           <span>
             Each interface is strictly segregated. To access Management, Merchant POS, or Faculty consoles, enter the respective authorization passkey below.
           </span>
@@ -264,16 +264,16 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
                   alignItems: 'center',
                   padding: '12px 8px',
                   borderRadius: 12,
-                  backgroundColor: isSelected ? 'rgba(245, 158, 11, 0.16)' : 'rgba(255, 255, 255, 0.03)',
-                  border: isSelected ? '2px solid #F59E0B' : '1px solid var(--border-color)',
-                  color: isSelected ? '#FBBF24' : '#94A3B8',
+                  backgroundColor: isSelected ? '#EFF6FF' : '#F8FAFC',
+                  border: isSelected ? '2px solid #2563EB' : '1px solid #E2E8F0',
+                  color: isSelected ? '#2563EB' : '#64748B',
                   cursor: 'pointer',
                   transition: 'all 150ms ease'
                 }}
               >
-                <Icon size={20} color={isSelected ? '#F59E0B' : '#64748B'} style={{ marginBottom: 6 }} />
+                <Icon size={20} color={isSelected ? '#2563EB' : '#64748B'} style={{ marginBottom: 6 }} />
                 <span style={{ fontSize: 12, fontWeight: isSelected ? 800 : 600 }}>{item.label}</span>
-                <span style={{ fontSize: 10, color: isSelected ? '#F59E0B' : '#64748B', marginTop: 2, fontWeight: 700 }}>
+                <span style={{ fontSize: 10, color: isSelected ? '#2563EB' : '#94A3B8', marginTop: 2, fontWeight: 700 }}>
                   {item.pin}
                 </span>
               </button>
@@ -286,8 +286,8 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
           style={{
             padding: 20,
             borderRadius: 16,
-            backgroundColor: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid var(--border-color)',
+            backgroundColor: '#F8FAFC',
+            border: '1px solid #E2E8F0',
             marginBottom: 16
           }}
         >
@@ -301,11 +301,11 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
                 boxShadow: `0 0 10px ${currentPortalConfig.color}`
               }}
             />
-            <h3 style={{ fontSize: 16, fontWeight: 900, color: '#F8FAFC' }}>
+            <h3 style={{ fontSize: 16, fontWeight: 900, color: '#0F172A' }}>
               {currentPortalConfig.title}
             </h3>
           </div>
-          <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 16 }}>
+          <p style={{ fontSize: 13, color: '#64748B', marginBottom: 16 }}>
             {currentPortalConfig.desc}
           </p>
 
@@ -321,10 +321,10 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
               fontWeight: 900,
               gap: 8,
               borderRadius: 12,
-              backgroundColor: currentPortalConfig.color,
-              borderColor: currentPortalConfig.color,
-              color: '#080B12',
-              boxShadow: `0 4px 20px ${currentPortalConfig.color}40`,
+              backgroundColor: '#2563EB',
+              borderColor: '#2563EB',
+              color: '#FFFFFF',
+              boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)',
               cursor: 'pointer',
               marginBottom: 14,
               display: 'flex',
@@ -349,17 +349,16 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
                 gap: 10,
                 padding: '12px 18px',
                 borderRadius: 12,
-                backgroundColor: 'rgba(245, 158, 11, 0.12)',
-                border: '1px dashed rgba(245, 158, 11, 0.5)',
-                color: '#FBBF24',
+                backgroundColor: '#EFF6FF',
+                border: '1px dashed #2563EB',
+                color: '#2563EB',
                 fontSize: 13,
                 fontWeight: 800,
                 cursor: 'pointer',
-                marginBottom: 16,
-                boxShadow: '0 0 16px rgba(245, 158, 11, 0.12)'
+                marginBottom: 16
               }}
             >
-              <Hand size={18} color="#F59E0B" />
+              <Hand size={18} color="#2563EB" />
               {isScanningPalm ? 'Scanning Subdermal Palm Hash...' : `Scan Palm to Authenticate (${selectedRole})`}
             </button>
           )}
@@ -367,7 +366,7 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
           {/* PIN Form */}
           <form onSubmit={handleVerify}>
             <div className="form-group" style={{ marginBottom: 14 }}>
-              <label className="form-label" style={{ fontSize: 12, fontWeight: 800, color: '#E2E8F0' }}>
+              <label className="form-label" style={{ fontSize: 12, fontWeight: 800, color: '#0F172A' }}>
                 {currentPortalConfig.pinLabel}
               </label>
               <div style={{ position: 'relative' }}>
@@ -379,9 +378,9 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
                     paddingLeft: 42,
                     fontSize: 15,
                     letterSpacing: '0.1em',
-                    backgroundColor: 'rgba(20, 26, 38, 0.95)',
-                    color: '#F8FAFC',
-                    borderColor: errorMsg ? '#EF4444' : 'rgba(245, 158, 11, 0.3)'
+                    backgroundColor: '#FFFFFF',
+                    color: '#0F172A',
+                    borderColor: errorMsg ? '#EF4444' : '#E2E8F0'
                   }}
                   placeholder={`Enter ${currentPortalConfig.demoPin} to unlock...`}
                   value={pinInput}
@@ -392,7 +391,7 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
                   autoFocus
                 />
               </div>
-              <div style={{ fontSize: 11, color: '#F59E0B', marginTop: 4, fontWeight: 700 }}>
+              <div style={{ fontSize: 11, color: '#2563EB', marginTop: 4, fontWeight: 700 }}>
                 💡 Demo Passkey: <strong>{currentPortalConfig.demoPin}</strong>
               </div>
             </div>
@@ -401,10 +400,10 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
               <div
                 style={{
                   padding: '10px 14px',
-                  backgroundColor: 'rgba(239, 68, 68, 0.12)',
-                  border: '1px solid rgba(239, 68, 68, 0.4)',
+                  backgroundColor: '#FEE2E2',
+                  border: '1px solid #FCA5A5',
                   borderRadius: 8,
-                  color: '#FCA5A5',
+                  color: '#991B1B',
                   fontSize: 12,
                   fontWeight: 700,
                   marginBottom: 14
@@ -423,9 +422,8 @@ export const PortalGateModal: React.FC<PortalGateModalProps> = ({
                 fontSize: 14,
                 fontWeight: 900,
                 borderRadius: 12,
-                backgroundColor: currentPortalConfig.color,
-                borderColor: currentPortalConfig.color,
-                boxShadow: `0 4px 20px ${currentPortalConfig.color}40`
+                backgroundColor: '#2563EB',
+                borderColor: '#2563EB'
               }}
             >
               Verify & Enter {currentPortalConfig.title}

@@ -3,12 +3,28 @@ import { useApp } from '../context/AppContext';
 import { ShieldCheck, Share2, Download, Eye, Lock } from 'lucide-react';
 
 export const DocumentVaultPage: React.FC = () => {
-  const { documents, openShareModal, showToast } = useApp();
+  const { documents, openShareModal, openDocPreview, downloadDoc, showToast } = useApp();
   const [selectedCategory, setSelectedCategory] = useState<'All' | 'Identity' | 'Academic' | 'Certificates'>('All');
 
   const filteredDocs = selectedCategory === 'All'
     ? documents
     : documents.filter((d) => d.category === selectedCategory);
+
+  const handleDownload = (doc: any) => {
+    try {
+      downloadDoc(doc);
+    } catch (err: any) {
+      showToast(`Download error: ${err.message || 'Unable to access document server.'}`);
+    }
+  };
+
+  const handlePreview = (doc: any) => {
+    try {
+      openDocPreview(doc);
+    } catch (err: any) {
+      showToast(`Preview error: ${err.message || 'Unsupported format or expired link.'}`);
+    }
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -61,23 +77,23 @@ export const DocumentVaultPage: React.FC = () => {
 
             <div style={{ display: 'flex', gap: 8, borderTop: '1px solid var(--border-color)', paddingTop: 12 }}>
               <button
-                onClick={() => showToast(`Opening preview for ${doc.title}`)}
+                onClick={() => handlePreview(doc)}
                 className="btn btn-secondary btn-sm"
-                style={{ flex: 1 }}
+                style={{ flex: 1, gap: 6, fontWeight: 700 }}
               >
                 <Eye size={14} /> Preview
               </button>
               <button
-                onClick={() => showToast(`Downloading ${doc.title}...`)}
+                onClick={() => handleDownload(doc)}
                 className="btn btn-secondary btn-sm"
-                style={{ flex: 1 }}
+                style={{ flex: 1, gap: 6, fontWeight: 700 }}
               >
                 <Download size={14} /> Download
               </button>
               <button
                 onClick={() => openShareModal(doc)}
                 className="btn btn-primary btn-sm"
-                style={{ flex: 1 }}
+                style={{ flex: 1, gap: 6, fontWeight: 700 }}
               >
                 <Share2 size={14} /> Share Link
               </button>

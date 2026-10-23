@@ -36,7 +36,7 @@ export const AuthModal: React.FC = () => {
 
         {isAuthenticated ? (
           <div>
-            <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8, color: '#F8FAFC' }}>Sign Out Confirmation</h3>
+            <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8, color: '#0F172A' }}>Sign Out Confirmation</h3>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 24 }}>
               Are you sure you want to sign out of your NEXORA Operating System session?
             </p>
@@ -53,7 +53,7 @@ export const AuthModal: React.FC = () => {
           </div>
         ) : (
           <div>
-            <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4, color: '#F8FAFC' }}>NEXORA Identity Portal</h3>
+            <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4, color: '#0F172A' }}>NEXORA Identity Portal</h3>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 20 }}>
               Touch Palm to Sensor or Sign In with Campus Credentials
             </p>
@@ -61,29 +61,28 @@ export const AuthModal: React.FC = () => {
             {/* Palm Sign-in Option */}
             <div
               style={{
-                backgroundColor: 'rgba(245, 158, 11, 0.12)',
-                border: '2px dashed rgba(245, 158, 11, 0.45)',
+                backgroundColor: '#EFF6FF',
+                border: '2px dashed #2563EB',
                 borderRadius: 'var(--radius-lg)',
                 padding: 20,
                 marginBottom: 20,
-                cursor: 'pointer',
-                boxShadow: '0 0 20px rgba(245, 158, 11, 0.15)'
+                cursor: 'pointer'
               }}
               onClick={handlePalmSignIn}
             >
-              <Hand size={42} color="#F59E0B" style={{ margin: '0 auto 8px' }} />
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#FBBF24' }}>
+              <Hand size={42} color="#2563EB" style={{ margin: '0 auto 8px' }} />
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#2563EB' }}>
                 {isScanningPalm ? 'Detecting Palm Subdermal Hash...' : '[ SCAN PALM TO SIGN IN ]'}
               </div>
-              <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
+              <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>
                 Instant Biometric Identity Pass
               </div>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '16px 0', color: 'var(--text-muted)', fontSize: 12 }}>
-              <div style={{ flex: 1, height: 1, backgroundColor: 'rgba(255, 255, 255, 0.1)' }} />
+              <div style={{ flex: 1, height: 1, backgroundColor: '#E2E8F0' }} />
               <span>OR USE CREDENTIALS</span>
-              <div style={{ flex: 1, height: 1, backgroundColor: 'rgba(255, 255, 255, 0.1)' }} />
+              <div style={{ flex: 1, height: 1, backgroundColor: '#E2E8F0' }} />
             </div>
 
             {/* Credential Form */}

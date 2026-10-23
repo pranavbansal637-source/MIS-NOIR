@@ -57,21 +57,21 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
         403 ACCESS RESTRICTED • ROLE ISOLATION ACTIVE
       </div>
 
-      <h1 style={{ fontSize: 28, fontWeight: 900, color: '#F8FAFC', marginBottom: 12 }}>
+      <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F172A', marginBottom: 12 }}>
         Insufficient Privileges for this Workspace
       </h1>
 
       <p
         style={{
           fontSize: 14,
-          color: '#94A3B8',
+          color: '#64748B',
           maxWidth: 520,
           lineHeight: 1.6,
           marginBottom: 28
         }}
       >
-        Your current session is authenticated as <strong style={{ color: '#FBBF24' }}>[{currentRole}]</strong>.
-        This interface requires <strong style={{ color: '#EF4444' }}>[{requiredRole}]</strong> authorization.
+        Your current session is authenticated as <strong style={{ color: '#2563EB' }}>[{currentRole}]</strong>.
+        This interface requires <strong style={{ color: '#DC2626' }}>[{requiredRole}]</strong> authorization.
         In accordance with institutional security policies, cross-workspace access is strictly restricted.
       </p>
 
@@ -90,9 +90,9 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
           style={{
             gap: 8,
             borderRadius: 12,
-            backgroundColor: '#F59E0B',
-            borderColor: 'rgba(245, 158, 11, 0.5)',
-            boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)'
+            backgroundColor: '#2563EB',
+            borderColor: '#2563EB',
+            boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)'
           }}
         >
           <KeyRound size={16} /> Authenticate as {requiredRole}

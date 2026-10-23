@@ -78,8 +78,8 @@ export const KioskApp: React.FC = () => {
       className="kiosk-mode"
       style={{
         minHeight: '100vh',
-        backgroundColor: '#0B0F19',
-        color: '#FFFFFF',
+        backgroundColor: '#F1F5F9',
+        color: '#0F172A',
         padding: 32,
         fontFamily: 'var(--font-sans)',
         display: 'flex',
@@ -87,13 +87,13 @@ export const KioskApp: React.FC = () => {
       }}
     >
       {/* Kiosk Top Navigation Bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #1E293B', paddingBottom: 20 }}>
-        <NoirLogo size="lg" showSubtitle={true} theme="dark" />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #E2E8F0', paddingBottom: 20 }}>
+        <NoirLogo size="lg" showSubtitle={true} theme="light" />
 
         {/* Location / Context Switcher (DEMO TOOLBAR) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1E293B', padding: '6px 14px', borderRadius: 20 }}>
-            <MapPin size={16} color="#38BDF8" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#FFFFFF', border: '1px solid #E2E8F0', padding: '6px 14px', borderRadius: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+            <MapPin size={16} color="#2563EB" />
             <select
               value={`${activeTerminalLocation}:${activeTerminalType}`}
               onChange={(e) => {
@@ -104,7 +104,7 @@ export const KioskApp: React.FC = () => {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#FFFFFF',
+                color: '#0F172A',
                 fontSize: 13,
                 fontWeight: 800,
                 cursor: 'pointer',
@@ -112,7 +112,7 @@ export const KioskApp: React.FC = () => {
               }}
             >
               {terminalOptions.map((opt) => (
-                <option key={opt.location} value={`${opt.location}:${opt.type}`} style={{ background: '#0F172A', color: '#FFFFFF' }}>
+                <option key={opt.location} value={`${opt.location}:${opt.type}`} style={{ background: '#FFFFFF', color: '#0F172A' }}>
                   Terminal: {opt.label}
                 </option>
               ))}
@@ -145,8 +145,8 @@ export const KioskApp: React.FC = () => {
         {/* Physical Palm Scanner Node Box */}
         <div
           style={{
-            background: 'linear-gradient(135deg, rgba(16, 21, 32, 0.95) 0%, rgba(9, 12, 19, 0.98) 100%)',
-            border: '2px solid rgba(245, 158, 11, 0.5)',
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)',
+            border: '2px solid #BFDBFE',
             borderRadius: 24,
             padding: 48,
             textAlign: 'center',
@@ -155,23 +155,23 @@ export const KioskApp: React.FC = () => {
             alignItems: 'center',
             justifyContent: 'center',
             minHeight: 460,
-            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.2)'
+            boxShadow: '0 20px 60px rgba(15, 23, 42, 0.08), 0 0 35px rgba(37, 99, 235, 0.1)'
           }}
         >
           {kioskStatus === 'IDLE' && (
             <div>
               <div
                 className="palm-radar-circle"
-                style={{ width: 200, height: 200, marginBottom: 28, cursor: 'pointer', margin: '0 auto 28px' }}
+                style={{ width: 200, height: 200, marginBottom: 28, cursor: 'pointer', margin: '0 auto 28px', backgroundColor: '#EFF6FF', border: '3px dashed #2563EB' }}
                 onClick={handleSimulatePalmScan}
               >
-                <Hand size={100} color="#F59E0B" />
+                <Hand size={100} color="#2563EB" />
               </div>
 
-              <h1 style={{ fontSize: 34, fontWeight: 900, color: '#F8FAFC', letterSpacing: '0.02em' }}>
+              <h1 style={{ fontSize: 34, fontWeight: 900, color: '#0F172A', letterSpacing: '0.02em' }}>
                 PLACE YOUR PALM
               </h1>
-              <p style={{ fontSize: 16, color: '#94A3B8', marginTop: 8, margin: '8px auto 28px' }}>
+              <p style={{ fontSize: 16, color: '#64748B', marginTop: 8, margin: '8px auto 28px' }}>
                 NEXORA Subdermal Biometric Identity Node • {activeTerminalLocation} ({activeTerminalType})
               </p>
 
@@ -183,7 +183,8 @@ export const KioskApp: React.FC = () => {
                   fontSize: 18,
                   padding: '16px 36px',
                   borderRadius: 30,
-                  fontWeight: 900
+                  fontWeight: 900,
+                  backgroundColor: '#2563EB'
                 }}
               >
                 [ SIMULATE PALM SCAN ] (DEMO)
@@ -193,15 +194,15 @@ export const KioskApp: React.FC = () => {
 
           {kioskStatus === 'SCANNING' && (
             <div>
-              <div className="palm-radar-circle" style={{ width: 180, height: 180, margin: '0 auto 28px' }}>
+              <div className="palm-radar-circle" style={{ width: 180, height: 180, margin: '0 auto 28px', backgroundColor: '#EFF6FF', border: '3px solid #2563EB' }}>
                 <div className="palm-radar-pulse" />
-                <Hand size={90} color="#F59E0B" />
+                <Hand size={90} color="#2563EB" />
               </div>
 
-              <h1 style={{ fontSize: 32, fontWeight: 800, color: '#FBBF24' }}>
+              <h1 style={{ fontSize: 32, fontWeight: 800, color: '#2563EB' }}>
                 PALM DETECTED
               </h1>
-              <p style={{ fontSize: 16, color: '#94A3B8', marginTop: 8 }}>
+              <p style={{ fontSize: 16, color: '#64748B', marginTop: 8 }}>
                 Verifying vascular match with NEXORA identity vault...
               </p>
             </div>
@@ -214,39 +215,39 @@ export const KioskApp: React.FC = () => {
                   width: 90,
                   height: 90,
                   borderRadius: '50%',
-                  backgroundColor: '#064E3B',
-                  border: '3px solid #10B981',
+                  backgroundColor: '#D1FAE5',
+                  border: '3px solid #059669',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 20px'
                 }}
               >
-                <CheckCircle2 size={56} color="#10B981" />
+                <CheckCircle2 size={56} color="#059669" />
               </div>
 
               <span className="badge badge-success" style={{ fontSize: 14, padding: '6px 16px', marginBottom: 12 }}>
                 ✓ IDENTITY VERIFIED
               </span>
 
-              <h2 style={{ fontSize: 32, fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
+              <h2 style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
                 {student.name}
               </h2>
-              <div style={{ fontSize: 16, color: '#38BDF8', fontWeight: 700, marginTop: 4 }}>
+              <div style={{ fontSize: 16, color: '#2563EB', fontWeight: 700, marginTop: 4 }}>
                 {student.program} • Semester {student.semester}
               </div>
 
               {/* CONTEXT-AWARE TERMINAL ACTION DISPLAY */}
-              <div style={{ marginTop: 24, padding: 20, backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.1)' }}>
+              <div style={{ marginTop: 24, padding: 20, backgroundColor: '#F8FAFC', borderRadius: 16, border: '1px solid #E2E8F0' }}>
                 {activeTerminalType === 'CLASSROOM' && (
                   <div>
-                    <div style={{ fontSize: 18, color: '#10B981', fontWeight: 900 }}>
+                    <div style={{ fontSize: 18, color: '#059669', fontWeight: 900 }}>
                       ✓ ATTENDANCE RECORDED
                     </div>
-                    <div style={{ fontSize: 14, color: '#94A3B8', marginTop: 6 }}>
+                    <div style={{ fontSize: 14, color: '#64748B', marginTop: 6 }}>
                       Marketing Management (MKT-201) • 10:42 AM
                     </div>
-                    <div style={{ fontSize: 13, color: '#CBD5E1', marginTop: 10, fontStyle: 'italic' }}>
+                    <div style={{ fontSize: 13, color: '#475569', marginTop: 10, fontStyle: 'italic' }}>
                       Have a good class, Pranav!
                     </div>
                   </div>
@@ -256,13 +257,13 @@ export const KioskApp: React.FC = () => {
                   <div>
                     {activePosPaymentRequest ? (
                       <div>
-                        <div style={{ fontSize: 14, fontWeight: 900, color: '#F59E0B', textTransform: 'uppercase' }}>
+                        <div style={{ fontSize: 14, fontWeight: 900, color: '#D97706', textTransform: 'uppercase' }}>
                           PAYMENT REQUEST RECEIVED
                         </div>
-                        <div style={{ fontSize: 24, fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
+                        <div style={{ fontSize: 24, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
                           {activePosPaymentRequest.shopName}: ₹{activePosPaymentRequest.amount}
                         </div>
-                        <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 4 }}>
+                        <div style={{ fontSize: 13, color: '#64748B', marginTop: 4 }}>
                           Items: {activePosPaymentRequest.itemsSummary}
                         </div>
 
@@ -275,20 +276,20 @@ export const KioskApp: React.FC = () => {
                             [ CONFIRM PAYMENT ₹{activePosPaymentRequest.amount} ]
                           </button>
                         ) : (
-                          <div style={{ fontSize: 16, color: '#10B981', fontWeight: 900, marginTop: 12 }}>
+                          <div style={{ fontSize: 16, color: '#059669', fontWeight: 900, marginTop: 12 }}>
                             ✓ PAYMENT SUCCESSFUL!
                           </div>
                         )}
                       </div>
                     ) : (
                       <div>
-                        <div style={{ fontSize: 18, color: '#10B981', fontWeight: 900 }}>
+                        <div style={{ fontSize: 18, color: '#059669', fontWeight: 900 }}>
                           ✓ SHOP IDENTIFICATION VERIFIED
                         </div>
-                        <div style={{ fontSize: 14, color: '#94A3B8', marginTop: 4 }}>
+                        <div style={{ fontSize: 14, color: '#64748B', marginTop: 4 }}>
                           NEXORA Balance: ₹{student.walletBalance}
                         </div>
-                        <div style={{ fontSize: 12, color: '#64748B', marginTop: 8 }}>
+                        <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 8 }}>
                           Awaiting merchant payment request from POS...
                         </div>
                       </div>
@@ -298,11 +299,11 @@ export const KioskApp: React.FC = () => {
 
                 {activeTerminalType === 'LIBRARY' && (
                   <div>
-                    <div style={{ fontSize: 18, color: '#FBBF24', fontWeight: 900 }}>
+                    <div style={{ fontSize: 18, color: '#D97706', fontWeight: 900 }}>
                       Welcome, Pranav
                     </div>
-                    <div style={{ fontSize: 13, color: '#CBD5E1', marginTop: 6 }}>
-                      Books borrowed: <strong>2</strong> • Due today: <strong style={{ color: '#F59E0B' }}>1</strong>
+                    <div style={{ fontSize: 13, color: '#475569', marginTop: 6 }}>
+                      Books borrowed: <strong>2</strong> • Due today: <strong style={{ color: '#D97706' }}>1</strong>
                     </div>
                     <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                       <button onClick={() => showToast('Library Scanner ready for barcode scan.')} className="btn btn-secondary btn-sm" style={{ flex: 1 }}>Borrow</button>
@@ -314,13 +315,13 @@ export const KioskApp: React.FC = () => {
 
                 {activeTerminalType === 'EVENT' && (
                   <div>
-                    <div style={{ fontSize: 18, color: '#10B981', fontWeight: 900 }}>
+                    <div style={{ fontSize: 18, color: '#059669', fontWeight: 900 }}>
                       ✓ CHECK-IN SUCCESSFUL
                     </div>
-                    <div style={{ fontSize: 15, fontWeight: 800, color: '#FFFFFF', marginTop: 6 }}>
+                    <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', marginTop: 6 }}>
                       NEXORA HACKSPHERE 2026
                     </div>
-                    <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 4 }}>
+                    <div style={{ fontSize: 13, color: '#64748B', marginTop: 4 }}>
                       Venue: Auditorium A • 10:54 AM
                     </div>
                   </div>
@@ -328,13 +329,13 @@ export const KioskApp: React.FC = () => {
 
                 {activeTerminalType === 'GATE' && (
                   <div>
-                    <div style={{ fontSize: 18, color: '#10B981', fontWeight: 900 }}>
+                    <div style={{ fontSize: 18, color: '#059669', fontWeight: 900 }}>
                       ✓ VERIFIED ENTRY
                     </div>
-                    <div style={{ fontSize: 14, color: '#94A3B8', marginTop: 4 }}>
+                    <div style={{ fontSize: 14, color: '#64748B', marginTop: 4 }}>
                       Campus Gate Entry Recorded for {student.name}
                     </div>
-                    <div style={{ fontSize: 12, color: '#CBD5E1', marginTop: 6 }}>
+                    <div style={{ fontSize: 12, color: '#475569', marginTop: 6 }}>
                       Hostel Gate Pass Status: APPROVED
                     </div>
                   </div>
@@ -352,20 +353,20 @@ export const KioskApp: React.FC = () => {
 
         {/* Right Info Box */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div style={{ background: '#1E293B', padding: 24, borderRadius: 20, border: '1px solid #334155' }}>
-            <div style={{ fontSize: 11, fontWeight: 900, color: '#38BDF8', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          <div style={{ background: '#FFFFFF', padding: 24, borderRadius: 20, border: '1px solid #E2E8F0', boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.05)' }}>
+            <div style={{ fontSize: 11, fontWeight: 900, color: '#2563EB', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
               TERMINAL LOCATION CONTEXT
             </div>
-            <h3 style={{ fontSize: 20, fontWeight: 900, color: '#FFFFFF', marginTop: 6 }}>
+            <h3 style={{ fontSize: 20, fontWeight: 900, color: '#0F172A', marginTop: 6 }}>
               {activeTerminalLocation}
             </h3>
-            <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 2 }}>
+            <div style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>
               Type: {activeTerminalType} • Device ID: TRM-8891
             </div>
 
-            <div style={{ marginTop: 16, borderTop: '1px solid #334155', paddingTop: 14, fontSize: 13, color: '#CBD5E1' }}>
-              <div>Hardware Status: <strong style={{ color: '#10B981' }}>● ONLINE</strong></div>
-              <div>Palm Subdermal Provider: <strong style={{ color: '#38BDF8' }}>Biometric Hash Active</strong></div>
+            <div style={{ marginTop: 16, borderTop: '1px solid #E2E8F0', paddingTop: 14, fontSize: 13, color: '#334155' }}>
+              <div>Hardware Status: <strong style={{ color: '#059669' }}>● ONLINE</strong></div>
+              <div>Palm Subdermal Provider: <strong style={{ color: '#2563EB' }}>Biometric Hash Active</strong></div>
             </div>
           </div>
         </div>

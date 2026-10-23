@@ -40,7 +40,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
       tagline: 'Personal Digital Campus OS',
       desc: 'Clean mobile & desktop dashboard for live attendance, campus services, activity feed & NEXORA ID.',
       icon: Smartphone,
-      color: '#F59E0B',
+      color: '#2563EB',
       badge: 'Mobile & Desktop'
     },
     {
@@ -49,7 +49,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
       tagline: 'Institutional Administration Console',
       desc: 'Desktop-first workspace for academics, student directory, terminal management & audit security.',
       icon: Building2,
-      color: '#FBBF24',
+      color: '#4F46E5',
       badge: 'Desktop-First'
     },
     {
@@ -58,7 +58,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
       tagline: 'Campus Commerce & POS Portal',
       desc: 'Dedicated shopkeeper POS system linked directly with Palm payment terminals.',
       icon: Store,
-      color: '#10B981',
+      color: '#059669',
       badge: 'Merchant Register'
     },
     {
@@ -67,7 +67,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
       tagline: 'Teaching & Live Attendance Portal',
       desc: 'Fast instructor portal for class schedules, roster check-ins & grade submission.',
       icon: GraduationCap,
-      color: '#F59E0B',
+      color: '#D97706',
       badge: 'Instructor OS'
     },
     {
@@ -76,7 +76,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
       tagline: 'Physical Kiosk Identity Node',
       desc: 'Hardware terminal interface for automated classroom attendance, shop POS & library check-in.',
       icon: Hand,
-      color: '#F59E0B',
+      color: '#0284C7',
       badge: 'Physical Kiosk'
     }
   ];
@@ -85,15 +85,15 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: '#060709',
-        backgroundImage: 'radial-gradient(rgba(245, 158, 11, 0.12) 1px, transparent 1px)',
+        backgroundColor: '#F8FAFC',
+        backgroundImage: 'radial-gradient(rgba(37, 99, 235, 0.08) 1px, transparent 1px)',
         backgroundSize: '28px 28px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         padding: '40px 24px',
         fontFamily: 'var(--font-family)',
-        color: '#F8FAFC'
+        color: '#0F172A'
       }}
     >
       {/* Top Header */}
@@ -127,7 +127,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
           style={{
             fontSize: 12,
             fontWeight: 900,
-            color: '#F59E0B',
+            color: '#2563EB',
             textTransform: 'uppercase',
             letterSpacing: '0.18em',
             marginBottom: 10
@@ -139,7 +139,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
           style={{
             fontSize: 40,
             fontWeight: 900,
-            color: '#F8FAFC',
+            color: '#0F172A',
             letterSpacing: '-0.02em',
             marginBottom: 16,
             lineHeight: 1.2
@@ -150,7 +150,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
         <p
           style={{
             fontSize: 16,
-            color: '#94A3B8',
+            color: '#475569',
             lineHeight: 1.6,
             fontWeight: 500
           }}
@@ -164,13 +164,13 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
         style={{
           width: '100%',
           maxWidth: 1100,
-          background: 'linear-gradient(135deg, rgba(16, 20, 30, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%)',
+          background: '#FFFFFF',
           borderRadius: 24,
           padding: 32,
-          color: '#F8FAFC',
+          color: '#0F172A',
           marginBottom: 48,
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.15)',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
+          boxShadow: '0 10px 30px rgba(15, 23, 42, 0.08)',
+          border: '1px solid #E2E8F0',
           position: 'relative',
           overflow: 'hidden'
         }}
@@ -180,14 +180,14 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
             style={{
               fontSize: 11,
               fontWeight: 900,
-              color: '#FBBF24',
+              color: '#2563EB',
               letterSpacing: '0.14em',
               textTransform: 'uppercase'
             }}
           >
             NEXORA CORE CENTRAL BACKEND
           </div>
-          <div style={{ fontSize: 22, fontWeight: 800, marginTop: 4, color: '#FFFFFF' }}>
+          <div style={{ fontSize: 22, fontWeight: 800, marginTop: 4, color: '#0F172A' }}>
             Shared APIs • Granular RBAC • Biometric Identity Vault
           </div>
         </div>
@@ -209,9 +209,8 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                 key={item.role}
                 onClick={() => handleLaunch(item.role)}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(245, 158, 11, 0.2)',
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
                   borderRadius: 14,
                   padding: 18,
                   textAlign: 'center',
@@ -225,8 +224,8 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                     width: 44,
                     height: 44,
                     borderRadius: 12,
-                    backgroundColor: `${item.color}22`,
-                    border: `1px solid ${item.color}55`,
+                    backgroundColor: `${item.color}15`,
+                    border: `1px solid ${item.color}35`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -235,8 +234,8 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                 >
                   <Icon size={22} color={item.color} />
                 </div>
-                <div style={{ fontSize: 15, fontWeight: 800, color: '#FFFFFF' }}>{item.title}</div>
-                <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 4 }}>{item.badge}</div>
+                <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A' }}>{item.title}</div>
+                <div style={{ fontSize: 11, color: '#64748B', marginTop: 4 }}>{item.badge}</div>
               </div>
             );
           })}
@@ -245,7 +244,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
 
       {/* Workspaces Grid Selector */}
       <div style={{ width: '100%', maxWidth: 1100 }}>
-        <h2 style={{ fontSize: 22, fontWeight: 900, color: '#F8FAFC', marginBottom: 20 }}>
+        <h2 style={{ fontSize: 22, fontWeight: 900, color: '#0F172A', marginBottom: 20 }}>
           Launch Workspace Interface
         </h2>
 
@@ -257,16 +256,15 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                 key={item.role}
                 onClick={() => handleLaunch(item.role)}
                 style={{
-                  background: 'rgba(14, 18, 27, 0.88)',
-                  backdropFilter: 'blur(20px)',
+                  background: '#FFFFFF',
                   borderRadius: 18,
-                  border: '1px solid rgba(245, 158, 11, 0.25)',
+                  border: '1px solid #E2E8F0',
                   padding: 24,
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   cursor: 'pointer',
-                  boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+                  boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
                   transition: 'all 200ms ease-in-out'
                 }}
                 className="noir-card-interactive"
@@ -278,8 +276,8 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                         width: 48,
                         height: 48,
                         borderRadius: 12,
-                        backgroundColor: `${item.color}20`,
-                        border: `1px solid ${item.color}40`,
+                        backgroundColor: `${item.color}15`,
+                        border: `1px solid ${item.color}30`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -292,8 +290,8 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                         fontSize: 11,
                         fontWeight: 800,
                         color: item.color,
-                        backgroundColor: `${item.color}18`,
-                        border: `1px solid ${item.color}35`,
+                        backgroundColor: `${item.color}12`,
+                        border: `1px solid ${item.color}25`,
                         padding: '4px 12px',
                         borderRadius: 20
                       }}
@@ -302,13 +300,13 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                     </span>
                   </div>
 
-                  <h3 style={{ fontSize: 20, fontWeight: 900, color: '#F8FAFC', marginBottom: 4 }}>
+                  <h3 style={{ fontSize: 20, fontWeight: 900, color: '#0F172A', marginBottom: 4 }}>
                     {item.title}
                   </h3>
                   <div style={{ fontSize: 13, fontWeight: 700, color: item.color, marginBottom: 10 }}>
                     {item.tagline}
                   </div>
-                  <p style={{ fontSize: 13, color: '#94A3B8', lineHeight: 1.5, marginBottom: 20 }}>
+                  <p style={{ fontSize: 13, color: '#64748B', lineHeight: 1.5, marginBottom: 20 }}>
                     {item.desc}
                   </p>
                 </div>
@@ -318,7 +316,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderTop: '1px solid #E2E8F0',
                     paddingTop: 16,
                     fontSize: 13,
                     fontWeight: 800,
@@ -340,13 +338,13 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
           marginTop: 64,
           textAlign: 'center',
           fontSize: 12,
-          color: '#94A3B8',
+          color: '#64748B',
           display: 'flex',
           alignItems: 'center',
           gap: 8
         }}
       >
-        <ShieldCheck size={16} color="#F59E0B" />
+        <ShieldCheck size={16} color="#059669" />
         NEXORA Operating System • One Identity. One Campus. One Experience.
       </div>
 

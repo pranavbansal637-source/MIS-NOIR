@@ -14,7 +14,10 @@ import {
   Hand,
   Lock,
   KeyRound,
-  ChevronDown
+  ChevronDown,
+  Bell,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 interface TopHeaderProps {
@@ -30,7 +33,11 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
     showToast,
     setModal,
     demoNotification,
-    isAuthenticated
+    isAuthenticated,
+    theme,
+    toggleTheme,
+    unreadNotificationCount,
+    liveAttendanceSession
   } = useApp();
 
   const [showGateModal, setShowGateModal] = useState(false);
@@ -54,10 +61,10 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
     <header
       style={{
         height: 70,
-        backgroundColor: 'rgba(8, 11, 18, 0.92)',
-        backdropFilter: 'blur(24px)',
-        WebkitBackdropFilter: 'blur(24px)',
-        borderBottom: '1px solid rgba(245, 158, 11, 0.22)',
+        backgroundColor: 'var(--bg-surface)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid var(--border-color)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -65,7 +72,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        boxShadow: '0 4px 25px rgba(0, 0, 0, 0.6)'
+        boxShadow: '0 2px 10px rgba(15, 23, 42, 0.04)'
       }}
     >
       {/* Toast banner overlay if active */}
@@ -76,13 +83,13 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
             top: 76,
             left: '50%',
             transform: 'translateX(-50%)',
-            background: 'rgba(12, 16, 24, 0.98)',
+            background: '#FFFFFF',
             backdropFilter: 'blur(16px)',
             border: '1px solid #10B981',
-            color: '#F8FAFC',
+            color: '#0F172A',
             padding: '10px 22px',
             borderRadius: 'var(--radius-full)',
-            boxShadow: '0 10px 30px rgba(16, 185, 129, 0.35)',
+            boxShadow: '0 10px 30px rgba(16, 185, 129, 0.25)',
             fontSize: 13,
             fontWeight: 700,
             display: 'flex',
@@ -120,15 +127,15 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 fontWeight: 800,
                 borderRadius: 'var(--radius-full)',
                 padding: '7px 16px',
-                background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, rgba(20, 24, 34, 0.9) 100%)',
-                border: '1px solid rgba(245, 158, 11, 0.4)',
-                color: '#FBBF24',
-                boxShadow: '0 2px 12px rgba(245, 158, 11, 0.18)',
+                background: '#F1F5F9',
+                border: '1px solid #CBD5E1',
+                color: '#0F172A',
+                boxShadow: '0 1px 3px rgba(15, 23, 42, 0.05)',
                 cursor: 'pointer'
               }}
               title="Click to Switch Interface"
             >
-              <Lock size={12} color="#F59E0B" />
+              <Lock size={12} color="#2563EB" />
               {roleLabels[role]}
             </div>
 
@@ -144,16 +151,16 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 fontWeight: 800,
                 borderRadius: 'var(--radius-full)',
                 padding: '7px 16px',
-                backgroundColor: 'rgba(245, 158, 11, 0.12)',
-                border: '1px solid rgba(245, 158, 11, 0.4)',
-                color: '#FBBF24',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #CBD5E1',
+                color: '#0F172A',
                 cursor: 'pointer'
               }}
               title="Switch to Student, Shopkeeper POS, Management, Faculty, or Kiosk"
             >
-              <KeyRound size={13} color="#F59E0B" />
+              <KeyRound size={13} color="#2563EB" />
               Switch Interface
-              <ChevronDown size={14} color="#F59E0B" />
+              <ChevronDown size={14} color="#64748B" />
             </button>
           </div>
 
@@ -165,12 +172,12 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 top: 48,
                 left: 0,
                 width: 320,
-                background: 'rgba(10, 14, 24, 0.98)',
+                background: '#FFFFFF',
                 backdropFilter: 'blur(24px)',
                 WebkitBackdropFilter: 'blur(24px)',
-                border: '1px solid rgba(245, 158, 11, 0.4)',
+                border: '1px solid #E2E8F0',
                 borderRadius: 16,
-                boxShadow: '0 16px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(245, 158, 11, 0.15)',
+                boxShadow: '0 16px 40px rgba(15, 23, 42, 0.14)',
                 padding: 10,
                 zIndex: 1000,
                 display: 'flex',
@@ -178,7 +185,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 gap: 4
               }}
             >
-              <div style={{ fontSize: 10, fontWeight: 900, color: '#F59E0B', padding: '6px 12px', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+              <div style={{ fontSize: 10, fontWeight: 900, color: '#2563EB', padding: '6px 12px', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
                 SELECT INTERFACE (1-CLICK SWITCH)
               </div>
 
@@ -204,18 +211,18 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                       justifyContent: 'space-between',
                       padding: '10px 14px',
                       borderRadius: 10,
-                      backgroundColor: isCurrent ? 'rgba(245, 158, 11, 0.18)' : 'transparent',
-                      border: isCurrent ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent',
+                      backgroundColor: isCurrent ? '#EFF6FF' : 'transparent',
+                      border: isCurrent ? '1px solid #BFDBFE' : '1px solid transparent',
                       cursor: 'pointer',
                       textAlign: 'left',
                       transition: 'all 120ms ease'
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 800, color: isCurrent ? '#FBBF24' : '#F8FAFC' }}>
+                      <div style={{ fontSize: 13, fontWeight: 800, color: isCurrent ? '#1D4ED8' : '#0F172A' }}>
                         {item.label}
                       </div>
-                      <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
+                      <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>
                         {item.desc}
                       </div>
                     </div>
@@ -228,7 +235,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 );
               })}
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', margin: '6px 0' }} />
+              <div style={{ borderTop: '1px solid #E2E8F0', margin: '6px 0' }} />
 
               <div style={{ display: 'flex', gap: 6 }}>
                 <button
@@ -239,7 +246,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                   className="btn btn-secondary btn-sm"
                   style={{ flex: 1, justifyContent: 'center', gap: 6, fontSize: 11, fontWeight: 700 }}
                 >
-                  <Lock size={12} color="#F59E0B" /> Security Passkey Gate
+                  <Lock size={12} color="#2563EB" /> Security Passkey Gate
                 </button>
 
                 {onOpenLanding && (
@@ -267,29 +274,29 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
           display: 'none',
           alignItems: 'center',
           gap: 10,
-          background: 'rgba(16, 21, 32, 0.85)',
-          border: '1px solid rgba(255, 255, 255, 0.12)',
+          background: '#F1F5F9',
+          border: '1px solid #E2E8F0',
           borderRadius: 'var(--radius-full)',
           padding: '8px 18px',
           width: 340,
           cursor: 'pointer',
-          color: '#94A3B8',
+          color: '#475569',
           fontSize: 13,
-          boxShadow: '0 2px 10px rgba(0,0,0,0.4)'
+          boxShadow: '0 1px 3px rgba(15,23,42,0.04)'
         }}
         className="desktop-search-trigger"
       >
-        <Search size={16} color="#F59E0B" />
-        <span style={{ flex: 1, color: '#94A3B8', fontWeight: 500 }}>Search campus, rooms, fees, medical...</span>
+        <Search size={16} color="#2563EB" />
+        <span style={{ flex: 1, color: '#64748B', fontWeight: 500 }}>Search campus, rooms, fees, medical...</span>
         <kbd
           style={{
-            background: 'rgba(30, 41, 59, 0.8)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#FFFFFF',
+            border: '1px solid #CBD5E1',
             borderRadius: 6,
             padding: '2px 8px',
             fontSize: 11,
             fontWeight: 800,
-            color: '#F8FAFC'
+            color: '#475569'
           }}
         >
           CTRL + K
@@ -308,31 +315,98 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
               gap: 6,
               borderRadius: 'var(--radius-full)',
               padding: '7px 16px',
-              background: 'rgba(245, 158, 11, 0.15)',
-              borderColor: 'rgba(245, 158, 11, 0.35)',
-              color: '#FBBF24',
+              background: '#EFF6FF',
+              borderColor: '#BFDBFE',
+              color: '#1D4ED8',
               fontWeight: 900,
-              boxShadow: '0 2px 12px rgba(245, 158, 11, 0.2)'
+              boxShadow: '0 1px 4px rgba(37, 99, 235, 0.1)'
             }}
           >
-            <Wallet size={15} color="#F59E0B" />
+            <Wallet size={15} color="#2563EB" />
             ₹{student.walletBalance}
           </button>
         )}
 
-        {/* Palm Scan Trigger */}
+        {/* Palm Scan: Show only when live session is active for student, or in non-student roles */}
+        {role === 'STUDENT' ? (
+          liveAttendanceSession?.status === 'LIVE' && (
+            <button
+              onClick={() => setModal('PALM_SCAN')}
+              className="btn btn-primary btn-sm"
+              title={`Live Attendance Open: ${liveAttendanceSession.courseName}`}
+              style={{
+                borderRadius: 'var(--radius-full)',
+                backgroundColor: '#059669',
+                borderColor: '#047857',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                fontWeight: 800,
+                fontSize: 12,
+                padding: '7px 14px'
+              }}
+            >
+              <span style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#34D399', boxShadow: '0 0 8px #34D399' }} />
+              <Hand size={14} color="#FFFFFF" /> Check-In
+            </button>
+          )
+        ) : (
+          <button
+            onClick={() => setModal('PALM_SCAN')}
+            className="btn btn-secondary btn-icon"
+            title="NEXORA Palm Hardware Terminal Emulator"
+            style={{
+              borderRadius: 'var(--radius-full)'
+            }}
+          >
+            <Hand size={18} color="var(--brand-primary)" />
+          </button>
+        )}
+
+        {/* Notifications Button with real unread count */}
         <button
-          onClick={() => setModal('PALM_SCAN')}
+          onClick={() => setModal('NOTIFICATIONS')}
           className="btn btn-secondary btn-icon"
-          title="NEXORA Palm Biometric Scanner"
+          title="Notifications Center"
           style={{
             borderRadius: 'var(--radius-full)',
-            background: 'rgba(245, 158, 11, 0.12)',
-            borderColor: 'rgba(245, 158, 11, 0.35)',
-            boxShadow: '0 0 14px rgba(245, 158, 11, 0.2)'
+            position: 'relative'
           }}
         >
-          <Hand size={18} color="#F59E0B" />
+          <Bell size={18} color="var(--brand-primary)" />
+          {unreadNotificationCount > 0 && (
+            <span
+              style={{
+                position: 'absolute',
+                top: -2,
+                right: -2,
+                minWidth: 18,
+                height: 18,
+                borderRadius: '50%',
+                backgroundColor: '#DC2626',
+                color: '#FFFFFF',
+                fontSize: 10,
+                fontWeight: 800,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0 4px',
+                boxShadow: '0 0 6px rgba(220, 38, 38, 0.6)'
+              }}
+            >
+              {unreadNotificationCount}
+            </span>
+          )}
+        </button>
+
+        {/* Theme Switcher Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="btn btn-secondary btn-icon"
+          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+          style={{ borderRadius: 'var(--radius-full)' }}
+        >
+          {theme === 'dark' ? <Sun size={17} color="#F59E0B" /> : <Moon size={17} color="#6366F1" />}
         </button>
 
         {/* AI Assistant button */}
@@ -343,11 +417,11 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
           style={{
             borderRadius: 'var(--radius-full)',
             position: 'relative',
-            background: 'rgba(251, 191, 36, 0.12)',
-            borderColor: 'rgba(251, 191, 36, 0.35)'
+            background: '#EFF6FF',
+            borderColor: '#BFDBFE'
           }}
         >
-          <Sparkles size={18} color="#FBBF24" />
+          <Sparkles size={18} color="#2563EB" />
           <span
             style={{
               position: 'absolute',
@@ -356,8 +430,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              backgroundColor: '#F59E0B',
-              boxShadow: '0 0 8px #F59E0B'
+              backgroundColor: '#2563EB',
+              boxShadow: '0 0 6px #2563EB'
             }}
           />
         </button>
@@ -369,11 +443,11 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
           title="Campus Emergency Contacts"
           style={{
             borderRadius: 'var(--radius-full)',
-            borderColor: 'rgba(239, 68, 68, 0.35)',
-            background: 'rgba(239, 68, 68, 0.12)'
+            borderColor: '#FECACA',
+            background: '#FEF2F2'
           }}
         >
-          <ShieldAlert size={18} color="#EF4444" />
+          <ShieldAlert size={18} color="#DC2626" />
         </button>
 
         {/* Sign In / Sign Out Auth Button */}
@@ -386,7 +460,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
           {isAuthenticated ? 'Sign Out' : 'Sign In'}
         </button>
 
-        {/* User avatar with solar amber ring */}
+        {/* User avatar */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 4 }}>
           <img
             src={user.avatar}
@@ -396,8 +470,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
               height: 38,
               borderRadius: '50%',
               objectFit: 'cover',
-              border: '2px solid #F59E0B',
-              boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)'
+              border: '2px solid #2563EB',
+              boxShadow: '0 1px 4px rgba(37, 99, 235, 0.2)'
             }}
           />
         </div>

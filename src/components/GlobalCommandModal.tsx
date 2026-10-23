@@ -82,7 +82,7 @@ export const GlobalCommandModal: React.FC<CommandModalProps> = ({ onSelectTab })
             gap: 12,
             padding: '16px 20px',
             borderBottom: '1px solid var(--border-color)',
-            backgroundColor: 'rgba(18, 24, 36, 0.95)'
+            backgroundColor: '#F8FAFC'
           }}
         >
           <Search size={20} color="var(--brand-primary)" />

@@ -23,7 +23,7 @@ export const StudentActivityPage: React.FC = () => {
     timestamp: log.timestamp,
     status: log.result,
     icon: CheckSquare,
-    color: '#F59E0B'
+    color: '#2563EB'
   }));
 
   const paymentItems = transactions.map((tx) => ({
@@ -34,7 +34,7 @@ export const StudentActivityPage: React.FC = () => {
     timestamp: tx.timestamp,
     status: tx.status,
     icon: CreditCard,
-    color: tx.type === 'CREDIT' ? '#10B981' : '#38BDF8'
+    color: tx.type === 'CREDIT' ? '#059669' : '#2563EB'
   }));
 
   const eventItems = events
@@ -47,7 +47,7 @@ export const StudentActivityPage: React.FC = () => {
       timestamp: 'Registered',
       status: 'CONFIRMED',
       icon: Calendar,
-      color: '#FBBF24'
+      color: '#D97706'
     }));
 
   const libraryItems = books
@@ -60,7 +60,7 @@ export const StudentActivityPage: React.FC = () => {
       timestamp: 'Reserved',
       status: 'READY FOR PICKUP',
       icon: BookOpen,
-      color: '#F59E0B'
+      color: '#2563EB'
     }));
 
   const allFeed = [...attendanceItems, ...paymentItems, ...eventItems, ...libraryItems];
@@ -73,20 +73,20 @@ export const StudentActivityPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <div>
-        <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--brand-primary, #F59E0B)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+        <div style={{ fontSize: 12, fontWeight: 900, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
           UNIFIED CAMPUS ACTIVITY LOG
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 900, color: 'var(--text-main, #F8FAFC)', marginTop: 4 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
           Activity Timeline
         </h1>
-        <p style={{ fontSize: 14, color: 'var(--text-secondary, #94A3B8)', marginTop: 4 }}>
+        <p style={{ fontSize: 14, color: '#64748B', marginTop: 4 }}>
           Real-time activity stream combining attendance check-ins, wallet payments, event tickets and library records.
         </p>
       </div>
 
       {/* Filter Tabs */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, overflowX: 'auto', paddingBottom: 4 }}>
-        <Filter size={16} color="var(--brand-primary, #F59E0B)" style={{ marginRight: 4 }} />
+        <Filter size={16} color="#2563EB" style={{ marginRight: 4 }} />
         {(['ALL', 'ATTENDANCE', 'PAYMENTS', 'EVENTS', 'LIBRARY'] as const).map((f) => {
           const isActive = filter === f;
           return (
@@ -98,9 +98,9 @@ export const StudentActivityPage: React.FC = () => {
                 borderRadius: 20,
                 fontSize: 13,
                 fontWeight: isActive ? 800 : 600,
-                color: isActive ? '#F59E0B' : 'var(--text-secondary, #94A3B8)',
-                backgroundColor: isActive ? 'rgba(245, 158, 11, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                border: isActive ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid var(--border-color)',
+                color: isActive ? '#2563EB' : '#64748B',
+                backgroundColor: isActive ? '#EFF6FF' : '#FFFFFF',
+                border: isActive ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
                 cursor: 'pointer',
                 transition: 'all 150ms ease'
               }}
@@ -114,7 +114,7 @@ export const StudentActivityPage: React.FC = () => {
       {/* Unified Feed Timeline */}
       <div className="noir-card">
         {filteredFeed.length === 0 ? (
-          <div style={{ padding: 32, textAlign: 'center', color: 'var(--text-secondary, #94A3B8)' }}>
+          <div style={{ padding: 32, textAlign: 'center', color: '#64748B' }}>
             No activity records found for this filter.
           </div>
         ) : (
@@ -129,9 +129,9 @@ export const StudentActivityPage: React.FC = () => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: 16,
-                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
+                    backgroundColor: '#F8FAFC',
                     borderRadius: 12,
-                    border: '1px solid var(--border-color)'
+                    border: '1px solid #E2E8F0'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -140,7 +140,7 @@ export const StudentActivityPage: React.FC = () => {
                         width: 44,
                         height: 44,
                         borderRadius: 12,
-                        backgroundColor: `${item.color}18`,
+                        backgroundColor: `${item.color}15`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -150,10 +150,10 @@ export const StudentActivityPage: React.FC = () => {
                       <Icon size={20} color={item.color} />
                     </div>
                     <div>
-                      <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-main, #F8FAFC)' }}>
+                      <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A' }}>
                         {item.title}
                       </div>
-                      <div style={{ fontSize: 13, color: 'var(--text-secondary, #94A3B8)', marginTop: 2 }}>
+                      <div style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>
                         {item.subtitle}
                       </div>
                     </div>
@@ -163,7 +163,7 @@ export const StudentActivityPage: React.FC = () => {
                     <span className="badge badge-success" style={{ fontSize: 11 }}>
                       <CheckCircle2 size={12} style={{ marginRight: 4 }} /> {item.status}
                     </span>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted, #64748B)', marginTop: 4, display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'flex-end' }}>
+                    <div style={{ fontSize: 12, color: '#64748B', marginTop: 4, display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'flex-end' }}>
                       <Clock size={12} /> {item.timestamp}
                     </div>
                   </div>

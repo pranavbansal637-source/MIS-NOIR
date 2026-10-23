@@ -5,11 +5,12 @@ import {
   ShoppingBag,
   Calendar,
   QrCode,
-  Sparkles,
   TrendingUp,
   Wallet,
   Bell,
-  Clock
+  Clock,
+  Hand,
+  CheckCircle2
 } from 'lucide-react';
 
 interface StudentHomeProps {
@@ -17,7 +18,9 @@ interface StudentHomeProps {
 }
 
 export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
-  const { student, setModal, subjects, events } = useApp();
+  const { student, setModal, subjects, events, liveAttendanceSession } = useApp();
+
+  const isAttendanceRecorded = liveAttendanceSession.recordedStudentIds.includes(student.studentId);
 
   const nextClass = {
     subject: 'Marketing Management',
@@ -50,26 +53,136 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             style={{
               fontSize: 32,
               fontWeight: 900,
-              color: '#F8FAFC',
+              color: 'var(--text-primary)',
               letterSpacing: '-0.02em'
             }}
           >
             Good morning, {student.name}
           </h1>
-          <p style={{ fontSize: 14, color: '#94A3B8', marginTop: 4, fontWeight: 600 }}>
+          <p style={{ fontSize: 14, color: 'var(--text-secondary)', marginTop: 4, fontWeight: 600 }}>
             {student.program} • Semester {student.semester} • NEXORA Student Node
           </p>
         </div>
 
-        {/* Dynamic Palm Scanner Quick Button */}
-        <button
-          onClick={() => setModal('PALM_SCAN')}
-          className="btn btn-primary"
-          style={{ gap: 10, borderRadius: 30, padding: '10px 22px', fontWeight: 800 }}
-        >
-          <Sparkles size={18} /> [ PALM SCANNER ]
-        </button>
+        {/* Live Attendance State Action: Only shown during an authorized faculty live session */}
+        {liveAttendanceSession.status === 'LIVE' ? (
+          isAttendanceRecorded ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '9px 18px',
+                backgroundColor: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+                borderRadius: 30,
+                color: '#065F46',
+                fontSize: 13,
+                fontWeight: 800
+              }}
+            >
+              <CheckCircle2 size={16} color="#059669" />
+              ✓ Attendance Recorded ({liveAttendanceSession.courseCode})
+            </div>
+          ) : (
+            <button
+              onClick={() => setModal('PALM_SCAN')}
+              className="btn btn-primary"
+              style={{
+                gap: 10,
+                borderRadius: 30,
+                padding: '10px 22px',
+                fontWeight: 800,
+                backgroundColor: '#059669',
+                borderColor: '#047857',
+                boxShadow: '0 4px 14px rgba(5, 150, 105, 0.35)'
+              }}
+            >
+              <span
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  backgroundColor: '#34D399',
+                  boxShadow: '0 0 8px #34D399'
+                }}
+              />
+              <Hand size={18} /> [ SCAN PALM: {liveAttendanceSession.courseCode} ]
+            </button>
+          )
+        ) : liveAttendanceSession.status === 'CLOSED' ? (
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              color: 'var(--text-secondary)',
+              padding: '8px 16px',
+              backgroundColor: 'var(--bg-card)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 30
+            }}
+          >
+            ● Attendance Session Closed
+          </div>
+        ) : (
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              color: 'var(--text-secondary)',
+              padding: '8px 16px',
+              backgroundColor: 'var(--bg-card)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 30,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8
+            }}
+          >
+            <Clock size={14} color="#64748B" />
+            Next: {nextClass.subject} ({nextClass.time})
+          </div>
+        )}
       </div>
+
+      {/* Live Session Alert Banner if active */}
+      {liveAttendanceSession.status === 'LIVE' && !isAttendanceRecorded && (
+        <div
+          style={{
+            padding: '16px 20px',
+            backgroundColor: '#ECFDF5',
+            border: '2px solid #10B981',
+            borderRadius: 14,
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 14,
+            boxShadow: '0 4px 16px rgba(16, 185, 129, 0.15)'
+          }}
+        >
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="badge badge-success" style={{ fontSize: 11, fontWeight: 900 }}>
+                ● LIVE ATTENDANCE SESSION ACTIVE
+              </span>
+              <strong style={{ color: '#065F46', fontSize: 15 }}>
+                {liveAttendanceSession.courseName} ({liveAttendanceSession.courseCode})
+              </strong>
+            </div>
+            <div style={{ fontSize: 13, color: '#047857', marginTop: 4 }}>
+              Faculty: <strong>{liveAttendanceSession.facultyName}</strong> • Room: <strong>{liveAttendanceSession.room}</strong> ({liveAttendanceSession.building})
+            </div>
+          </div>
+          <button
+            onClick={() => setModal('PALM_SCAN')}
+            className="btn btn-primary"
+            style={{ backgroundColor: '#059669', borderColor: '#047857', gap: 8, fontWeight: 800 }}
+          >
+            <Hand size={16} /> Scan Palm Terminal Now
+          </button>
+        </div>
+      )}
 
       {/* 4 Important KPI Cards */}
       <div className="grid-4">
@@ -77,16 +190,16 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => onNavigate('attendance')}
-          style={{ borderLeft: '4px solid #F59E0B' }}
+          style={{ borderLeft: '4px solid #2563EB' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             ATTENDANCE
           </div>
-          <div style={{ fontSize: 34, fontWeight: 900, color: '#F8FAFC', marginTop: 4 }}>
+          <div style={{ fontSize: 34, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
             {student.attendanceOverall}%
           </div>
-          <div style={{ fontSize: 12, color: '#34D399', marginTop: 6, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700 }}>
-            <TrendingUp size={14} color="#34D399" /> Satisfies 75% policy limit
+          <div style={{ fontSize: 12, color: '#059669', marginTop: 6, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700 }}>
+            <TrendingUp size={14} color="#059669" /> Satisfies 75% policy limit
           </div>
         </div>
 
@@ -94,15 +207,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => onNavigate('attendance')}
-          style={{ borderLeft: '4px solid #FBBF24' }}
+          style={{ borderLeft: '4px solid #3B82F6' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             NEXT CLASS
           </div>
-          <div style={{ fontSize: 17, fontWeight: 900, color: '#F8FAFC', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {nextClass.subject}
           </div>
-          <div style={{ fontSize: 12, color: '#CBD5E1', marginTop: 6, fontWeight: 700 }}>
+          <div style={{ fontSize: 12, color: '#475569', marginTop: 6, fontWeight: 700 }}>
             {nextClass.time} • Room {nextClass.room}
           </div>
         </div>
@@ -111,15 +224,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => onNavigate('events')}
-          style={{ borderLeft: '4px solid #F59E0B' }}
+          style={{ borderLeft: '4px solid #D97706' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             UPCOMING EVENT
           </div>
-          <div style={{ fontSize: 16, fontWeight: 900, color: '#F8FAFC', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ fontSize: 16, fontWeight: 900, color: '#0F172A', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {upcomingEvent.title}
           </div>
-          <div style={{ fontSize: 12, color: '#FBBF24', marginTop: 6, fontWeight: 700 }}>
+          <div style={{ fontSize: 12, color: '#D97706', marginTop: 6, fontWeight: 700 }}>
             14 OCT • Registered
           </div>
         </div>
@@ -128,15 +241,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => setModal('TOPUP')}
-          style={{ borderLeft: '4px solid #10B981' }}
+          style={{ borderLeft: '4px solid #059669' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             NEXORA WALLET
           </div>
-          <div style={{ fontSize: 34, fontWeight: 900, color: '#FBBF24', marginTop: 4 }}>
+          <div style={{ fontSize: 34, fontWeight: 900, color: '#059669', marginTop: 4 }}>
             ₹{student.walletBalance}
           </div>
-          <div style={{ fontSize: 12, color: '#F59E0B', marginTop: 6, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+          <div style={{ fontSize: 12, color: '#2563EB', marginTop: 6, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
             <Wallet size={14} /> Quick Top-Up
           </div>
         </div>
@@ -144,17 +257,17 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
 
       {/* 4 Quick Actions */}
       <div>
-        <h3 style={{ fontSize: 17, fontWeight: 900, marginBottom: 14, color: '#F8FAFC' }}>Quick Operating Actions</h3>
+        <h3 style={{ fontSize: 17, fontWeight: 900, marginBottom: 14, color: '#0F172A' }}>Quick Operating Actions</h3>
         <div className="grid-4">
           <button
             onClick={() => onNavigate('attendance')}
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <CheckSquare size={22} color="#F59E0B" />
+            <CheckSquare size={22} color="#2563EB" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#F8FAFC' }}>Attendance</div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>Breakdown & trends</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>Attendance</div>
+              <div style={{ fontSize: 11, color: '#64748B' }}>Breakdown & trends</div>
             </div>
           </button>
 
@@ -163,10 +276,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <ShoppingBag size={22} color="#10B981" />
+            <ShoppingBag size={22} color="#059669" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#F8FAFC' }}>Campus</div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>Food, shops & library</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>Campus</div>
+              <div style={{ fontSize: 11, color: '#64748B' }}>Food, shops & library</div>
             </div>
           </button>
 
@@ -175,10 +288,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <Calendar size={22} color="#FBBF24" />
+            <Calendar size={22} color="#D97706" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#F8FAFC' }}>Events</div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>Tickets & check-ins</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>Events</div>
+              <div style={{ fontSize: 11, color: '#64748B' }}>Tickets & check-ins</div>
             </div>
           </button>
 
@@ -187,10 +300,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <QrCode size={22} color="#F59E0B" />
+            <QrCode size={22} color="#4F46E5" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#F8FAFC' }}>NEXORA ID</div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>Digital ID & vault</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>NEXORA ID</div>
+              <div style={{ fontSize: 11, color: '#64748B' }}>Digital ID & vault</div>
             </div>
           </button>
         </div>
@@ -201,10 +314,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         {/* TODAY */}
         <div className="noir-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#F8FAFC', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Clock size={18} color="#F59E0B" /> TODAY'S SCHEDULE
+            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Clock size={18} color="#2563EB" /> TODAY'S SCHEDULE
             </h3>
-            <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 600 }}>Semester 2 Roster</span>
+            <span style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>Semester 2 Roster</span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -216,21 +329,21 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: 14,
-                  background: i === 0 ? 'rgba(245, 158, 11, 0.12)' : 'rgba(255, 255, 255, 0.03)',
-                  border: i === 0 ? '1px solid rgba(245, 158, 11, 0.35)' : '1px solid rgba(255, 255, 255, 0.06)',
+                  background: i === 0 ? '#EFF6FF' : '#F8FAFC',
+                  border: i === 0 ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
                   borderRadius: 12
                 }}
               >
                 <div>
-                  <div style={{ fontWeight: 800, fontSize: 14, color: '#F8FAFC' }}>
+                  <div style={{ fontWeight: 800, fontSize: 14, color: '#0F172A' }}>
                     {sub.subjectName}
                   </div>
-                  <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
+                  <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
                     {sub.code} • Room A403 • {sub.instructor}
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 13, fontWeight: 900, color: i === 0 ? '#FBBF24' : '#F8FAFC' }}>
+                  <div style={{ fontSize: 13, fontWeight: 900, color: i === 0 ? '#1D4ED8' : '#0F172A' }}>
                     {i === 0 ? '10:00 AM' : i === 1 ? '11:30 AM' : '02:00 PM'}
                   </div>
                   {i === 0 && <span className="badge badge-primary" style={{ marginTop: 2 }}>NEXT CLASS</span>}
@@ -243,8 +356,8 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         {/* IMPORTANT Notifications */}
         <div className="noir-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#F8FAFC', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Bell size={18} color="#FBBF24" /> IMPORTANT NOTIFICATIONS
+            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Bell size={18} color="#D97706" /> IMPORTANT NOTIFICATIONS
             </h3>
           </div>
 
@@ -252,15 +365,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             <div
               style={{
                 padding: 14,
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                border: '1px solid rgba(245, 158, 11, 0.25)',
+                backgroundColor: '#EFF6FF',
+                border: '1px solid #BFDBFE',
                 borderRadius: 12
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 800, color: '#FBBF24' }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: '#1D4ED8' }}>
                 Mid-Semester Exam Timetable Published
               </div>
-              <div style={{ fontSize: 12, color: '#CBD5E1', marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: '#475569', marginTop: 4 }}>
                 Mid-term examinations start October 24th. Verify clearances in NEXORA ID Vault.
               </div>
             </div>
@@ -268,15 +381,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             <div
               style={{
                 padding: 14,
-                backgroundColor: 'rgba(251, 191, 36, 0.08)',
-                border: '1px solid rgba(251, 191, 36, 0.2)',
+                backgroundColor: '#FFFBEB',
+                border: '1px solid #FDE68A',
                 borderRadius: 12
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 800, color: '#F59E0B' }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: '#B45309' }}>
                 Library Book Return Due Today
               </div>
-              <div style={{ fontSize: 12, color: '#CBD5E1', marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: '#475569', marginTop: 4 }}>
                 "Principles of Marketing" is due at Central Library by 05:00 PM.
               </div>
             </div>

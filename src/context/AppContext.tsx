@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, type ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type {
   User,
   Role,
@@ -24,7 +24,16 @@ import type {
   CampusPoll,
   PosPaymentRequest,
   FacultyMember,
-  AssignmentItem
+  AssignmentItem,
+  AppNotification,
+  LiveAttendanceSession,
+  AttendanceSessionRecord,
+  TimetableEntry,
+  ShopOffer,
+  StockMovementRecord,
+  ShopProfile,
+  LibraryIssueRecord,
+  FacilityRecord
 } from '../types';
 import {
   INITIAL_USER,
@@ -48,9 +57,18 @@ import {
   MOCK_CAMPUS_POLLS,
   MOCK_FACULTY_LIST,
   MOCK_ASSIGNMENTS,
-  INITIAL_CAMPUS_ORDERS
+  INITIAL_CAMPUS_ORDERS,
+  INITIAL_NOTIFICATIONS,
+  INITIAL_LIVE_ATTENDANCE_SESSION,
+  MOCK_ATTENDANCE_HISTORY,
+  MOCK_STUDENT_TIMETABLE,
+  INITIAL_SHOP_OFFERS,
+  INITIAL_STOCK_MOVEMENTS,
+  INITIAL_SHOP_PROFILE,
+  INITIAL_LIBRARY_ISSUES,
+  INITIAL_FACILITIES
 } from '../data/mockData';
-import { PaymentService, type PaymentRequest } from '../services/PaymentService';
+import { PaymentService, type PaymentRequest, type PaymentResult } from '../services/PaymentService';
 import { DocumentService } from '../services/DocumentService';
 import { AiService } from '../services/AiService';
 import confetti from 'canvas-confetti';
@@ -63,16 +81,30 @@ export type ModalType =
   | 'PRIVACY'
   | 'RECEIPT'
   | 'DOCUMENT_SHARE'
+  | 'DOCUMENT_PREVIEW'
+  | 'NOTIFICATIONS'
   | 'TOPUP'
   | 'AUTH_MODAL'
   | 'PAY_FEE'
+  | 'CREATE_ASSIGNMENT'
+  | 'EDIT_PRODUCT'
+  | 'ADD_OFFER'
+  | 'ISSUE_BOOK'
+  | 'MAINTENANCE_TERMINAL'
+  | 'REGISTER_TERMINAL_DETAILED'
   | null;
 
 interface AppContextType {
+  // Authentication & Profile
   isAuthenticated: boolean;
   user: User;
   student: StudentProfile;
   role: Role;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+  setTheme: (t: 'light' | 'dark') => void;
+
+  // Academic & Core Modules
   subjects: SubjectAttendance[];
   events: EventItem[];
   products: ProductItem[];
@@ -88,26 +120,75 @@ interface AppContextType {
   activeModal: ModalType;
   selectedReceipt: WalletTransaction | null;
   selectedDocForShare: DocumentItem | null;
+  selectedDocForPreview: DocumentItem | null;
   selectedFeeForPay: FeeItem | null;
   demoNotification: string | null;
   pendingRoleTarget: Role | null;
 
-  // Real Faculty & Classroom State
+  // Real Notifications (Module 1.7)
+  notifications: AppNotification[];
+  unreadNotificationCount: number;
+  markNotificationAsRead: (id: string) => void;
+  markAllNotificationsAsRead: () => void;
+  addNotification: (notif: Omit<AppNotification, 'id' | 'timestamp' | 'read'>) => void;
+
+  // Live Attendance Session (Module 1.2 & 4.2)
+  liveAttendanceSession: LiveAttendanceSession;
+  startLiveAttendanceSession: (courseCode: string, courseName: string, room: string) => void;
+  closeLiveAttendanceSession: () => void;
+
+  // Detailed Attendance Records (Module 1.4 & 3.3)
+  attendanceRecords: AttendanceSessionRecord[];
+  correctAttendanceRecord: (recId: string, newStatus: AttendanceSessionRecord['status'], reason: string) => void;
+
+  // Timetable (Module 1.9)
+  studentTimetable: TimetableEntry[];
+
+  // Real Faculty & Classroom State (Module 4)
   facultyList: FacultyMember[];
   activeFaculty: FacultyMember;
   setActiveFacultyId: (id: string) => void;
   assignments: AssignmentItem[];
   gradeAssignmentSubmission: (asgId: string, studentId: string, marks: number, grade: string) => void;
+  createAssignment: (asg: Omit<AssignmentItem, 'id' | 'submissions' | 'totalSubmissions'>) => void;
 
-  // Profile Management
+  // Profile Management (Module 1.8)
   updateStudentProfile: (profile: Partial<StudentProfile>) => void;
 
-  // Real Shop Management
+  // Real Shop Management (Module 2)
+  shopProfile: ShopProfile;
+  updateShopProfile: (profile: Partial<ShopProfile>) => void;
+  shopOffers: ShopOffer[];
+  addShopOffer: (offer: Omit<ShopOffer, 'id'>) => void;
+  toggleShopOffer: (offerId: string) => void;
+  stockMovements: StockMovementRecord[];
   updateOrderStatus: (orderId: string, status: CampusOrder['status']) => void;
   addProduct: (product: Omit<ProductItem, 'id'>) => void;
+  updateProduct: (productId: string, updated: Partial<ProductItem>) => void;
+  deleteProduct: (productId: string) => void;
   updateProductStock: (productId: string, newStock: number) => void;
 
-  // New Feature States
+  // Facilities Management (Module 3.6)
+  facilities: FacilityRecord[];
+  addFacility: (fac: Omit<FacilityRecord, 'id'>) => void;
+  updateFacility: (id: string, updated: Partial<FacilityRecord>) => void;
+
+  // Library Management (Module 3.7)
+  libraryIssues: LibraryIssueRecord[];
+  issueLibraryBook: (bookId: string, studentId: string, studentName: string, days?: number) => void;
+  returnLibraryBook: (issueId: string) => void;
+  payLibraryFine: (issueId: string) => void;
+
+  // Terminal & Pehchaan Operations (Module 3.5 & 5)
+  registerDetailedTerminal: (term: Omit<TerminalDevice, 'id' | 'lastPing' | 'firmwareVersion' | 'ipAddress' | 'macAddress' | 'maintenanceHistory'>) => { success: boolean; message: string };
+  markTerminalMaintenance: (terminalId: string, reason: string, technician: string, expectedRestorationDate: string) => void;
+  restoreTerminalFromMaintenance: (terminalId: string, notes: string) => void;
+  removeTerminal: (terminalId: string) => void;
+
+  // Ticket Management (Module 3.9)
+  updateTicketStatus: (ticketId: string, status: ComplaintTicket['status'], note?: string, assignee?: string) => void;
+
+  // Medical, Fees, Transport, Hostels, Polls
   medicalRecord: MedicalRecord;
   feeItems: FeeItem[];
   hostelDetails: HostelDetails;
@@ -131,14 +212,17 @@ interface AppContextType {
   setModal: (modal: ModalType) => void;
   openReceiptModal: (tx: WalletTransaction) => void;
   openShareModal: (doc: DocumentItem) => void;
+  openDocPreview: (doc: DocumentItem) => void;
+  downloadDoc: (doc: DocumentItem) => void;
   openPayFeeModal: (fee: FeeItem) => void;
-  recordPalmAttendance: (subjectName?: string) => void;
+  recordPalmAttendance: (subjectName?: string) => { success: boolean; message: string };
   registerForEvent: (eventId: string) => Promise<boolean>;
   addToCart: (product: ProductItem) => void;
   removeFromCart: (productId: string) => void;
   clearCart: () => void;
   checkoutCart: () => Promise<boolean>;
   topupWallet: (amount: number) => void;
+  processGatewayTopup: (amount: number, method: 'UPI' | 'CARD' | 'NETBANKING', details: any) => Promise<PaymentResult>;
   payFeeItem: (feeId: string, amount: number) => Promise<boolean>;
   generateShareLink: (docId: string, recipient: string, durationMinutes: number) => string;
   submitComplaint: (category: ComplaintTicket['category'], description: string, priority: ComplaintTicket['priority']) => void;
@@ -176,10 +260,38 @@ const loadSavedUser = (): User => {
 };
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true); // Logged in by default for quick demo
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [user, setUser] = useState<User>(loadSavedUser);
   const [student, setStudent] = useState<StudentProfile>(loadSavedStudent);
   const [role, setRole] = useState<Role>('STUDENT');
+
+  // Theme Management (Light & Dark Mode)
+  const [theme, setThemeState] = useState<'light' | 'dark'>(() => {
+    try {
+      const saved = localStorage.getItem('noir_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+    } catch {}
+    return 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('noir_theme', theme);
+    } catch {}
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const next = theme === 'light' ? 'dark' : 'light';
+    setThemeState(next);
+    showToast(`Switched to ${next === 'dark' ? 'Dark' : 'Light'} Mode`);
+  };
+
+  const setTheme = (t: 'light' | 'dark') => {
+    setThemeState(t);
+  };
+
+  // Academic & Core Modules
   const [subjects, setSubjects] = useState<SubjectAttendance[]>(MOCK_SUBJECTS_ATTENDANCE);
   const [events, setEvents] = useState<EventItem[]>(MOCK_EVENTS);
   const [products, setProducts] = useState<ProductItem[]>(MOCK_PRODUCTS);
@@ -192,13 +304,445 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(MOCK_AUDIT_LOGS);
   const [cart, setCart] = useState<{ product: ProductItem; quantity: number }[]>([]);
 
+  // Notifications State (Module 1.7)
+  const [notifications, setNotifications] = useState<AppNotification[]>(() => {
+    try {
+      const saved = localStorage.getItem('noir_notifications');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return INITIAL_NOTIFICATIONS;
+  });
+
+  const unreadNotificationCount = notifications.filter((n) => !n.read).length;
+
+  const markNotificationAsRead = (id: string) => {
+    setNotifications((prev) => {
+      const updated = prev.map((n) => (n.id === id ? { ...n, read: true } : n));
+      try {
+        localStorage.setItem('noir_notifications', JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+  };
+
+  const markAllNotificationsAsRead = () => {
+    setNotifications((prev) => {
+      const updated = prev.map((n) => ({ ...n, read: true }));
+      try {
+        localStorage.setItem('noir_notifications', JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+    showToast('All notifications marked as read.');
+  };
+
+  const addNotification = (notif: Omit<AppNotification, 'id' | 'timestamp' | 'read'>) => {
+    const newN: AppNotification = {
+      ...notif,
+      id: `notif-${Date.now()}`,
+      timestamp: 'Just now',
+      read: false
+    };
+    setNotifications((prev) => [newN, ...prev]);
+  };
+
+  // Live Attendance Session State (Module 1.2 & 4.2)
+  const [liveAttendanceSession, setLiveAttendanceSession] = useState<LiveAttendanceSession>(INITIAL_LIVE_ATTENDANCE_SESSION);
+  const [attendanceRecords, setAttendanceRecords] = useState<AttendanceSessionRecord[]>(MOCK_ATTENDANCE_HISTORY);
+
+  const startLiveAttendanceSession = (courseCode: string, courseName: string, room: string) => {
+    const session: LiveAttendanceSession = {
+      id: `sess-${Date.now()}`,
+      courseCode,
+      courseName,
+      facultyId: activeFaculty.id,
+      facultyName: activeFaculty.name,
+      room,
+      building: 'Academic Block A',
+      status: 'LIVE',
+      startTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      endTime: 'Scheduled class period (1 hr)',
+      recordedStudentIds: []
+    };
+    setLiveAttendanceSession(session);
+    addNotification({
+      title: `Live Attendance Started: ${courseName}`,
+      message: `${activeFaculty.name} has opened biometric check-in for ${courseCode} in Room ${room}.`,
+      category: 'ATTENDANCE',
+      targetTab: 'attendance'
+    });
+    showToast(`✓ Live Attendance broadcast active for ${courseName} in Room ${room}!`);
+  };
+
+  const closeLiveAttendanceSession = () => {
+    setLiveAttendanceSession((prev) => ({ ...prev, status: 'CLOSED' }));
+    showToast(`Live attendance closed for ${liveAttendanceSession.courseName}. Attendance finalized.`);
+  };
+
+  const recordPalmAttendance = (_subjectName?: string): { success: boolean; message: string } => {
+    if (liveAttendanceSession.status !== 'LIVE') {
+      showToast('❌ Attendance cannot be submitted: No authorized faculty live session active.');
+      return { success: false, message: 'No live session active.' };
+    }
+
+    if (liveAttendanceSession.recordedStudentIds.includes(student.studentId)) {
+      showToast('⚠️ Attendance already recorded for this session. Duplicate submission prevented.');
+      return { success: false, message: 'Attendance already recorded for this session.' };
+    }
+
+    // Add student to recorded list
+    setLiveAttendanceSession((prev) => ({
+      ...prev,
+      recordedStudentIds: [...prev.recordedStudentIds, student.studentId]
+    }));
+
+    // Add attendance session record
+    const newRecord: AttendanceSessionRecord = {
+      id: `att-rec-${Date.now()}`,
+      date: 'Today',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      courseCode: liveAttendanceSession.courseCode,
+      courseName: liveAttendanceSession.courseName,
+      facultyName: liveAttendanceSession.facultyName,
+      room: liveAttendanceSession.room,
+      status: 'PRESENT',
+      verificationMethod: 'Palm Biometrics'
+    };
+    setAttendanceRecords((prev) => [newRecord, ...prev]);
+
+    // Update subject attendance percentage
+    setSubjects((prev) =>
+      prev.map((sub) => {
+        if (
+          sub.subjectName.toLowerCase().includes(liveAttendanceSession.courseName.toLowerCase()) ||
+          sub.code === liveAttendanceSession.courseCode
+        ) {
+          const newAttended = sub.attendedClasses + 1;
+          const newTotal = sub.totalClasses + 1;
+          const newPct = Math.round((newAttended / newTotal) * 1000) / 10;
+          return {
+            ...sub,
+            attendedClasses: newAttended,
+            totalClasses: newTotal,
+            percentage: newPct
+          };
+        }
+        return sub;
+      })
+    );
+
+    // Audit Log
+    const logItem: AuditLogItem = {
+      id: `log-${Date.now()}`,
+      user: `${student.name} (${student.studentId})`,
+      role: 'STUDENT',
+      action: 'PALM_BIOMETRIC_ATTENDANCE',
+      target: `Class: ${liveAttendanceSession.courseName} (Room ${liveAttendanceSession.room})`,
+      timestamp: 'Just now',
+      result: 'SUCCESS'
+    };
+    setAuditLogs((prev) => [logItem, ...prev]);
+
+    try {
+      confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+    } catch {}
+
+    showToast(`✓ Identity verified via Palm Biometrics. Attendance logged for ${liveAttendanceSession.courseName}!`);
+    return { success: true, message: 'Attendance recorded successfully.' };
+  };
+
+  const correctAttendanceRecord = (recId: string, newStatus: AttendanceSessionRecord['status'], reason: string) => {
+    setAttendanceRecords((prev) =>
+      prev.map((r) =>
+        r.id === recId
+          ? {
+              ...r,
+              status: newStatus,
+              correctedBy: user.name,
+              correctionReason: reason
+            }
+          : r
+      )
+    );
+    const logItem: AuditLogItem = {
+      id: `log-${Date.now()}`,
+      user: `${user.name} (${user.role})`,
+      role: user.role,
+      action: 'ATTENDANCE_ADMIN_CORRECTION',
+      target: `Record ${recId} updated to ${newStatus}. Reason: ${reason}`,
+      timestamp: 'Just now',
+      result: 'SUCCESS'
+    };
+    setAuditLogs((prev) => [logItem, ...prev]);
+    showToast(`Attendance record updated to ${newStatus}. Audit logged.`);
+  };
+
+  // Timetable
+  const [studentTimetable] = useState<TimetableEntry[]>(MOCK_STUDENT_TIMETABLE);
+
   // Faculty and Assignments State
   const [facultyList] = useState<FacultyMember[]>(MOCK_FACULTY_LIST);
   const [activeFacultyId, setActiveFacultyId] = useState<string>('fac-01');
   const activeFaculty = facultyList.find((f) => f.id === activeFacultyId) || facultyList[0];
   const [assignments, setAssignments] = useState<AssignmentItem[]>(MOCK_ASSIGNMENTS);
 
-  // New Feature States
+  const createAssignment = (asg: Omit<AssignmentItem, 'id' | 'submissions' | 'totalSubmissions'>) => {
+    const newAsg: AssignmentItem = {
+      ...asg,
+      id: `asg-${Date.now().toString().slice(-4)}`,
+      totalSubmissions: 0,
+      submissions: []
+    };
+    setAssignments((prev) => [newAsg, ...prev]);
+    addNotification({
+      title: `New Assignment Released: ${newAsg.title}`,
+      message: `Course: ${newAsg.courseCode} (${newAsg.courseName}) • Due: ${newAsg.dueDate} • Max Marks: ${newAsg.maxMarks}`,
+      category: 'ACADEMIC',
+      targetTab: 'grades'
+    });
+    showToast(`✓ Assignment "${newAsg.title}" published for ${newAsg.courseCode}!`);
+  };
+
+  // Shop Management State (Module 2)
+  const [shopProfile, setShopProfile] = useState<ShopProfile>(INITIAL_SHOP_PROFILE);
+  const [shopOffers, setShopOffers] = useState<ShopOffer[]>(INITIAL_SHOP_OFFERS);
+  const [stockMovements, setStockMovements] = useState<StockMovementRecord[]>(INITIAL_STOCK_MOVEMENTS);
+
+  const updateShopProfile = (updated: Partial<ShopProfile>) => {
+    setShopProfile((prev) => ({ ...prev, ...updated }));
+    showToast('✓ Shop profile & settings successfully saved to campus merchant registry!');
+  };
+
+  const addShopOffer = (offer: Omit<ShopOffer, 'id'>) => {
+    const newOffer: ShopOffer = {
+      ...offer,
+      id: `off-${Date.now().toString().slice(-4)}`
+    };
+    setShopOffers((prev) => [newOffer, ...prev]);
+    addNotification({
+      title: `Special Campus Offer: ${newOffer.code}`,
+      message: `${newOffer.title} is now active at the campus store!`,
+      category: 'SHOP',
+      targetTab: 'marketplace'
+    });
+    showToast(`Offer coupon "${newOffer.code}" activated!`);
+  };
+
+  const toggleShopOffer = (offerId: string) => {
+    setShopOffers((prev) =>
+      prev.map((o) => (o.id === offerId ? { ...o, isActive: !o.isActive } : o))
+    );
+    showToast('Shop offer status toggled.');
+  };
+
+  const updateProduct = (productId: string, updated: Partial<ProductItem>) => {
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id !== productId) return p;
+        const next = { ...p, ...updated };
+        if (updated.stock !== undefined && updated.stock !== p.stock) {
+          const delta = updated.stock - p.stock;
+          const movement: StockMovementRecord = {
+            id: `sm-${Date.now()}`,
+            productId: p.id,
+            productName: next.name,
+            type: delta > 0 ? 'RESTOCK' : 'MANUAL_ADJUSTMENT',
+            quantityChange: delta,
+            previousStock: p.stock,
+            newStock: updated.stock,
+            timestamp: 'Just now',
+            reason: 'Manual Inventory Adjustment in POS',
+            user: user.name
+          };
+          setStockMovements((sm) => [movement, ...sm]);
+        }
+        return next;
+      })
+    );
+    showToast('Product specifications & inventory updated.');
+  };
+
+  const deleteProduct = (productId: string) => {
+    const p = products.find((x) => x.id === productId);
+    setProducts((prev) => prev.filter((x) => x.id !== productId));
+    showToast(`Removed "${p?.name || 'Product'}" from catalogue.`);
+  };
+
+  // Facilities Management (Module 3.6)
+  const [facilities, setFacilities] = useState<FacilityRecord[]>(INITIAL_FACILITIES);
+
+  const addFacility = (fac: Omit<FacilityRecord, 'id'>) => {
+    const newFac: FacilityRecord = {
+      ...fac,
+      id: `fac-${Date.now().toString().slice(-4)}`
+    };
+    setFacilities((prev) => [...prev, newFac]);
+    showToast(`Added facility "${newFac.name}" to campus infrastructure!`);
+  };
+
+  const updateFacility = (id: string, updated: Partial<FacilityRecord>) => {
+    setFacilities((prev) => prev.map((f) => (f.id === id ? { ...f, ...updated } : f)));
+    showToast('Facility details updated.');
+  };
+
+  // Library Circulation (Module 3.7)
+  const [libraryIssues, setLibraryIssues] = useState<LibraryIssueRecord[]>(INITIAL_LIBRARY_ISSUES);
+
+  const issueLibraryBook = (bookId: string, studentId: string, studentName: string, days: number = 14) => {
+    const book = books.find((b) => b.id === bookId);
+    if (!book || book.availableCopies <= 0) {
+      showToast('Error: No copies available for issue.');
+      return;
+    }
+
+    const dueDateObj = new Date();
+    dueDateObj.setDate(dueDateObj.getDate() + days);
+
+    const newIssue: LibraryIssueRecord = {
+      id: `iss-${Date.now()}`,
+      bookId,
+      bookTitle: book.title,
+      userId: studentId,
+      userName: studentName,
+      userRole: 'STUDENT',
+      issueDate: 'Today',
+      dueDate: dueDateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+      status: 'ISSUED',
+      fineAmount: 0,
+      finePaid: false
+    };
+
+    setLibraryIssues((prev) => [newIssue, ...prev]);
+    setBooks((prev) =>
+      prev.map((b) => (b.id === bookId ? { ...b, availableCopies: b.availableCopies - 1 } : b))
+    );
+    showToast(`✓ Issued "${book.title}" to ${studentName}. Due in ${days} days.`);
+  };
+
+  const returnLibraryBook = (issueId: string) => {
+    const issue = libraryIssues.find((i) => i.id === issueId);
+    if (!issue) return;
+
+    setLibraryIssues((prev) =>
+      prev.map((i) => (i.id === issueId ? { ...i, status: 'RETURNED', returnDate: 'Today' } : i))
+    );
+    setBooks((prev) =>
+      prev.map((b) => (b.id === issue.bookId ? { ...b, availableCopies: b.availableCopies + 1 } : b))
+    );
+    showToast(`✓ Book "${issue.bookTitle}" returned to Central Library catalogue.`);
+  };
+
+  const payLibraryFine = (issueId: string) => {
+    setLibraryIssues((prev) =>
+      prev.map((i) => (i.id === issueId ? { ...i, fineAmount: 0, finePaid: true } : i))
+    );
+    showToast('✓ Library overdue fine settled and receipt recorded.');
+  };
+
+  // Terminal & Pehchaan Operations (Module 3.5 & 5)
+  const registerDetailedTerminal = (
+    term: Omit<TerminalDevice, 'id' | 'lastPing' | 'firmwareVersion' | 'ipAddress' | 'macAddress' | 'maintenanceHistory'>
+  ): { success: boolean; message: string } => {
+    const exists = terminals.some((t) => t.terminalCode.toLowerCase() === term.terminalCode.toLowerCase());
+    if (exists) {
+      showToast(`Error: Terminal code "${term.terminalCode}" is already registered.`);
+      return { success: false, message: 'Terminal code already registered.' };
+    }
+
+    const newDevice: TerminalDevice = {
+      ...term,
+      id: `term-${Date.now().toString().slice(-4)}`,
+      lastPing: 'Just now',
+      firmwareVersion: 'v2.4.1-palm',
+      ipAddress: `10.14.${Math.floor(1 + Math.random() * 5)}.${Math.floor(10 + Math.random() * 80)}`,
+      macAddress: `70:B3:D5:E4:${Math.floor(10 + Math.random() * 89)}:${Math.floor(10 + Math.random() * 89)}`,
+      isOperational: term.status === 'ONLINE',
+      maintenanceHistory: []
+    };
+
+    setTerminals((prev) => [newDevice, ...prev]);
+    showToast(`✓ Registered Palm Terminal: ${newDevice.locationName} (${newDevice.terminalCode})`);
+    return { success: true, message: 'Terminal registered successfully.' };
+  };
+
+  const markTerminalMaintenance = (terminalId: string, reason: string, technician: string, expectedRestorationDate: string) => {
+    const maintLog = {
+      id: `maint-${Date.now()}`,
+      terminalId,
+      reportedTime: 'Just now',
+      reason,
+      assignedTechnician: technician,
+      expectedRestorationDate,
+      status: 'IN_PROGRESS' as const
+    };
+
+    setTerminals((prev) =>
+      prev.map((t) => {
+        if (t.id !== terminalId) return t;
+        const currentHist = t.maintenanceHistory || [];
+        return {
+          ...t,
+          status: 'MAINTENANCE',
+          isOperational: false,
+          maintenanceHistory: [maintLog, ...currentHist]
+        };
+      })
+    );
+    showToast('Terminal marked under maintenance. Status broadcast to system.');
+  };
+
+  const restoreTerminalFromMaintenance = (terminalId: string, notes: string) => {
+    setTerminals((prev) =>
+      prev.map((t) => {
+        if (t.id !== terminalId) return t;
+        const currentHist = (t.maintenanceHistory || []).map((m, idx) =>
+          idx === 0
+            ? { ...m, status: 'RESTORED' as const, restoredAt: 'Just now', restorationNotes: notes }
+            : m
+        );
+        return {
+          ...t,
+          status: 'ONLINE',
+          isOperational: true,
+          maintenanceHistory: currentHist
+        };
+      })
+    );
+    showToast('✓ Terminal verified and restored to ONLINE service.');
+  };
+
+  const removeTerminal = (terminalId: string) => {
+    const term = terminals.find((t) => t.id === terminalId);
+    setTerminals((prev) => prev.filter((t) => t.id !== terminalId));
+    showToast(`Terminal "${term?.locationName}" deactivated and removed from live network.`);
+  };
+
+  // Ticket Management (Module 3.9)
+  const updateTicketStatus = (ticketId: string, status: ComplaintTicket['status'], note?: string, assignee?: string) => {
+    setComplaints((prev) =>
+      prev.map((c) => {
+        if (c.id !== ticketId) return c;
+        return {
+          ...c,
+          status,
+          assignedPerson: assignee || c.assignedPerson
+        };
+      })
+    );
+    const logItem: AuditLogItem = {
+      id: `log-${Date.now()}`,
+      user: `${user.name} (${user.role})`,
+      role: user.role,
+      action: 'TICKET_STATUS_UPDATE',
+      target: `Ticket ${ticketId} status changed to ${status}. ${note ? `Note: ${note}` : ''}`,
+      timestamp: 'Just now',
+      result: 'SUCCESS'
+    };
+    setAuditLogs((prev) => [logItem, ...prev]);
+    showToast(`Ticket status updated to ${status}.`);
+  };
+
+  // Other Feature States
   const [medicalRecord] = useState<MedicalRecord>(MOCK_MEDICAL_RECORD);
   const [feeItems, setFeeItems] = useState<FeeItem[]>(MOCK_FEE_ITEMS);
   const [hostelDetails, setHostelDetails] = useState<HostelDetails>(MOCK_HOSTEL_DETAILS);
@@ -215,6 +759,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const [selectedReceipt, setSelectedReceipt] = useState<WalletTransaction | null>(null);
   const [selectedDocForShare, setSelectedDocForShare] = useState<DocumentItem | null>(null);
+  const [selectedDocForPreview, setSelectedDocForPreview] = useState<DocumentItem | null>(null);
   const [selectedFeeForPay, setSelectedFeeForPay] = useState<FeeItem | null>(null);
   const [demoNotification, setDemoNotification] = useState<string | null>(null);
   const [pendingRoleTarget, setPendingRoleTarget] = useState<Role | null>(null);
@@ -289,45 +834,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setActiveModal('DOCUMENT_SHARE');
   };
 
+  const openDocPreview = (doc: DocumentItem) => {
+    setSelectedDocForPreview(doc);
+    setActiveModal('DOCUMENT_PREVIEW');
+  };
+
+  const downloadDoc = (doc: DocumentItem) => {
+    DocumentService.downloadDocument(doc, student);
+    showToast(`✓ Valid document file "${doc.title}.txt" downloaded to your device.`);
+  };
+
   const openPayFeeModal = (fee: FeeItem) => {
     setSelectedFeeForPay(fee);
     setActiveModal('PAY_FEE');
-  };
-
-  const recordPalmAttendance = (subjectName: string = 'Marketing Management') => {
-    setSubjects((prev) =>
-      prev.map((sub) => {
-        if (sub.subjectName.toLowerCase().includes(subjectName.toLowerCase())) {
-          const newAttended = sub.attendedClasses + 1;
-          const newTotal = sub.totalClasses + 1;
-          const newPct = Math.round((newAttended / newTotal) * 1000) / 10;
-          return {
-            ...sub,
-            attendedClasses: newAttended,
-            totalClasses: newTotal,
-            percentage: newPct
-          };
-        }
-        return sub;
-      })
-    );
-
-    const logItem: AuditLogItem = {
-      id: `log-${Date.now()}`,
-      user: `${student.name} (${student.studentId})`,
-      role: 'STUDENT',
-      action: 'PALM_BIOMETRIC_ATTENDANCE',
-      target: `Class: ${subjectName} (Room A403 Terminal)`,
-      timestamp: 'Just now',
-      result: 'SUCCESS'
-    };
-    setAuditLogs((prev) => [logItem, ...prev]);
-
-    try {
-      confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-    } catch {}
-
-    showToast(`✓ Identity verified via Palm Biometrics. Attendance logged for ${subjectName}.`);
   };
 
   const registerForEvent = async (eventId: string): Promise<boolean> => {
@@ -419,6 +938,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setStudent((prev) => ({ ...prev, walletBalance: res.newBalance || prev.walletBalance }));
     setTransactions((prev) => [res.transaction!, ...prev]);
 
+    // Update inventory stock for purchased products
+    cart.forEach((cartItem) => {
+      updateProductStock(cartItem.product.id, Math.max(0, cartItem.product.stock - cartItem.quantity));
+    });
+
     const newOrder: CampusOrder = {
       id: `ord-${Date.now().toString().slice(-5)}`,
       userId: student.userId,
@@ -449,24 +973,50 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const topupWallet = (amount: number) => {
-    const txId = `tx-${Date.now().toString().slice(-6)}`;
-    const topupTx: WalletTransaction = {
-      id: txId,
-      userId: student.userId,
-      merchantName: 'NEXORA UPI Payment Gateway',
-      category: 'TOPUP',
-      amount,
-      type: 'CREDIT',
-      status: 'SUCCESS',
-      timestamp: 'Just now',
-      receiptId: `RCP-TOPUP-${Math.floor(1000 + Math.random() * 9000)}`,
-      itemsSummary: `Added ₹${amount} via UPI Instant`
-    };
+    // Legacy direct topup compatibility - calls gateway flow internally
+    processGatewayTopup(amount, 'UPI', { upiVpa: 'instant@campus' });
+  };
 
-    setStudent((prev) => ({ ...prev, walletBalance: prev.walletBalance + amount }));
-    setTransactions((prev) => [topupTx, ...prev]);
-    setActiveModal(null);
-    showToast(`Wallet credited with ₹${amount}. New balance: ₹${student.walletBalance + amount}`);
+  const processGatewayTopup = async (
+    amount: number,
+    method: 'UPI' | 'CARD' | 'NETBANKING',
+    details: any
+  ): Promise<PaymentResult> => {
+    const res = await PaymentService.processGatewayTopup(
+      {
+        userId: student.userId,
+        amount,
+        method,
+        upiVpa: details?.upiVpa,
+        cardLast4: details?.cardNumber ? details.cardNumber.slice(-4) : '4242',
+        cardHolder: details?.cardHolder
+      },
+      student.walletBalance
+    );
+
+    if (res.success && res.transaction) {
+      setStudent((prev) => {
+        const next = { ...prev, walletBalance: res.newBalance || (prev.walletBalance + amount) };
+        try {
+          localStorage.setItem('noir_student_profile', JSON.stringify(next));
+        } catch {}
+        return next;
+      });
+      setTransactions((prev) => [res.transaction!, ...prev]);
+      addNotification({
+        title: `Wallet Credited: +₹${amount}`,
+        message: `Payment confirmed via ${method} gateway. New balance: ₹${(res.newBalance || (student.walletBalance + amount))}. Receipt: ${res.transaction.receiptId}`,
+        category: 'FEES',
+        targetTab: 'pay'
+      });
+      try {
+        confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
+      } catch {}
+      showToast(`✓ Gateway Payment Confirmed! ₹${amount} credited to your NEXORA Wallet.`);
+    } else {
+      showToast(`Payment Failed: ${res.error || 'Gateway rejected transaction'}`);
+    }
+    return res;
   };
 
   const payFeeItem = async (feeId: string, amount: number): Promise<boolean> => {
@@ -525,7 +1075,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       )
     );
 
-    showToast(`Secure 30-minute share link created for ${recipient}.`);
+    showToast(`Secure ${durationMinutes}-minute share link created for ${recipient}.`);
     return result.shareUrl;
   };
 
@@ -616,7 +1166,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setTerminals((prev) =>
       prev.map((t) =>
         t.id === terminalId
-          ? { ...t, status: t.status === 'ONLINE' ? 'OFFLINE' : 'ONLINE' }
+          ? {
+              ...t,
+              status: t.status === 'ONLINE' ? 'OFFLINE' : 'ONLINE',
+              isOperational: t.status !== 'ONLINE'
+            }
           : t
       )
     );
@@ -624,20 +1178,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const registerNewTerminal = (locationName: string, roomNumber: string, type: TerminalDevice['type']) => {
-    const newTerm: TerminalDevice = {
-      id: `term-${Date.now().toString().slice(-4)}`,
+    registerDetailedTerminal({
       terminalCode: `TRM-${Math.floor(1000 + Math.random() * 9000)}`,
       locationName,
       roomNumber,
       type,
       status: 'ONLINE',
-      lastPing: 'Just now',
-      firmwareVersion: 'NEXORA-OS v2.4',
-      ipAddress: `192.168.1.${Math.floor(10 + Math.random() * 80)}`,
-      macAddress: `00:1B:44:11:3A:${Math.floor(10 + Math.random() * 80)}`
-    };
-    setTerminals((prev) => [newTerm, ...prev]);
-    showToast(`✓ Registered Palm Terminal: ${locationName} [${type}]`);
+      isOperational: true
+    });
   };
 
   const createPosPaymentRequest = (shopName: string, amount: number, itemsSummary: string) => {
@@ -774,7 +1322,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const updateOrderStatus = (orderId: string, status: CampusOrder['status']) => {
-    setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status } : o)));
+    setOrders((prev) =>
+      prev.map((o) => {
+        if (o.id !== orderId) return o;
+        return {
+          ...o,
+          status,
+          timestamp: `Updated to ${status} just now`
+        };
+      })
+    );
     showToast(`Order #${orderId} status updated to: ${status}`);
   };
 
@@ -784,14 +1341,26 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       id: `prod-${Date.now().toString().slice(-4)}`
     };
     setProducts((prev) => [item, ...prev]);
+
+    const movement: StockMovementRecord = {
+      id: `sm-${Date.now()}`,
+      productId: item.id,
+      productName: item.name,
+      type: 'RESTOCK',
+      quantityChange: item.stock,
+      previousStock: 0,
+      newStock: item.stock,
+      timestamp: 'Just now',
+      reason: 'Initial Product Catalogue Addition',
+      user: user.name
+    };
+    setStockMovements((sm) => [movement, ...sm]);
+
     showToast(`Added "${item.name}" to campus catalogue!`);
   };
 
   const updateProductStock = (productId: string, newStock: number) => {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === productId ? { ...p, stock: Math.max(0, newStock) } : p))
-    );
-    showToast('Inventory stock count updated.');
+    updateProduct(productId, { stock: Math.max(0, newStock) });
   };
 
   const gradeAssignmentSubmission = (asgId: string, studentId: string, marks: number, grade: string) => {
@@ -816,6 +1385,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         user,
         student,
         role,
+        theme,
+        toggleTheme,
+        setTheme,
         subjects,
         events,
         products,
@@ -831,9 +1403,29 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         activeModal,
         selectedReceipt,
         selectedDocForShare,
+        selectedDocForPreview,
         selectedFeeForPay,
         demoNotification,
         pendingRoleTarget,
+
+        // Notifications
+        notifications,
+        unreadNotificationCount,
+        markNotificationAsRead,
+        markAllNotificationsAsRead,
+        addNotification,
+
+        // Live Attendance Session
+        liveAttendanceSession,
+        startLiveAttendanceSession,
+        closeLiveAttendanceSession,
+
+        // Detailed Attendance Records
+        attendanceRecords,
+        correctAttendanceRecord,
+
+        // Timetable
+        studentTimetable,
 
         // Faculty & Assignments
         facultyList,
@@ -841,15 +1433,45 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setActiveFacultyId,
         assignments,
         gradeAssignmentSubmission,
+        createAssignment,
 
         // Profile Management
         updateStudentProfile,
 
         // Shop Management
+        shopProfile,
+        updateShopProfile,
+        shopOffers,
+        addShopOffer,
+        toggleShopOffer,
+        stockMovements,
         updateOrderStatus,
         addProduct,
+        updateProduct,
+        deleteProduct,
         updateProductStock,
 
+        // Facilities Management
+        facilities,
+        addFacility,
+        updateFacility,
+
+        // Library Management
+        libraryIssues,
+        issueLibraryBook,
+        returnLibraryBook,
+        payLibraryFine,
+
+        // Terminal Management & Pehchaan
+        registerDetailedTerminal,
+        markTerminalMaintenance,
+        restoreTerminalFromMaintenance,
+        removeTerminal,
+
+        // Ticket Management
+        updateTicketStatus,
+
+        // Other state
         medicalRecord,
         feeItems,
         hostelDetails,
@@ -870,6 +1492,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setModal,
         openReceiptModal,
         openShareModal,
+        openDocPreview,
+        downloadDoc,
         openPayFeeModal,
         recordPalmAttendance,
         registerForEvent,
@@ -878,6 +1502,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         clearCart,
         checkoutCart,
         topupWallet,
+        processGatewayTopup,
         payFeeItem,
         generateShareLink,
         submitComplaint,

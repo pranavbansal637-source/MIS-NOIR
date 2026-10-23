@@ -24,7 +24,7 @@ import {
   Monitor,
   Package,
   Clock,
-  Briefcase
+  Tag
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -33,30 +33,30 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => {
-  const { role, switchRole, setModal, showToast } = useApp();
+  const { role, switchRole, setModal, showToast, unreadNotificationCount, activeFaculty } = useApp();
 
   if (role === 'KIOSK') return null;
 
   const sidebarStyle: React.CSSProperties = {
-    backgroundColor: '#090C13',
-    borderRight: '1px solid rgba(245, 158, 11, 0.2)',
+    backgroundColor: 'var(--bg-surface)',
+    borderRight: '1px solid var(--border-color)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '24px 16px',
     flexShrink: 0,
     zIndex: 20,
-    boxShadow: '4px 0 24px rgba(0, 0, 0, 0.6)',
+    boxShadow: '2px 0 12px rgba(15, 23, 42, 0.04)',
     overflowY: 'auto'
   };
 
   const renderInterfaceSwitcher = () => (
-    <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: 14, marginTop: 14 }}>
+    <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: 14, marginTop: 14 }}>
       <div
         style={{
           fontSize: 10,
           fontWeight: 900,
-          color: '#F59E0B',
+          color: '#2563EB',
           textTransform: 'uppercase',
           letterSpacing: '0.12em',
           padding: '0 4px 8px 4px'
@@ -75,9 +75,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             fontSize: 11,
             padding: '6px 8px',
             justifyContent: 'center',
-            backgroundColor: role === 'STUDENT' ? 'rgba(245, 158, 11, 0.25)' : 'transparent',
-            borderColor: role === 'STUDENT' ? '#F59E0B' : 'rgba(255, 255, 255, 0.12)',
-            color: role === 'STUDENT' ? '#FBBF24' : '#CBD5E1'
+            backgroundColor: role === 'STUDENT' ? '#EFF6FF' : '#FFFFFF',
+            borderColor: role === 'STUDENT' ? '#2563EB' : '#CBD5E1',
+            color: role === 'STUDENT' ? '#1D4ED8' : '#334155'
           }}
           title="Switch to Student Dashboard"
         >
@@ -94,9 +94,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             fontSize: 11,
             padding: '6px 8px',
             justifyContent: 'center',
-            backgroundColor: role === 'BUSINESS' ? 'rgba(16, 185, 129, 0.25)' : 'transparent',
-            borderColor: role === 'BUSINESS' ? '#10B981' : 'rgba(255, 255, 255, 0.12)',
-            color: role === 'BUSINESS' ? '#34D399' : '#CBD5E1'
+            backgroundColor: role === 'BUSINESS' ? '#ECFDF5' : '#FFFFFF',
+            borderColor: role === 'BUSINESS' ? '#10B981' : '#CBD5E1',
+            color: role === 'BUSINESS' ? '#047857' : '#334155'
           }}
           title="Switch to Merchant POS"
         >
@@ -113,9 +113,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             fontSize: 11,
             padding: '6px 8px',
             justifyContent: 'center',
-            backgroundColor: role === 'MANAGEMENT' ? 'rgba(245, 158, 11, 0.25)' : 'transparent',
-            borderColor: role === 'MANAGEMENT' ? '#F59E0B' : 'rgba(255, 255, 255, 0.12)',
-            color: role === 'MANAGEMENT' ? '#FBBF24' : '#CBD5E1'
+            backgroundColor: role === 'MANAGEMENT' ? '#EFF6FF' : '#FFFFFF',
+            borderColor: role === 'MANAGEMENT' ? '#2563EB' : '#CBD5E1',
+            color: role === 'MANAGEMENT' ? '#1D4ED8' : '#334155'
           }}
           title="Switch to Management Portal"
         >
@@ -132,9 +132,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             fontSize: 11,
             padding: '6px 8px',
             justifyContent: 'center',
-            backgroundColor: role === 'FACULTY' ? 'rgba(245, 158, 11, 0.25)' : 'transparent',
-            borderColor: role === 'FACULTY' ? '#F59E0B' : 'rgba(255, 255, 255, 0.12)',
-            color: role === 'FACULTY' ? '#FBBF24' : '#CBD5E1'
+            backgroundColor: role === 'FACULTY' ? '#EFF6FF' : '#FFFFFF',
+            borderColor: role === 'FACULTY' ? '#2563EB' : '#CBD5E1',
+            color: role === 'FACULTY' ? '#1D4ED8' : '#334155'
           }}
           title="Switch to Faculty Portal"
         >
@@ -152,7 +152,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             padding: '6px 8px',
             justifyContent: 'center',
             gridColumn: 'span 2',
-            color: '#CBD5E1'
+            color: '#334155',
+            backgroundColor: '#FFFFFF',
+            borderColor: '#CBD5E1'
           }}
           title="Open Palm Terminal Hardware Simulation"
         >
@@ -163,7 +165,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
   );
 
   // ----------------------------------------------------
-  // 1. STUDENT SIDEBAR (Streamlined to ONLY 5 Main Items)
+  // 1. STUDENT SIDEBAR
   // ----------------------------------------------------
   if (role === 'STUDENT') {
     const studentItems = [
@@ -176,6 +178,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
 
     const studentSubItems = [
       { id: 'attendance', label: 'Attendance', icon: CheckSquare },
+      { id: 'timetable', label: 'Timetable', icon: Clock },
       { id: 'pay', label: 'Wallet Pay', icon: CreditCard },
       { id: 'events', label: 'Events Pass', icon: Calendar },
       { id: 'grades', label: 'Gradebook', icon: GraduationCap },
@@ -194,7 +197,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             style={{
               fontSize: 10,
               fontWeight: 900,
-              color: '#F59E0B',
+              color: '#2563EB',
               textTransform: 'uppercase',
               letterSpacing: '0.14em',
               padding: '0 12px 10px 12px'
@@ -219,16 +222,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
                     borderRadius: 12,
                     fontSize: 13,
                     fontWeight: isActive ? 800 : 600,
-                    color: isActive ? '#FBBF24' : '#94A3B8',
-                    backgroundColor: isActive ? 'rgba(245, 158, 11, 0.16)' : 'transparent',
-                    border: isActive ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent',
-                    boxShadow: isActive ? '0 0 16px rgba(245, 158, 11, 0.2)' : 'none',
+                    color: isActive ? '#1D4ED8' : 'var(--text-secondary)',
+                    backgroundColor: isActive ? '#EFF6FF' : 'transparent',
+                    border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
+                    boxShadow: isActive ? '0 1px 4px rgba(37, 99, 235, 0.08)' : 'none',
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'all 150ms ease'
                   }}
                 >
-                  <Icon size={18} color={isActive ? '#F59E0B' : '#64748B'} />
+                  <Icon size={18} color={isActive ? '#2563EB' : '#64748B'} />
                   {item.label}
                 </button>
               );
@@ -239,7 +242,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             style={{
               fontSize: 10,
               fontWeight: 900,
-              color: '#F59E0B',
+              color: '#2563EB',
               textTransform: 'uppercase',
               letterSpacing: '0.14em',
               padding: '18px 12px 8px 12px'
@@ -264,15 +267,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
                     borderRadius: 10,
                     fontSize: 13,
                     fontWeight: isActive ? 800 : 600,
-                    color: isActive ? '#FBBF24' : '#94A3B8',
-                    backgroundColor: isActive ? 'rgba(245, 158, 11, 0.16)' : 'transparent',
-                    border: isActive ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent',
+                    color: isActive ? '#1D4ED8' : 'var(--text-secondary)',
+                    backgroundColor: isActive ? '#EFF6FF' : 'transparent',
+                    border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'all 150ms ease'
                   }}
                 >
-                  <Icon size={17} color={isActive ? '#F59E0B' : '#64748B'} />
+                  <Icon size={17} color={isActive ? '#2563EB' : '#64748B'} />
                   {item.label}
                 </button>
               );
@@ -281,25 +284,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
         </div>
 
         {/* Bottom Utility Area */}
-        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
           <button
-            onClick={() => showToast('🔔 NEXORA Notifications: Exam registration reminder & Library book due in 2 days.')}
+            onClick={() => setModal('NOTIFICATIONS')}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 12,
+              justifyContent: 'space-between',
               padding: '10px 14px',
               borderRadius: 10,
               fontSize: 13,
               fontWeight: 600,
-              color: '#94A3B8',
+              color: 'var(--text-primary)',
               background: 'transparent',
               border: 'none',
               cursor: 'pointer'
             }}
           >
-            <Bell size={18} color="#F59E0B" />
-            Notifications
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <Bell size={18} color="var(--brand-primary)" />
+              Notifications
+            </div>
+            {unreadNotificationCount > 0 && (
+              <span className="badge badge-danger" style={{ fontSize: 10, padding: '2px 7px' }}>
+                {unreadNotificationCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -312,13 +322,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
               borderRadius: 10,
               fontSize: 13,
               fontWeight: 600,
-              color: '#94A3B8',
+              color: 'var(--text-secondary)',
               background: 'transparent',
               border: 'none',
               cursor: 'pointer'
             }}
           >
-            <Settings size={18} color="#94A3B8" />
+            <Settings size={18} color="#64748B" />
             Settings & Privacy
           </button>
 
@@ -329,7 +339,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
   }
 
   // ----------------------------------------------------
-  // 2. MANAGEMENT SIDEBAR (Grouped Sections)
+  // 2. MANAGEMENT SIDEBAR
   // ----------------------------------------------------
   if (role === 'MANAGEMENT' || role === 'SUPER_ADMIN') {
     const mgmtGroups = [
@@ -342,9 +352,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
         items: [
           { id: 'mgmt-students', label: 'Students', icon: Users },
           { id: 'mgmt-faculty', label: 'Faculty', icon: GraduationCap },
-          { id: 'mgmt-attendance', label: 'Attendance', icon: CheckSquare },
-          { id: 'mgmt-timetable', label: 'Timetable', icon: Clock },
-          { id: 'mgmt-exams', label: 'Exams', icon: Briefcase }
+          { id: 'mgmt-attendance', label: 'Attendance', icon: CheckSquare }
         ]
       },
       {
@@ -386,7 +394,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
                 style={{
                   fontSize: 10,
                   fontWeight: 900,
-                  color: '#F59E0B',
+                  color: '#2563EB',
                   textTransform: 'uppercase',
                   letterSpacing: '0.14em',
                   padding: '0 10px 8px 10px'
@@ -410,14 +418,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
                         borderRadius: 8,
                         fontSize: 13,
                         fontWeight: isActive ? 800 : 600,
-                        color: isActive ? '#FBBF24' : '#94A3B8',
-                        backgroundColor: isActive ? 'rgba(245, 158, 11, 0.16)' : 'transparent',
-                        border: isActive ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent',
+                        color: isActive ? '#1D4ED8' : 'var(--text-secondary)',
+                        backgroundColor: isActive ? '#EFF6FF' : 'transparent',
+                        border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
                         cursor: 'pointer',
                         textAlign: 'left'
                       }}
                     >
-                      <Icon size={17} color={isActive ? '#F59E0B' : '#64748B'} />
+                      <Icon size={17} color={isActive ? '#2563EB' : '#64748B'} />
                       {item.label}
                     </button>
                   );
@@ -441,7 +449,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
       { id: 'biz-dashboard', label: 'Sales Dashboard', icon: LayoutDashboard },
       { id: 'biz-orders', label: 'Orders Feed', icon: Package },
       { id: 'biz-inventory', label: 'Products & Inventory', icon: ShoppingBag },
+      { id: 'biz-offers', label: 'Store Deals & Offers', icon: Tag },
       { id: 'biz-transactions', label: 'Transactions History', icon: CreditCard },
+      { id: 'biz-notifications', label: 'Store Alerts', icon: Bell },
       { id: 'terminals', label: 'Shop Palm Terminal', icon: Monitor },
       { id: 'biz-profile', label: 'Merchant Profile', icon: User }
     ];
@@ -462,7 +472,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
           style={{
             fontSize: 10,
             fontWeight: 900,
-            color: '#10B981',
+            color: '#059669',
             textTransform: 'uppercase',
             letterSpacing: '0.14em',
             padding: '0 10px 10px 10px'
@@ -487,14 +497,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
                   borderRadius: 10,
                   fontSize: 13,
                   fontWeight: isActive ? 800 : 600,
-                  color: isActive ? '#34D399' : '#94A3B8',
-                  backgroundColor: isActive ? 'rgba(16, 185, 129, 0.16)' : 'transparent',
-                  border: isActive ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid transparent',
+                  color: isActive ? '#065F46' : '#475569',
+                  backgroundColor: isActive ? '#ECFDF5' : 'transparent',
+                  border: isActive ? '1px solid #A7F3D0' : '1px solid transparent',
                   cursor: 'pointer',
                   textAlign: 'left'
                 }}
               >
-                <Icon size={18} color={isActive ? '#10B981' : '#64748B'} />
+                <Icon size={18} color={isActive ? '#059669' : '#64748B'} />
                 {item.label}
               </button>
             );
@@ -528,15 +538,53 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
         }}
         className="desktop-sidebar-only"
       >
-        <div style={{ padding: '0 8px 20px 8px' }}>
+        <div style={{ padding: '0 8px 16px 8px' }}>
           <NoirLogo size="sm" showSubtitle={true} />
+        </div>
+
+        {/* Aligned Faculty Profile Section (Module 4.1) */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            padding: '12px 14px',
+            backgroundColor: 'var(--bg-main)',
+            border: '1px solid var(--border-color)',
+            borderRadius: 14,
+            marginBottom: 16
+          }}
+        >
+          <img
+            src={activeFaculty.avatar}
+            alt={activeFaculty.name}
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '2px solid #2563EB',
+              flexShrink: 0
+            }}
+          />
+          <div style={{ overflow: 'hidden', minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {activeFaculty.name}
+            </div>
+            <div style={{ fontSize: 11, color: '#2563EB', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {activeFaculty.designation}
+            </div>
+            <div style={{ fontSize: 10, color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {activeFaculty.office}
+            </div>
+          </div>
         </div>
 
         <div
           style={{
             fontSize: 10,
             fontWeight: 900,
-            color: '#F59E0B',
+            color: '#2563EB',
             textTransform: 'uppercase',
             letterSpacing: '0.14em',
             padding: '0 10px 10px 10px'
@@ -561,14 +609,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
                   borderRadius: 10,
                   fontSize: 13,
                   fontWeight: isActive ? 800 : 600,
-                  color: isActive ? '#FBBF24' : '#94A3B8',
-                  backgroundColor: isActive ? 'rgba(245, 158, 11, 0.16)' : 'transparent',
-                  border: isActive ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent',
+                  color: isActive ? '#1D4ED8' : '#475569',
+                  backgroundColor: isActive ? '#EFF6FF' : 'transparent',
+                  border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
                   cursor: 'pointer',
                   textAlign: 'left'
                 }}
               >
-                <Icon size={18} color={isActive ? '#F59E0B' : '#64748B'} />
+                <Icon size={18} color={isActive ? '#2563EB' : '#64748B'} />
                 {item.label}
               </button>
             );

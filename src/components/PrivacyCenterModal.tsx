@@ -23,11 +23,11 @@ export const PrivacyCenterModal: React.FC = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <Shield size={22} color="#F59E0B" />
-            <span style={{ fontSize: 18, fontWeight: 800, color: '#F8FAFC' }}>NEXORA Privacy & Data Governance</span>
+            <Shield size={22} color="#2563EB" />
+            <span style={{ fontSize: 18, fontWeight: 800, color: '#0F172A' }}>NEXORA Privacy & Data Governance</span>
           </div>
           <button onClick={() => setModal(null)} className="btn btn-ghost btn-icon btn-sm">
-            <X size={18} color="#94A3B8" />
+            <X size={18} color="#64748B" />
           </button>
         </div>
 
@@ -41,8 +41,8 @@ export const PrivacyCenterModal: React.FC = () => {
               key={index}
               style={{
                 padding: 14,
-                backgroundColor: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid rgba(245, 158, 11, 0.25)',
+                backgroundColor: '#F8FAFC',
+                border: '1px solid #E2E8F0',
                 borderRadius: 'var(--radius-md)',
                 display: 'flex',
                 alignItems: 'flex-start',

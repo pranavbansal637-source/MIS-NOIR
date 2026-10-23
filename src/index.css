@@ -1,65 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700;900&display=swap');
 
 :root {
-  /* NEXORA Dark Obsidian & Solar Amber / Titanium Theme */
-  --bg-main: #060709;
-  --bg-surface: rgba(14, 18, 26, 0.82);
-  --bg-surface-solid: #0E121A;
-  --bg-subtle: rgba(245, 158, 11, 0.06);
-  --bg-hover: rgba(245, 158, 11, 0.12);
-  --bg-glass: rgba(12, 16, 24, 0.82);
-  --bg-glass-card: rgba(16, 20, 30, 0.88);
-  --bg-glass-modal: rgba(10, 13, 20, 0.96);
+  /* NEXORA Pristine Executive Light Theme */
+  --bg-main: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-solid: #FFFFFF;
+  --bg-subtle: #F1F5F9;
+  --bg-hover: #E2E8F0;
+  --bg-glass: rgba(255, 255, 255, 0.88);
+  --bg-glass-card: rgba(255, 255, 255, 0.95);
+  --bg-glass-modal: #FFFFFF;
 
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --text-bright: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-main: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-bright: #020617;
 
-  /* NEXORA Signature Luminous Solar & Titanium Accents */
-  --brand-primary: #F59E0B;        /* Solar Amber */
-  --brand-primary-hover: #D97706;
-  --brand-secondary: #FBBF24;      /* Cyber Gold */
-  --brand-silver: #E2E8F0;         /* Brushed Titanium / Chrome */
-  --brand-accent: #E11D48;         /* Laser Crimson */
-  --brand-cyan: #0EA5E9;           /* Electric Cyan */
-  --brand-emerald: #10B981;        /* Biometric Verified Emerald */
+  /* NEXORA Signature Accents (Royal Sapphire, Solar Amber & Clean Emerald) */
+  --brand-primary: #2563EB;        /* Royal Sapphire Blue */
+  --brand-primary-hover: #1D4ED8;
+  --brand-secondary: #3B82F6;      /* Vibrant Sky Blue */
+  --brand-silver: #64748B;
+  --brand-accent: #4F46E5;         /* Electric Indigo */
+  --brand-cyan: #0284C7;           /* Cerulean */
+  --brand-emerald: #059669;        /* Verified Emerald */
   --brand-orange: #EA580C;
+  --brand-amber: #D97706;          /* Deep Solar Amber */
 
   /* Gradients */
-  --grad-primary: linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #D97706 100%);
-  --grad-titanium: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 50%, #94A3B8 100%);
-  --grad-amber-titanium: linear-gradient(135deg, #FFFFFF 0%, #FBBF24 50%, #F59E0B 100%);
-  --grad-accent: linear-gradient(135deg, #F59E0B 0%, #E11D48 100%);
+  --grad-primary: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  --grad-titanium: linear-gradient(135deg, #0F172A 0%, #334155 50%, #64748B 100%);
+  --grad-amber-titanium: linear-gradient(135deg, #0F172A 0%, #1E293B 40%, #2563EB 100%);
+  --grad-accent: linear-gradient(135deg, #4F46E5 0%, #2563EB 100%);
   --grad-emerald: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  --grad-gold: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
-  --grad-glass: linear-gradient(135deg, rgba(22, 28, 40, 0.9) 0%, rgba(10, 13, 20, 0.8) 100%);
-  --grad-glass-hover: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(251, 191, 36, 0.08) 100%);
+  --grad-gold: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
+  --grad-glass-hover: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(59, 130, 246, 0.04) 100%);
 
   /* State Colors */
-  --state-success: #10B981;
-  --state-success-light: rgba(16, 185, 129, 0.15);
-  --state-warning: #F59E0B;
-  --state-warning-light: rgba(245, 158, 11, 0.15);
-  --state-danger: #EF4444;
-  --state-danger-light: rgba(239, 68, 68, 0.15);
+  --state-success: #059669;
+  --state-success-light: rgba(5, 150, 105, 0.12);
+  --state-warning: #D97706;
+  --state-warning-light: rgba(217, 119, 6, 0.12);
+  --state-danger: #DC2626;
+  --state-danger-light: rgba(220, 38, 38, 0.1);
 
-  /* Glass Borders */
-  --border-color: rgba(245, 158, 11, 0.18);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-light: rgba(255, 255, 255, 0.12);
-  --border-focus: #F59E0B;
-  --border-glass: rgba(245, 158, 11, 0.3);
-  --border-glass-glow: rgba(245, 158, 11, 0.55);
+  /* Clean Crisp Borders */
+  --border-color: #E2E8F0;
+  --border-subtle: #F1F5F9;
+  --border-light: #E2E8F0;
+  --border-focus: #2563EB;
+  --border-glass: rgba(226, 232, 240, 0.9);
+  --border-glass-glow: rgba(37, 99, 235, 0.35);
 
-  /* Shadows & Glows */
-  --shadow-xs: 0 2px 6px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.8);
-  --shadow-brand: 0 8px 25px -4px rgba(245, 158, 11, 0.4);
-  --shadow-glow-amber: 0 0 25px rgba(245, 158, 11, 0.35);
-  --shadow-glow-cyan: 0 0 25px rgba(14, 165, 233, 0.35);
+  /* Elevated Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
+  --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 48px -6px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+  --shadow-brand: 0 8px 25px -4px rgba(37, 99, 235, 0.35);
+  --shadow-glow-amber: 0 0 25px rgba(217, 119, 6, 0.25);
+  --shadow-glow-cyan: 0 0 25px rgba(37, 99, 235, 0.25);
 
   /* Radius */
   --radius-sm: 10px;
@@ -76,6 +78,36 @@
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+[data-theme="dark"],
+:root[data-theme="dark"] {
+  /* NEXORA Futuristic Executive Dark Theme */
+  --bg-main: #0B0F19;
+  --bg-surface: #111827;
+  --bg-surface-solid: #111827;
+  --bg-subtle: #1F2937;
+  --bg-hover: #374151;
+  --bg-glass: rgba(17, 24, 39, 0.92);
+  --bg-glass-card: rgba(17, 24, 39, 0.96);
+  --bg-glass-modal: #111827;
+
+  --text-primary: #F8FAFC;
+  --text-main: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-bright: #FFFFFF;
+
+  --border-color: #1F2937;
+  --border-subtle: #1F2937;
+  --border-light: #374151;
+  --border-glass: rgba(55, 65, 81, 0.7);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 20px 48px -6px rgba(0, 0, 0, 0.8);
+}
+
 
 /* Base Resets */
 *, *::before, *::after {
@@ -127,7 +159,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -138,38 +170,38 @@ h1, h2, h3, h4, h5, h6 {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(10, 13, 20, 0.8);
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(245, 158, 11, 0.35);
+  background: #CBD5E1;
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 158, 11, 0.7);
+  background: #94A3B8;
 }
 
-/* Ambient Background Motion Mesh (Deep Obsidian + Solar Amber Orbs) */
+/* Ambient Background Motion Mesh (Luminous Pearl & Subtle Pastel Orbs) */
 .noir-ambient-backdrop {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 0%, #0D111A 0%, #060709 100%);
+  background: radial-gradient(circle at 50% 0%, #FFFFFF 0%, #F8FAFC 60%, #F1F5F9 100%);
 }
 
 .noir-orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(120px);
-  opacity: 0.28;
+  opacity: 0.15;
   animation: floatOrb 24s infinite alternate ease-in-out;
 }
 
 .noir-orb-1 {
   width: 650px;
   height: 650px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(245, 158, 11, 0) 70%);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.28) 0%, rgba(37, 99, 235, 0) 70%);
   top: -150px;
   left: -100px;
 }
@@ -177,7 +209,7 @@ h1, h2, h3, h4, h5, h6 {
 .noir-orb-2 {
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, rgba(217, 119, 6, 0.35) 0%, rgba(217, 119, 6, 0) 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(245, 158, 11, 0) 70%);
   bottom: -150px;
   right: -100px;
   animation-delay: -8s;
@@ -186,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 .noir-orb-3 {
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, rgba(251, 191, 36, 0) 70%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(99, 102, 241, 0) 70%);
   top: 40%;
   left: 35%;
   animation-delay: -14s;
@@ -237,15 +269,15 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Ultra Sleek Obsidian Glassmorphic Cards */
+/* Ultra Sleek Executive Cards */
 .noir-card,
 .nexora-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-sm);
   padding: 22px;
   position: relative;
   overflow: hidden;
@@ -255,9 +287,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .noir-card:hover,
 .nexora-card:hover {
-  border-color: rgba(245, 158, 11, 0.45);
-  box-shadow: 0 16px 45px 0 rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.16);
-  background: rgba(18, 23, 34, 0.92);
+  border-color: var(--brand-secondary);
+  box-shadow: var(--shadow-md);
+  background: var(--bg-surface);
 }
 
 .noir-card-interactive {
@@ -265,12 +297,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .noir-card-interactive:hover {
-  transform: translateY(-3px) scale(1.01);
-  border-color: rgba(245, 158, 11, 0.65);
-  box-shadow: 0 18px 50px 0 rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.25);
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Glass Buttons */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -292,16 +324,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-primary {
   background: var(--grad-primary);
-  color: #000000;
-  font-weight: 800;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 6px 22px rgba(245, 158, 11, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+  font-weight: 700;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.6), 0 0 22px rgba(251, 191, 36, 0.45);
-  filter: brightness(1.1);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+  filter: brightness(1.05);
 }
 
 .btn-primary:active {
@@ -309,18 +341,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary {
-  background: rgba(18, 23, 34, 0.85);
-  backdrop-filter: blur(12px);
+  background: var(--bg-surface);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-secondary:hover {
-  background: rgba(28, 36, 52, 0.95);
+  background: var(--bg-subtle);
   border-color: var(--brand-primary);
   color: var(--brand-primary);
-  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-ghost {
@@ -329,19 +360,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-ghost:hover {
-  background: rgba(245, 158, 11, 0.12);
+  background: var(--bg-subtle);
   color: var(--brand-primary);
 }
 
 .btn-danger {
-  background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
   color: #FFFFFF;
-  box-shadow: 0 4px 18px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25);
 }
 
 .btn-danger:hover {
-  box-shadow: 0 6px 24px rgba(239, 68, 68, 0.6);
-  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  filter: brightness(1.05);
 }
 
 .btn-icon {
@@ -376,37 +407,37 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-primary {
-  background: rgba(245, 158, 11, 0.15);
-  color: #FBBF24;
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563EB;
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.08);
 }
 
 .badge-success {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+  background: rgba(16, 185, 129, 0.14);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 1px 4px rgba(16, 185, 129, 0.08);
 }
 
 .badge-warning {
-  background: rgba(245, 158, 11, 0.15);
-  color: #FBBF24;
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+  background: rgba(245, 158, 11, 0.14);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.08);
 }
 
 .badge-danger {
-  background: rgba(239, 68, 68, 0.15);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.35);
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.12);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: 0 1px 4px rgba(239, 68, 68, 0.08);
 }
 
 .badge-neutral {
-  background: rgba(30, 41, 59, 0.7);
-  color: #94A3B8;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
 }
 
 /* Inputs & Form Controls */
@@ -427,9 +458,8 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   padding: 12px 16px;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background-color: rgba(14, 18, 28, 0.88);
-  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
   color: var(--text-primary);
   font-family: var(--font-family);
   font-size: 14px;
@@ -443,17 +473,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .input-field:focus {
   border-color: var(--brand-primary);
-  background-color: rgba(18, 23, 36, 0.98);
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25), 0 0 18px rgba(245, 158, 11, 0.25);
+  background-color: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
 
 /* Modals & Backdrop */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(4, 5, 8, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -463,12 +493,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-content {
-  background: rgba(12, 16, 24, 0.96);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  background: var(--bg-surface);
   border-radius: var(--radius-xl);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.2);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.22);
+  border: 1px solid var(--border-color);
   width: 100%;
   max-width: 560px;
   max-height: 90vh;
@@ -518,19 +546,19 @@ h1, h2, h3, h4, h5, h6 {
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* Biometric Radar Animation - Solar Gold Ring */
+/* Biometric Radar Animation - Royal Sapphire Ring */
 .palm-radar-circle {
   position: relative;
   width: 170px;
   height: 170px;
   border-radius: var(--radius-full);
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.05) 70%);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.02) 70%);
   border: 3px dashed var(--brand-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  box-shadow: 0 0 35px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.2);
 }
 
 .palm-radar-pulse {
@@ -549,8 +577,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Kiosk Specific Touch Styling */
 .kiosk-mode {
-  background: radial-gradient(circle at center, #0B0E17 0%, #060709 100%);
-  color: #F8FAFC;
+  background: radial-gradient(circle at center, #F8FAFC 0%, #E2E8F0 100%);
+  color: #0F172A;
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -558,9 +586,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .kiosk-card {
-  background: rgba(14, 18, 27, 0.92);
+  background: #FFFFFF;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid #CBD5E1;
   border-radius: 24px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.12);
 }

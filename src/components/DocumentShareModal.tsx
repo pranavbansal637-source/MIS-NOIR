@@ -41,7 +41,7 @@ export const DocumentShareModal: React.FC = () => {
           </button>
         </div>
 
-        <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(245, 158, 11, 0.25)', borderRadius: 'var(--radius-md)', padding: 14, marginBottom: 20 }}>
+        <div style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 'var(--radius-md)', padding: 14, marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>
             {selectedDocForShare.title}
           </div>

@@ -20,18 +20,18 @@ export const PayFeeModal: React.FC = () => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ padding: 24, maxWidth: 460 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <CreditCard size={20} color="#F59E0B" />
-            <span style={{ fontSize: 16, fontWeight: 800, color: '#F8FAFC' }}>NEXORA University Fee Clearance</span>
+            <CreditCard size={20} color="#2563EB" />
+            <span style={{ fontSize: 16, fontWeight: 800, color: '#0F172A' }}>NEXORA University Fee Clearance</span>
           </div>
-          <button onClick={() => setModal(null)} className="btn btn-ghost btn-icon btn-sm"><X size={18} color="#94A3B8" /></button>
+          <button onClick={() => setModal(null)} className="btn btn-ghost btn-icon btn-sm"><X size={18} color="#64748B" /></button>
         </div>
 
-        <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(245, 158, 11, 0.25)', borderRadius: 'var(--radius-md)', padding: 14, marginBottom: 20 }}>
+        <div style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 'var(--radius-md)', padding: 14, marginBottom: 20 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>{selectedFeeForPay.title}</div>
           <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4 }}>
             Due Date: {selectedFeeForPay.dueDate} • Total: ₹{selectedFeeForPay.totalAmount} • Paid: ₹{selectedFeeForPay.paidAmount}
           </div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: '#FBBF24', marginTop: 8 }}>
+          <div style={{ fontSize: 18, fontWeight: 800, color: '#2563EB', marginTop: 8 }}>
             Remaining Balance Due: ₹{due}
           </div>
         </div>

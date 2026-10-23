@@ -21,7 +21,16 @@ import type {
   CampusPoll,
   FacultyMember,
   AssignmentItem,
-  CampusOrder
+  CampusOrder,
+  AppNotification,
+  LiveAttendanceSession,
+  AttendanceSessionRecord,
+  TimetableEntry,
+  ShopOffer,
+  StockMovementRecord,
+  ShopProfile,
+  LibraryIssueRecord,
+  FacilityRecord
 } from '../types';
 
 export const INITIAL_USER: User = {
@@ -508,7 +517,11 @@ export const MOCK_TERMINALS: TerminalDevice[] = [
     lastPing: '2 seconds ago',
     firmwareVersion: 'v2.4.1-palm',
     ipAddress: '10.14.2.103',
-    macAddress: '70:B3:D5:E4:91:01'
+    macAddress: '70:B3:D5:E4:91:01',
+    photoUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&auto=format&fit=crop&q=80',
+    assignedDept: 'School of Business',
+    isOperational: true,
+    maintenanceHistory: []
   },
   {
     id: 'term-404',
@@ -520,7 +533,11 @@ export const MOCK_TERMINALS: TerminalDevice[] = [
     lastPing: '3 seconds ago',
     firmwareVersion: 'v2.4.1-palm',
     ipAddress: '10.14.2.104',
-    macAddress: '70:B3:D5:E4:91:02'
+    macAddress: '70:B3:D5:E4:91:02',
+    photoUrl: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&auto=format&fit=crop&q=80',
+    assignedDept: 'School of Business',
+    isOperational: true,
+    maintenanceHistory: []
   },
   {
     id: 'term-lib',
@@ -532,7 +549,11 @@ export const MOCK_TERMINALS: TerminalDevice[] = [
     lastPing: '1 second ago',
     firmwareVersion: 'v2.4.1-palm',
     ipAddress: '10.14.1.20',
-    macAddress: '70:B3:D5:E4:80:5A'
+    macAddress: '70:B3:D5:E4:80:5A',
+    photoUrl: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=400&auto=format&fit=crop&q=80',
+    assignedDept: 'Central Library System',
+    isOperational: true,
+    maintenanceHistory: []
   },
   {
     id: 'term-gate1',
@@ -544,7 +565,23 @@ export const MOCK_TERMINALS: TerminalDevice[] = [
     lastPing: 'Just now',
     firmwareVersion: 'v2.4.0-palm',
     ipAddress: '10.14.0.1',
-    macAddress: '70:B3:D5:E4:11:00'
+    macAddress: '70:B3:D5:E4:11:00',
+    photoUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?w=400&auto=format&fit=crop&q=80',
+    assignedDept: 'Campus Security & Vigilance',
+    isOperational: true,
+    maintenanceHistory: [
+      {
+        id: 'maint-01',
+        terminalId: 'term-gate1',
+        reportedTime: '12 Oct 2026, 09:00 AM',
+        reason: 'Optical sensor recalibration after power surge',
+        assignedTechnician: 'Ramesh Verma (Hardware Engineer)',
+        expectedRestorationDate: '12 Oct 2026, 11:30 AM',
+        status: 'RESTORED',
+        restoredAt: '12 Oct 2026, 11:15 AM',
+        restorationNotes: 'Sensor recalibrated, vascular threshold test passed (99.8% match rate)'
+      }
+    ]
   },
   {
     id: 'term-cant',
@@ -556,7 +593,11 @@ export const MOCK_TERMINALS: TerminalDevice[] = [
     lastPing: '4 seconds ago',
     firmwareVersion: 'v2.4.1-palm',
     ipAddress: '10.14.3.44',
-    macAddress: '70:B3:D5:E4:44:99'
+    macAddress: '70:B3:D5:E4:44:99',
+    photoUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&auto=format&fit=crop&q=80',
+    assignedDept: 'Campus Dining Services',
+    isOperational: true,
+    maintenanceHistory: []
   }
 ];
 
@@ -1152,4 +1193,612 @@ export const INITIAL_CAMPUS_ORDERS: CampusOrder[] = [
     paymentId: 'TX-PAY-8895-04'
   }
 ];
+
+// ==========================================
+// REAL CAMPUS NOTIFICATIONS
+// ==========================================
+
+export const INITIAL_NOTIFICATIONS: AppNotification[] = [
+  {
+    id: 'notif-1',
+    title: 'Mid-Semester Examination Schedule Published',
+    message: 'Official timetable for Fall 2026 mid-term examinations is now available. Verify hall ticket clearance.',
+    category: 'EXAM',
+    timestamp: '10 mins ago',
+    read: false,
+    targetTab: 'grades'
+  },
+  {
+    id: 'notif-2',
+    title: 'Library Book Return Due Today',
+    message: '"Principles of Marketing" by Kotler is due at Central Library by 05:00 PM. Avoid late return penalty of ₹10/day.',
+    category: 'LIBRARY',
+    timestamp: '1 hour ago',
+    read: false,
+    targetTab: 'library'
+  },
+  {
+    id: 'notif-3',
+    title: 'Live Attendance Session Started: Marketing Management',
+    message: 'Dr. Sarah Jenkins has opened live biometric attendance in Room A403. Check in within 15 minutes.',
+    category: 'ATTENDANCE',
+    timestamp: '2 hours ago',
+    read: true,
+    targetTab: 'attendance'
+  },
+  {
+    id: 'notif-4',
+    title: 'Semester Tuition & Lab Fee Due Date Approaching',
+    message: 'Semester 2 installment balance of ₹24,000 is due on Nov 15th. Pay online via NEXORA Pay with zero charges.',
+    category: 'FEES',
+    timestamp: '1 day ago',
+    read: true,
+    targetTab: 'fees'
+  },
+  {
+    id: 'notif-5',
+    title: 'Canteen Flash Offer: 20% Off Artisanal Beverages',
+    message: 'Use code COMBO20 at the Quad Cafe checkout for 20% off handcrafted cold brews & snacks.',
+    category: 'SHOP',
+    timestamp: '2 days ago',
+    read: true,
+    targetTab: 'marketplace'
+  }
+];
+
+// ==========================================
+// REAL LIVE ATTENDANCE SESSION
+// ==========================================
+
+export const INITIAL_LIVE_ATTENDANCE_SESSION: LiveAttendanceSession = {
+  id: 'sess-live-403',
+  courseCode: 'MKT-201',
+  courseName: 'Marketing Management',
+  facultyId: 'fac-01',
+  facultyName: 'Dr. Sarah Jenkins',
+  room: 'A403',
+  building: 'Academic Block A',
+  status: 'LIVE',
+  startTime: '10:00 AM',
+  endTime: '11:15 AM',
+  recordedStudentIds: []
+};
+
+// ==========================================
+// DETAILED STUDENT ATTENDANCE HISTORY
+// ==========================================
+
+export const MOCK_ATTENDANCE_HISTORY: AttendanceSessionRecord[] = [
+  {
+    id: 'att-rec-101',
+    date: '23 Oct 2026',
+    time: '10:00 AM - 11:15 AM',
+    courseCode: 'MKT-201',
+    courseName: 'Marketing Management',
+    facultyName: 'Dr. Sarah Jenkins',
+    room: 'A403',
+    status: 'PRESENT',
+    verificationMethod: 'Palm Biometrics'
+  },
+  {
+    id: 'att-rec-102',
+    date: '22 Oct 2026',
+    time: '11:30 AM - 12:45 PM',
+    courseCode: 'FIN-304',
+    courseName: 'Corporate Finance',
+    facultyName: 'Dr. Elena Rostova',
+    room: 'A404',
+    status: 'PRESENT',
+    verificationMethod: 'Palm Biometrics'
+  },
+  {
+    id: 'att-rec-103',
+    date: '22 Oct 2026',
+    time: '02:00 PM - 03:15 PM',
+    courseCode: 'ECO-102',
+    courseName: 'Micro Economics',
+    facultyName: 'Prof. Rajesh Kumar',
+    room: 'L102',
+    status: 'ABSENT',
+    verificationMethod: 'N/A'
+  },
+  {
+    id: 'att-rec-104',
+    date: '21 Oct 2026',
+    time: '10:00 AM - 11:15 AM',
+    courseCode: 'MGT-101',
+    courseName: 'Organizational Management',
+    facultyName: 'Prof. David Vance',
+    room: 'A402',
+    status: 'PRESENT',
+    verificationMethod: 'Palm Biometrics'
+  },
+  {
+    id: 'att-rec-105',
+    date: '20 Oct 2026',
+    time: '11:30 AM - 12:45 PM',
+    courseCode: 'MKT-201',
+    courseName: 'Marketing Management',
+    facultyName: 'Dr. Sarah Jenkins',
+    room: 'A403',
+    status: 'PRESENT',
+    verificationMethod: 'Manual Override',
+    correctedBy: 'Dr. Sarah Jenkins',
+    correctionReason: 'Authorized medical leave slip submitted'
+  },
+  {
+    id: 'att-rec-106',
+    date: '19 Oct 2026',
+    time: '02:00 PM - 03:15 PM',
+    courseCode: 'FIN-304',
+    courseName: 'Corporate Finance',
+    facultyName: 'Dr. Elena Rostova',
+    room: 'A404',
+    status: 'CANCELLED',
+    verificationMethod: 'N/A',
+    correctionReason: 'Faculty guest lecture at National Economic Conclave'
+  },
+  {
+    id: 'att-rec-107',
+    date: '18 Oct 2026',
+    time: '10:00 AM - 11:15 AM',
+    courseCode: 'ECO-102',
+    courseName: 'Micro Economics',
+    facultyName: 'Prof. Rajesh Kumar',
+    room: 'L102',
+    status: 'PRESENT',
+    verificationMethod: 'Palm Biometrics'
+  },
+  {
+    id: 'att-rec-108',
+    date: '17 Oct 2026',
+    time: '09:00 AM - 10:15 AM',
+    courseCode: 'MGT-101',
+    courseName: 'Organizational Management',
+    facultyName: 'Prof. David Vance',
+    room: 'A402',
+    status: 'PRESENT',
+    verificationMethod: 'Palm Biometrics'
+  }
+];
+
+// ==========================================
+// STUDENT ACADEMIC TIMETABLE
+// ==========================================
+
+export const MOCK_STUDENT_TIMETABLE: TimetableEntry[] = [
+  // Monday
+  {
+    id: 'tt-mon-1',
+    day: 'Monday',
+    courseCode: 'MKT-201',
+    courseName: 'Marketing Management',
+    facultyName: 'Dr. Sarah Jenkins',
+    room: 'A403',
+    building: 'Academic Block A',
+    startTime: '10:00 AM',
+    endTime: '11:15 AM',
+    credits: 4,
+    status: 'NORMAL'
+  },
+  {
+    id: 'tt-mon-2',
+    day: 'Monday',
+    courseCode: 'FIN-304',
+    courseName: 'Corporate Finance',
+    facultyName: 'Dr. Elena Rostova',
+    room: 'A404',
+    building: 'Academic Block A',
+    startTime: '11:30 AM',
+    endTime: '12:45 PM',
+    credits: 4,
+    status: 'NORMAL'
+  },
+  {
+    id: 'tt-mon-3',
+    day: 'Monday',
+    courseCode: 'ECO-102',
+    courseName: 'Micro Economics',
+    facultyName: 'Prof. Rajesh Kumar',
+    room: 'L102',
+    building: 'Lecture Hall Complex',
+    startTime: '02:00 PM',
+    endTime: '03:15 PM',
+    credits: 3,
+    status: 'NORMAL'
+  },
+
+  // Tuesday
+  {
+    id: 'tt-tue-1',
+    day: 'Tuesday',
+    courseCode: 'MGT-101',
+    courseName: 'Organizational Management',
+    facultyName: 'Prof. David Vance',
+    room: 'A402',
+    building: 'Academic Block A',
+    startTime: '10:00 AM',
+    endTime: '11:15 AM',
+    credits: 3,
+    status: 'NORMAL'
+  },
+  {
+    id: 'tt-tue-2',
+    day: 'Tuesday',
+    courseCode: 'MKT-201',
+    courseName: 'Marketing Management Lab',
+    facultyName: 'Dr. Sarah Jenkins',
+    room: 'Lab B101',
+    building: 'Innovation Block',
+    startTime: '11:30 AM',
+    endTime: '01:00 PM',
+    credits: 2,
+    status: 'NORMAL'
+  },
+
+  // Wednesday
+  {
+    id: 'tt-wed-1',
+    day: 'Wednesday',
+    courseCode: 'FIN-304',
+    courseName: 'Corporate Finance',
+    facultyName: 'Dr. Elena Rostova',
+    room: 'A404',
+    building: 'Academic Block A',
+    startTime: '10:00 AM',
+    endTime: '11:15 AM',
+    credits: 4,
+    status: 'NORMAL'
+  },
+  {
+    id: 'tt-wed-2',
+    day: 'Wednesday',
+    courseCode: 'ECO-102',
+    courseName: 'Micro Economics',
+    facultyName: 'Prof. Rajesh Kumar',
+    room: 'L102',
+    building: 'Lecture Hall Complex',
+    startTime: '11:30 AM',
+    endTime: '12:45 PM',
+    credits: 3,
+    status: 'NORMAL'
+  },
+
+  // Thursday
+  {
+    id: 'tt-thu-1',
+    day: 'Thursday',
+    courseCode: 'MKT-201',
+    courseName: 'Marketing Management',
+    facultyName: 'Dr. Sarah Jenkins',
+    room: 'A403',
+    building: 'Academic Block A',
+    startTime: '10:00 AM',
+    endTime: '11:15 AM',
+    credits: 4,
+    status: 'NORMAL'
+  },
+  {
+    id: 'tt-thu-2',
+    day: 'Thursday',
+    courseCode: 'MGT-101',
+    courseName: 'Organizational Management',
+    facultyName: 'Prof. David Vance',
+    room: 'A402',
+    building: 'Academic Block A',
+    startTime: '02:00 PM',
+    endTime: '03:15 PM',
+    credits: 3,
+    status: 'NORMAL'
+  },
+
+  // Friday
+  {
+    id: 'tt-fri-1',
+    day: 'Friday',
+    courseCode: 'FIN-304',
+    courseName: 'Corporate Finance Simulation',
+    facultyName: 'Dr. Elena Rostova',
+    room: 'FinTech Lab C02',
+    building: 'Academic Block C',
+    startTime: '10:00 AM',
+    endTime: '12:00 PM',
+    credits: 4,
+    status: 'NORMAL'
+  },
+  {
+    id: 'tt-fri-2',
+    day: 'Friday',
+    courseCode: 'ECO-102',
+    courseName: 'Micro Economics Seminar',
+    facultyName: 'Prof. Rajesh Kumar',
+    room: 'L102',
+    building: 'Lecture Hall Complex',
+    startTime: '02:00 PM',
+    endTime: '03:30 PM',
+    credits: 3,
+    status: 'NORMAL'
+  }
+];
+
+// ==========================================
+// REAL SHOP OFFERS & COUPONS
+// ==========================================
+
+export const INITIAL_SHOP_OFFERS: ShopOffer[] = [
+  {
+    id: 'off-1',
+    code: 'COMBO20',
+    title: '20% Off Canteen Combos & Artisanal Coffee',
+    discountPercentage: 20,
+    minOrderAmount: 150,
+    validUntil: '31 Oct 2026',
+    isActive: true,
+    categoryLimit: 'Food'
+  },
+  {
+    id: 'off-2',
+    code: 'EXAMFUEL',
+    title: '15% Off All Campus Store Purchases',
+    discountPercentage: 15,
+    minOrderAmount: 200,
+    validUntil: '15 Nov 2026',
+    isActive: true,
+    categoryLimit: 'All'
+  },
+  {
+    id: 'off-3',
+    code: 'STATIONERY10',
+    title: '10% Off Exam Books & Registers',
+    discountPercentage: 10,
+    minOrderAmount: 100,
+    validUntil: '05 Nov 2026',
+    isActive: true,
+    categoryLimit: 'Stationery'
+  }
+];
+
+// ==========================================
+// REAL STOCK AUDIT & MOVEMENTS
+// ==========================================
+
+export const INITIAL_STOCK_MOVEMENTS: StockMovementRecord[] = [
+  {
+    id: 'sm-1',
+    productId: 'prod-2',
+    productName: 'Grilled Paneer Tikka Sandwich',
+    type: 'SALE',
+    quantityChange: -1,
+    previousStock: 45,
+    newStock: 44,
+    timestamp: 'Today, 10:45 AM',
+    reason: 'Campus Order #ord-101',
+    user: 'PRANAV'
+  },
+  {
+    id: 'sm-2',
+    productId: 'prod-1',
+    productName: 'Artisanal Cold Brew Coffee',
+    type: 'SALE',
+    quantityChange: -1,
+    previousStock: 60,
+    newStock: 59,
+    timestamp: 'Today, 10:45 AM',
+    reason: 'Campus Order #ord-101',
+    user: 'PRANAV'
+  },
+  {
+    id: 'sm-3',
+    productId: 'prod-7',
+    productName: 'Classmate Pulse Spiral Register',
+    type: 'RESTOCK',
+    quantityChange: 50,
+    previousStock: 25,
+    newStock: 75,
+    timestamp: 'Yesterday, 02:00 PM',
+    reason: 'Weekly Wholesale Delivery (ITC Supplier)',
+    user: 'Suresh Nair (Manager)'
+  },
+  {
+    id: 'sm-4',
+    productId: 'prod-9',
+    productName: 'Casio Scientific Calculator fx-991CW',
+    type: 'MANUAL_ADJUSTMENT',
+    quantityChange: 10,
+    previousStock: 5,
+    newStock: 15,
+    timestamp: '21 Oct 2026',
+    reason: 'Warehouse Audit Inventory Correction',
+    user: 'Suresh Nair (Manager)'
+  }
+];
+
+// ==========================================
+// REAL SHOP ENTITY PROFILE
+// ==========================================
+
+export const INITIAL_SHOP_PROFILE: ShopProfile = {
+  id: 'canteen-main',
+  name: 'The Central Quad Cafe & Campus Store',
+  managerName: 'Mr. Suresh Nair',
+  phone: '+91 98112 99001',
+  email: 'quadcafe@nexora.edu',
+  location: 'Student Center Ground Floor (Near Courtyard Fountain)',
+  operatingHours: '07:30 AM – 09:30 PM (Mon–Sat)',
+  category: 'Canteen, Gourmet Coffee, Stationery & Digital Printing',
+  gstin: '07AAAAA0000A1Z5',
+  fssaiNumber: '10019011006542'
+};
+
+// ==========================================
+// REAL LIBRARY ISSUES & CIRCULATION
+// ==========================================
+
+export const INITIAL_LIBRARY_ISSUES: LibraryIssueRecord[] = [
+  {
+    id: 'iss-1',
+    bookId: 'b-1',
+    bookTitle: 'Principles of Marketing (18th Global Ed)',
+    userId: 'usr-001',
+    userName: 'PRANAV',
+    userRole: 'STUDENT',
+    issueDate: '10 Oct 2026',
+    dueDate: '24 Oct 2026',
+    status: 'ISSUED',
+    fineAmount: 0,
+    finePaid: false
+  },
+  {
+    id: 'iss-2',
+    bookId: 'b-2',
+    bookTitle: 'Corporate Finance: Theory and Practice',
+    userId: 'usr-002',
+    userName: 'Aarav Sharma',
+    userRole: 'STUDENT',
+    issueDate: '01 Oct 2026',
+    dueDate: '15 Oct 2026',
+    status: 'OVERDUE',
+    fineAmount: 80,
+    finePaid: false
+  },
+  {
+    id: 'iss-3',
+    bookId: 'b-3',
+    bookTitle: 'Artificial Intelligence: A Modern Approach',
+    userId: 'fac-01',
+    userName: 'Dr. Sarah Jenkins',
+    userRole: 'FACULTY',
+    issueDate: '15 Sep 2026',
+    dueDate: '15 Nov 2026',
+    status: 'ISSUED',
+    fineAmount: 0,
+    finePaid: false
+  },
+  {
+    id: 'iss-4',
+    bookId: 'b-4',
+    bookTitle: 'Microeconomic Analysis (Hal Varian)',
+    userId: 'usr-005',
+    userName: 'Sneha Patel',
+    userRole: 'STUDENT',
+    issueDate: '25 Sep 2026',
+    dueDate: '09 Oct 2026',
+    returnDate: '09 Oct 2026',
+    status: 'RETURNED',
+    fineAmount: 0,
+    finePaid: true
+  }
+];
+
+// ==========================================
+// REAL CAMPUS FACILITIES & HOSTELS
+// ==========================================
+
+export const INITIAL_FACILITIES: FacilityRecord[] = [
+  {
+    id: 'fac-hostel-a',
+    name: 'Hostel Block A (Senior Boys)',
+    type: 'HOSTEL_BOYS',
+    building: 'Hostel Complex West',
+    location: 'North Campus Lane 2',
+    capacity: 450,
+    currentOccupancy: 420,
+    inCharge: 'Prof. S. N. Mukherjee (Warden)',
+    contactPhone: '+91 98451 11220',
+    status: 'OPERATIONAL',
+    amenities: ['High-speed Wi-Fi', 'Solar Water Heating', 'Study Room', 'Indoor Gym', 'Biometric Palm Turnstile']
+  },
+  {
+    id: 'fac-hostel-b',
+    name: 'Hostel Block B (Junior Boys)',
+    type: 'HOSTEL_BOYS',
+    building: 'Hostel Complex West',
+    location: 'North Campus Lane 3',
+    capacity: 450,
+    currentOccupancy: 440,
+    inCharge: 'Dr. Arvind Swamy (Warden)',
+    contactPhone: '+91 98451 11221',
+    status: 'OPERATIONAL',
+    amenities: ['Room 304 (PRANAV)', 'Common Recreation Lounge', 'Mess Hall Connector', '24x7 Security']
+  },
+  {
+    id: 'fac-hostel-c',
+    name: 'Hostel Block C (Women\'s Resident Hall)',
+    type: 'HOSTEL_GIRLS',
+    building: 'Hostel Complex East',
+    location: 'East Campus Gardens',
+    capacity: 450,
+    currentOccupancy: 410,
+    inCharge: 'Dr. Meenakshi Sundaram (Chief Warden)',
+    contactPhone: '+91 98451 11222',
+    status: 'OPERATIONAL',
+    amenities: ['Biometric Optical Palm Access', 'Infirmary Annex', 'Reading Rooms', 'Fitness Studio', 'Automated Laundry']
+  },
+  {
+    id: 'fac-mess',
+    name: 'Central Annapoorna Dining Hall',
+    type: 'CAFETERIA',
+    building: 'Student Amenities Hub',
+    location: 'Ground Floor, Amenities Center',
+    capacity: 1200,
+    currentOccupancy: 850,
+    inCharge: 'Mr. B. K. Hegde (Mess Supervisor)',
+    contactPhone: '+91 98451 11230',
+    status: 'OPERATIONAL',
+    amenities: ['Nutritional Quality Certified', 'Veg & Non-Veg Counters', 'Continuous Sanitization', 'Digital Palm Coupon Pass']
+  },
+  {
+    id: 'fac-lib',
+    name: 'Rabindranath Tagore Central Library',
+    type: 'LIBRARY',
+    building: 'Academic Block B',
+    location: 'Floors 1, 2 & 3',
+    capacity: 650,
+    currentOccupancy: 380,
+    inCharge: 'Dr. Radhakrishnan (Chief University Librarian)',
+    contactPhone: '+91 98451 11240',
+    status: 'OPERATIONAL',
+    amenities: ['120,000 Physical Volumes', 'IEEE/ACM Digital Portal', 'Quiet Research Cubicles', 'Palm Kiosks']
+  },
+  {
+    id: 'fac-acad-a',
+    name: 'Sir C.V. Raman Academic Block A',
+    type: 'ACADEMIC_BLOCK',
+    building: 'Academic Quadrangle',
+    location: 'Main University Boulevard',
+    capacity: 2200,
+    currentOccupancy: 1850,
+    inCharge: 'Dean of Academic Affairs',
+    contactPhone: '+91 98451 11250',
+    status: 'OPERATIONAL',
+    amenities: ['Smart Lecture Theatres (A401–A410)', 'Optical Palm Attendance Scanners', 'Air Conditioned']
+  },
+  {
+    id: 'fac-sports',
+    name: 'Major Dhyan Chand Indoor Sports Arena',
+    type: 'SPORTS_COMPLEX',
+    building: 'Sports Complex',
+    location: 'South Campus Ring Road',
+    capacity: 800,
+    currentOccupancy: 210,
+    inCharge: 'Col. Ranjit Singh (Director of Physical Education)',
+    contactPhone: '+91 98451 11260',
+    status: 'OPERATIONAL',
+    amenities: ['Wooden Badminton Courts', 'Olympic Swimming Pool', 'Table Tennis Hall', 'Squash Court']
+  },
+  {
+    id: 'fac-lab',
+    name: 'Alan Turing AI & Autonomous Systems Lab',
+    type: 'LAB',
+    building: 'Innovation Block C',
+    location: 'Floor 3, Innovation Block',
+    capacity: 120,
+    currentOccupancy: 95,
+    inCharge: 'Dr. Sarah Jenkins',
+    contactPhone: '+91 98451 11270',
+    status: 'OPERATIONAL',
+    amenities: ['NVIDIA H100 GPU Clusters', 'Optical Palm Scanner Development Kits', 'Edge TPU Workstations']
+  }
+];
+
 

@@ -33,15 +33,15 @@ export const PollsPage: React.FC = () => {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       padding: 14,
-                      borderColor: isSelected ? '#F59E0B' : 'var(--border-color)',
-                      backgroundColor: isSelected ? 'rgba(245, 158, 11, 0.16)' : 'rgba(255, 255, 255, 0.03)',
-                      color: isSelected ? '#FBBF24' : '#F8FAFC'
+                      borderColor: isSelected ? '#2563EB' : '#E2E8F0',
+                      backgroundColor: isSelected ? '#EFF6FF' : '#F8FAFC',
+                      color: isSelected ? '#2563EB' : '#0F172A'
                     }}
                   >
                     <span style={{ fontWeight: isSelected ? 800 : 600 }}>{opt.text}</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: isSelected ? '#F59E0B' : '#94A3B8' }}>{pct}% ({opt.votes} votes)</span>
-                      {isSelected && <CheckCircle2 size={16} color="#F59E0B" />}
+                      <span style={{ fontSize: 12, fontWeight: 700, color: isSelected ? '#2563EB' : '#64748B' }}>{pct}% ({opt.votes} votes)</span>
+                      {isSelected && <CheckCircle2 size={16} color="#2563EB" />}
                     </div>
                   </button>
                 );

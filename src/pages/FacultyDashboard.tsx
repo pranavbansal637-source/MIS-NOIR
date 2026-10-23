@@ -33,7 +33,11 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
     setActiveFacultyId,
     assignments,
     gradeAssignmentSubmission,
-    terminals
+    terminals,
+    liveAttendanceSession,
+    startLiveAttendanceSession,
+    closeLiveAttendanceSession,
+    createAssignment
   } = useApp();
 
   // Internal tab state if not driven by parent
@@ -42,7 +46,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
   const setTab = onNavigate || setLocalTab;
 
   // Live Attendance Session State
-  const [sessionActive, setSessionActive] = useState(false);
+  const sessionActive = liveAttendanceSession.status === 'LIVE';
   const [selectedCourseIndex, setSelectedCourseIndex] = useState(0);
   const [liveCount, setLiveCount] = useState(44);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -56,6 +60,14 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
     { id: 'std-8897', name: 'Devendra Joshi', roll: 'NR-2026-8897', status: 'LATE', method: 'Manual Override', cgpa: 8.10, att: 79 }
   ]);
 
+  // Assignment Creation Modal State
+  const [showCreateAsgModal, setShowCreateAsgModal] = useState(false);
+  const [newAsgCourseCode, setNewAsgCourseCode] = useState(activeFaculty.courses[0]?.code || 'CS-401');
+  const [newAsgTitle, setNewAsgTitle] = useState('');
+  const [newAsgDesc, setNewAsgDesc] = useState('');
+  const [newAsgDueDate, setNewAsgDueDate] = useState('');
+  const [newAsgMaxMarks, setNewAsgMaxMarks] = useState(100);
+
   // Selected Assignment for Grading Modal
   const [gradingModalAsg, setGradingModalAsg] = useState<any | null>(null);
   const [marksInput, setMarksInput] = useState<Record<string, number>>({});
@@ -67,9 +79,9 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
   const currentCourse = activeFaculty.courses[selectedCourseIndex] || activeFaculty.courses[0];
 
   const handleStartSession = () => {
-    setSessionActive(true);
+    startLiveAttendanceSession(currentCourse.code, currentCourse.name, currentCourse.room);
     setIsSubmitted(false);
-    showToast(`Live Palm & QR Session active for ${currentCourse.name} (${currentCourse.room})`);
+    showToast(`Live Palm & QR Session activated for ${currentCourse.name} (${currentCourse.room})`);
 
     const interval = setInterval(() => {
       setLiveCount((prev) => {
@@ -83,9 +95,35 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
   };
 
   const handleStopAndSubmit = () => {
-    setSessionActive(false);
+    closeLiveAttendanceSession();
     setIsSubmitted(true);
     showToast(`✓ Attendance finalized & submitted: ${liveCount} Present, ${currentCourse.studentsCount - liveCount} Absent.`);
+  };
+
+  const handleCreateAssignmentSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAsgTitle.trim()) {
+      showToast('Please enter an assignment title');
+      return;
+    }
+    if (!newAsgDueDate) {
+      showToast('Please select a due date');
+      return;
+    }
+    const matchedCourse = activeFaculty.courses.find((c) => c.code === newAsgCourseCode) || activeFaculty.courses[0];
+    createAssignment({
+      courseCode: matchedCourse.code,
+      courseName: matchedCourse.name,
+      title: newAsgTitle.trim(),
+      description: newAsgDesc.trim() || 'Complete the assigned problem set and submit before deadline.',
+      dueDate: newAsgDueDate,
+      maxMarks: Number(newAsgMaxMarks) || 100,
+      totalStudents: matchedCourse.studentsCount || 50
+    });
+    setShowCreateAsgModal(false);
+    setNewAsgTitle('');
+    setNewAsgDesc('');
+    setNewAsgDueDate('');
   };
 
   const toggleStudentStatus = (id: string) => {
@@ -121,8 +159,9 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 20,
-          background: 'linear-gradient(135deg, rgba(16, 21, 32, 0.95) 0%, rgba(8, 11, 18, 0.98) 100%)',
-          border: '1px solid rgba(245, 158, 11, 0.35)'
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 60%, #EFF6FF 100%)',
+          border: '1px solid #E2E8F0',
+          boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.06)'
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
@@ -133,22 +172,22 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
               width: 72,
               height: 72,
               borderRadius: '50%',
-              border: '3px solid #F59E0B',
+              border: '3px solid #2563EB',
               objectFit: 'cover',
-              boxShadow: '0 4px 15px rgba(245, 158, 11, 0.35)'
+              boxShadow: '0 4px 14px rgba(37, 99, 235, 0.2)'
             }}
           />
           <div>
-            <div style={{ fontSize: 11, fontWeight: 900, color: '#F59E0B', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+            <div style={{ fontSize: 11, fontWeight: 900, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
               NEXORA FACULTY INSTRUCTOR OS
             </div>
-            <h1 style={{ fontSize: 24, fontWeight: 900, color: '#F8FAFC', marginTop: 2 }}>
+            <h1 style={{ fontSize: 24, fontWeight: 900, color: '#0F172A', marginTop: 2 }}>
               {activeFaculty.name}
             </h1>
-            <p style={{ fontSize: 13, color: '#CBD5E1', fontWeight: 600 }}>
+            <p style={{ fontSize: 13, color: '#475569', fontWeight: 600 }}>
               {activeFaculty.designation} • {activeFaculty.department}
             </p>
-            <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
+            <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
               {activeFaculty.degree} • {activeFaculty.office}
             </div>
           </div>
@@ -166,19 +205,19 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
               className="input-field"
               style={{
                 fontWeight: 700,
-                color: '#F8FAFC',
-                backgroundColor: 'rgba(20, 26, 38, 0.95)',
-                borderColor: 'rgba(245, 158, 11, 0.35)',
+                color: '#0F172A',
+                backgroundColor: '#FFFFFF',
+                borderColor: '#CBD5E1',
                 paddingRight: 32
               }}
             >
               {facultyList.map((f) => (
-                <option key={f.id} value={f.id} style={{ background: '#0F141E', color: '#F8FAFC' }}>
+                <option key={f.id} value={f.id} style={{ background: '#FFFFFF', color: '#0F172A' }}>
                   {f.name} ({f.department.split(' ')[0]})
                 </option>
               ))}
             </select>
-            <ChevronDown size={16} color="#F59E0B" style={{ position: 'absolute', right: 12, top: 12, pointerEvents: 'none' }} />
+            <ChevronDown size={16} color="#2563EB" style={{ position: 'absolute', right: 12, top: 12, pointerEvents: 'none' }} />
           </div>
         </div>
       </div>
@@ -207,12 +246,12 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                 fontWeight: isActive ? 800 : 600,
                 padding: '8px 18px',
                 whiteSpace: 'nowrap',
-                backgroundColor: isActive ? 'rgba(245, 158, 11, 0.18)' : 'rgba(255, 255, 255, 0.03)',
-                borderColor: isActive ? 'rgba(245, 158, 11, 0.45)' : 'var(--border-color)',
-                color: isActive ? '#FBBF24' : '#94A3B8'
+                backgroundColor: isActive ? '#EFF6FF' : '#FFFFFF',
+                borderColor: isActive ? '#BFDBFE' : '#E2E8F0',
+                color: isActive ? '#1D4ED8' : '#475569'
               }}
             >
-              <Icon size={15} color={isActive ? '#F59E0B' : '#64748B'} />
+              <Icon size={15} color={isActive ? '#2563EB' : '#64748B'} />
               {tab.label}
             </button>
           );
@@ -226,38 +265,38 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* KPI Summary */}
           <div className="grid-4">
-            <div className="noir-card" style={{ borderLeft: '4px solid #F59E0B' }}>
-              <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase' }}>TODAY'S LECTURES</div>
-              <div style={{ fontSize: 32, fontWeight: 900, color: '#F8FAFC', marginTop: 4 }}>{activeFaculty.courses.length}</div>
-              <div style={{ fontSize: 12, color: '#F59E0B', marginTop: 4, fontWeight: 700 }}>Next: {currentCourse.code} at 10:00 AM</div>
+            <div className="noir-card" style={{ borderLeft: '4px solid #2563EB' }}>
+              <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase' }}>TODAY'S LECTURES</div>
+              <div style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>{activeFaculty.courses.length}</div>
+              <div style={{ fontSize: 12, color: '#2563EB', marginTop: 4, fontWeight: 700 }}>Next: {currentCourse.code} at 10:00 AM</div>
             </div>
 
-            <div className="noir-card" style={{ borderLeft: '4px solid #10B981' }}>
-              <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase' }}>ENROLLED STUDENTS</div>
-              <div style={{ fontSize: 32, fontWeight: 900, color: '#10B981', marginTop: 4 }}>
+            <div className="noir-card" style={{ borderLeft: '4px solid #059669' }}>
+              <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase' }}>ENROLLED STUDENTS</div>
+              <div style={{ fontSize: 32, fontWeight: 900, color: '#059669', marginTop: 4 }}>
                 {activeFaculty.courses.reduce((sum, c) => sum + c.studentsCount, 0)}
               </div>
-              <div style={{ fontSize: 12, color: '#10B981', marginTop: 4, fontWeight: 700 }}>✓ 100% Palm Enrolled</div>
+              <div style={{ fontSize: 12, color: '#059669', marginTop: 4, fontWeight: 700 }}>✓ 100% Palm Enrolled</div>
             </div>
 
-            <div className="noir-card" style={{ borderLeft: '4px solid #F59E0B' }}>
-              <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase' }}>AVERAGE ATTENDANCE</div>
-              <div style={{ fontSize: 32, fontWeight: 900, color: '#F59E0B', marginTop: 4 }}>89.2%</div>
-              <div style={{ fontSize: 12, color: '#FBBF24', marginTop: 4, fontWeight: 700 }}>Highest in Academic Block A</div>
+            <div className="noir-card" style={{ borderLeft: '4px solid #D97706' }}>
+              <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase' }}>AVERAGE ATTENDANCE</div>
+              <div style={{ fontSize: 32, fontWeight: 900, color: '#D97706', marginTop: 4 }}>89.2%</div>
+              <div style={{ fontSize: 12, color: '#D97706', marginTop: 4, fontWeight: 700 }}>Highest in Academic Block A</div>
             </div>
 
-            <div className="noir-card" style={{ borderLeft: '4px solid #F59E0B' }}>
-              <div style={{ fontSize: 11, fontWeight: 900, color: '#94A3B8', textTransform: 'uppercase' }}>STUDENT RATING</div>
-              <div style={{ fontSize: 32, fontWeight: 900, color: '#F59E0B', marginTop: 4 }}>
-                {activeFaculty.rating} <span style={{ fontSize: 14, color: '#94A3B8' }}>/ 5.0</span>
+            <div className="noir-card" style={{ borderLeft: '4px solid #4F46E5' }}>
+              <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase' }}>STUDENT RATING</div>
+              <div style={{ fontSize: 32, fontWeight: 900, color: '#4F46E5', marginTop: 4 }}>
+                {activeFaculty.rating} <span style={{ fontSize: 14, color: '#64748B' }}>/ 5.0</span>
               </div>
-              <div style={{ fontSize: 12, color: '#FBBF24', marginTop: 4, fontWeight: 700 }}>★ 184 Semester Reviews</div>
+              <div style={{ fontSize: 12, color: '#4F46E5', marginTop: 4, fontWeight: 700 }}>★ 184 Semester Reviews</div>
             </div>
           </div>
 
           {/* Today's Courses List */}
           <div className="noir-card">
-            <h3 style={{ fontSize: 18, fontWeight: 900, color: '#F8FAFC', marginBottom: 16 }}>
+            <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A', marginBottom: 16 }}>
               Today's Teaching Schedule
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -270,8 +309,8 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: 18,
-                    backgroundColor: i === 0 ? 'rgba(245, 158, 11, 0.1)' : 'rgba(255, 255, 255, 0.03)',
-                    border: i === 0 ? '1px solid rgba(245, 158, 11, 0.35)' : '1px solid rgba(255, 255, 255, 0.08)',
+                    backgroundColor: i === 0 ? '#EFF6FF' : '#F8FAFC',
+                    border: i === 0 ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
                     borderRadius: 14,
                     gap: 16
                   }}
@@ -281,10 +320,10 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                       <span className={`badge ${i === 0 ? 'badge-primary' : 'badge-neutral'}`}>
                         {c.code}
                       </span>
-                      <h4 style={{ fontSize: 17, fontWeight: 900, color: '#F8FAFC' }}>{c.name}</h4>
+                      <h4 style={{ fontSize: 17, fontWeight: 900, color: '#0F172A' }}>{c.name}</h4>
                     </div>
-                    <div style={{ fontSize: 13, color: '#94A3B8', marginTop: 4 }}>
-                      Timing: <strong style={{ color: '#F8FAFC' }}>{c.time}</strong> • Location: <strong style={{ color: '#F8FAFC' }}>{c.room}</strong> • Enrolled: <strong style={{ color: '#F8FAFC' }}>{c.studentsCount} Students</strong>
+                    <div style={{ fontSize: 13, color: '#64748B', marginTop: 4 }}>
+                      Timing: <strong style={{ color: '#0F172A' }}>{c.time}</strong> • Location: <strong style={{ color: '#0F172A' }}>{c.room}</strong> • Enrolled: <strong style={{ color: '#0F172A' }}>{c.studentsCount} Students</strong>
                     </div>
                   </div>
 
@@ -387,10 +426,10 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
           <div className="noir-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <div>
-                <h3 style={{ fontSize: 18, fontWeight: 900, color: '#F8FAFC' }}>
+                <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A' }}>
                   Live Class Roll Call & Override Controls
                 </h3>
-                <p style={{ fontSize: 13, color: '#94A3B8' }}>
+                <p style={{ fontSize: 13, color: '#64748B' }}>
                   Students checking in via palm terminal outside {currentCourse.room} appear in real-time
                 </p>
               </div>
@@ -406,8 +445,8 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: 14,
-                    backgroundColor: s.status === 'PRESENT' ? 'rgba(16, 185, 129, 0.08)' : s.status === 'ABSENT' ? 'rgba(239, 68, 68, 0.08)' : 'rgba(245, 158, 11, 0.08)',
-                    border: s.status === 'PRESENT' ? '1px solid rgba(16, 185, 129, 0.25)' : s.status === 'ABSENT' ? '1px solid rgba(239, 68, 68, 0.25)' : '1px solid rgba(245, 158, 11, 0.25)',
+                    backgroundColor: s.status === 'PRESENT' ? '#ECFDF5' : s.status === 'ABSENT' ? '#FEF2F2' : '#FFFBEB',
+                    border: s.status === 'PRESENT' ? '1px solid #A7F3D0' : s.status === 'ABSENT' ? '1px solid #FECACA' : '1px solid #FDE68A',
                     borderRadius: 12
                   }}
                 >
@@ -417,7 +456,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                         width: 36,
                         height: 36,
                         borderRadius: '50%',
-                        backgroundColor: s.status === 'PRESENT' ? '#10B981' : s.status === 'ABSENT' ? '#EF4444' : '#F59E0B',
+                        backgroundColor: s.status === 'PRESENT' ? '#059669' : s.status === 'ABSENT' ? '#DC2626' : '#D97706',
                         color: '#FFFFFF',
                         display: 'flex',
                         alignItems: 'center',
@@ -429,10 +468,10 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                       {s.name.charAt(0)}
                     </div>
                     <div>
-                      <div style={{ fontWeight: 800, color: '#F8FAFC', fontSize: 14 }}>
-                        {s.name} <span style={{ color: '#94A3B8', fontWeight: 600 }}>({s.roll})</span>
+                      <div style={{ fontWeight: 800, color: '#0F172A', fontSize: 14 }}>
+                        {s.name} <span style={{ color: '#64748B', fontWeight: 600 }}>({s.roll})</span>
                       </div>
-                      <div style={{ fontSize: 12, color: '#94A3B8' }}>
+                      <div style={{ fontSize: 12, color: '#64748B' }}>
                         Method: <strong>{s.method}</strong> • Term CGPA: {s.cgpa}
                       </div>
                     </div>
@@ -465,10 +504,10 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
           <div className="noir-card">
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 16 }}>
               <div>
-                <h3 style={{ fontSize: 18, fontWeight: 900, color: '#F8FAFC' }}>
+                <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A' }}>
                   Enrolled Students Directory ({currentCourse.name})
                 </h3>
-                <p style={{ fontSize: 13, color: '#94A3B8' }}>
+                <p style={{ fontSize: 13, color: '#64748B' }}>
                   Total 50 students registered for {currentCourse.code}
                 </p>
               </div>
@@ -483,7 +522,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                     onChange={(e) => setRosterSearch(e.target.value)}
                     style={{ paddingLeft: 36, fontSize: 13 }}
                   />
-                  <Search size={16} color="#94A3B8" style={{ position: 'absolute', left: 12, top: 12 }} />
+                  <Search size={16} color="#64748B" style={{ position: 'absolute', left: 12, top: 12 }} />
                 </div>
               </div>
             </div>
@@ -491,7 +530,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: 13 }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.1)', color: '#94A3B8' }}>
+                  <tr style={{ borderBottom: '1px solid #E2E8F0', color: '#64748B' }}>
                     <th style={{ padding: '12px 14px' }}>STUDENT NAME</th>
                     <th style={{ padding: '12px 14px' }}>ROLL NO</th>
                     <th style={{ padding: '12px 14px' }}>ATTENDANCE</th>
@@ -504,13 +543,13 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                   {studentsRoster
                     .filter((s) => s.name.toLowerCase().includes(rosterSearch.toLowerCase()) || s.roll.toLowerCase().includes(rosterSearch.toLowerCase()))
                     .map((s) => (
-                      <tr key={s.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                        <td style={{ padding: '12px 14px', fontWeight: 800, color: '#F8FAFC' }}>{s.name}</td>
-                        <td style={{ padding: '12px 14px', color: '#F59E0B', fontWeight: 700 }}>{s.roll}</td>
+                      <tr key={s.id} style={{ borderBottom: '1px solid #F1F5F9' }}>
+                        <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0F172A' }}>{s.name}</td>
+                        <td style={{ padding: '12px 14px', color: '#2563EB', fontWeight: 700 }}>{s.roll}</td>
                         <td style={{ padding: '12px 14px' }}>
-                          <span style={{ fontWeight: 800, color: s.att >= 75 ? '#10B981' : '#EF4444' }}>{s.att}%</span>
+                          <span style={{ fontWeight: 800, color: s.att >= 75 ? '#059669' : '#DC2626' }}>{s.att}%</span>
                         </td>
-                        <td style={{ padding: '12px 14px', fontWeight: 800 }}>{s.cgpa}</td>
+                        <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0F172A' }}>{s.cgpa}</td>
                         <td style={{ padding: '12px 14px' }}>
                           <span className="badge badge-success">✓ Verified</span>
                         </td>
@@ -539,15 +578,15 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h2 style={{ fontSize: 20, fontWeight: 900, color: '#F8FAFC' }}>
+              <h2 style={{ fontSize: 20, fontWeight: 900, color: '#0F172A' }}>
                 Course Assignments & Project Submissions
               </h2>
-              <p style={{ fontSize: 13, color: '#94A3B8' }}>
+              <p style={{ fontSize: 13, color: '#64748B' }}>
                 Review and grade student submissions for your courses
               </p>
             </div>
             <button
-              onClick={() => showToast('New assignment assignment creation module opened.')}
+              onClick={() => setShowCreateAsgModal(true)}
               className="btn btn-primary"
               style={{ gap: 6 }}
             >
@@ -561,19 +600,19 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                   <div>
                     <span className="badge badge-primary" style={{ marginBottom: 6 }}>{asg.courseCode}</span>
-                    <h3 style={{ fontSize: 18, fontWeight: 900, color: '#F8FAFC' }}>{asg.title}</h3>
-                    <p style={{ fontSize: 13, color: '#94A3B8', marginTop: 4 }}>{asg.description}</p>
+                    <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A' }}>{asg.title}</h3>
+                    <p style={{ fontSize: 13, color: '#64748B', marginTop: 4 }}>{asg.description}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 12, color: '#94A3B8' }}>Due Date</div>
-                    <strong style={{ color: '#EF4444', fontSize: 14 }}>{asg.dueDate}</strong>
+                    <div style={{ fontSize: 12, color: '#64748B' }}>Due Date</div>
+                    <strong style={{ color: '#DC2626', fontSize: 14 }}>{asg.dueDate}</strong>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: 14 }}>
-                  <div style={{ display: 'flex', gap: 24, fontSize: 13 }}>
-                    <div>Submissions: <strong>{asg.totalSubmissions} / {asg.totalStudents}</strong></div>
-                    <div>Max Marks: <strong>{asg.maxMarks}</strong></div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #E2E8F0', paddingTop: 14 }}>
+                  <div style={{ display: 'flex', gap: 24, fontSize: 13, color: '#475569' }}>
+                    <div>Submissions: <strong style={{ color: '#0F172A' }}>{asg.totalSubmissions} / {asg.totalStudents}</strong></div>
+                    <div>Max Marks: <strong style={{ color: '#0F172A' }}>{asg.maxMarks}</strong></div>
                   </div>
 
                   <button
@@ -581,7 +620,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                     className="btn btn-secondary btn-sm"
                     style={{ fontWeight: 800, gap: 6 }}
                   >
-                    <Award size={15} color="#F59E0B" /> Evaluate Submissions ({asg.submissions.length})
+                    <Award size={15} color="#2563EB" /> Evaluate Submissions ({asg.submissions.length})
                   </button>
                 </div>
               </div>
@@ -595,31 +634,31 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
       {/* ======================================================== */}
       {currentTab === 'faculty-schedule' && (
         <div className="noir-card">
-          <h3 style={{ fontSize: 18, fontWeight: 900, color: '#F8FAFC', marginBottom: 16 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A', marginBottom: 16 }}>
             Weekly Teaching Timetable ({activeFaculty.name})
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, minWidth: 680, overflowX: 'auto' }}>
             {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day, idx) => (
-              <div key={day} style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', borderRadius: 12, padding: 14, border: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                <div style={{ fontWeight: 900, color: '#F8FAFC', fontSize: 14, marginBottom: 12, textAlign: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', paddingBottom: 6 }}>
+              <div key={day} style={{ backgroundColor: '#F8FAFC', borderRadius: 12, padding: 14, border: '1px solid #E2E8F0' }}>
+                <div style={{ fontWeight: 900, color: '#0F172A', fontSize: 14, marginBottom: 12, textAlign: 'center', borderBottom: '1px solid #E2E8F0', paddingBottom: 6 }}>
                   {day}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.12)', padding: 10, borderRadius: 8, border: '1px solid rgba(245, 158, 11, 0.3)', fontSize: 12 }}>
-                    <strong style={{ color: '#FBBF24' }}>10:00 - 11:15 AM</strong>
-                    <div style={{ fontWeight: 800, marginTop: 2, color: '#F8FAFC' }}>{activeFaculty.courses[0]?.code}</div>
-                    <div style={{ color: '#CBD5E1' }}>{activeFaculty.courses[0]?.room}</div>
+                  <div style={{ backgroundColor: '#EFF6FF', padding: 10, borderRadius: 8, border: '1px solid #BFDBFE', fontSize: 12 }}>
+                    <strong style={{ color: '#1D4ED8' }}>10:00 - 11:15 AM</strong>
+                    <div style={{ fontWeight: 800, marginTop: 2, color: '#0F172A' }}>{activeFaculty.courses[0]?.code}</div>
+                    <div style={{ color: '#475569' }}>{activeFaculty.courses[0]?.room}</div>
                   </div>
 
                   {idx % 2 === 1 && (
-                    <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.04)', padding: 10, borderRadius: 8, border: '1px solid rgba(255, 255, 255, 0.12)', fontSize: 12 }}>
-                      <strong style={{ color: '#F59E0B' }}>02:00 - 03:15 PM</strong>
-                      <div style={{ fontWeight: 800, marginTop: 2, color: '#F8FAFC' }}>{activeFaculty.courses[1]?.code || 'Research Lab'}</div>
-                      <div style={{ color: '#CBD5E1' }}>Tech Block Lab</div>
+                    <div style={{ backgroundColor: '#F1F5F9', padding: 10, borderRadius: 8, border: '1px solid #CBD5E1', fontSize: 12 }}>
+                      <strong style={{ color: '#2563EB' }}>02:00 - 03:15 PM</strong>
+                      <div style={{ fontWeight: 800, marginTop: 2, color: '#0F172A' }}>{activeFaculty.courses[1]?.code || 'Research Lab'}</div>
+                      <div style={{ color: '#475569' }}>Tech Block Lab</div>
                     </div>
                   )}
 
-                  <div style={{ padding: 8, backgroundColor: 'rgba(255, 255, 255, 0.02)', borderRadius: 8, border: '1px dashed rgba(255, 255, 255, 0.15)', fontSize: 11, color: '#94A3B8', textAlign: 'center' }}>
+                  <div style={{ padding: 8, backgroundColor: '#FFFFFF', borderRadius: 8, border: '1px dashed #CBD5E1', fontSize: 11, color: '#64748B', textAlign: 'center' }}>
                     Office Hours: 03:30 PM
                   </div>
                 </div>
@@ -634,7 +673,7 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
       {/* ======================================================== */}
       {currentTab === 'terminals' && (
         <div className="noir-card">
-          <h3 style={{ fontSize: 18, fontWeight: 900, color: '#F8FAFC', marginBottom: 16 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A', marginBottom: 16 }}>
             Assigned Lecture Hall Palm Terminals
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -646,17 +685,17 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: 16,
-                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  backgroundColor: '#F8FAFC',
                   borderRadius: 12,
-                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                  border: '1px solid #E2E8F0'
                 }}
               >
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span className="badge badge-success">ONLINE</span>
-                    <strong style={{ fontSize: 15, color: '#F8FAFC' }}>{term.locationName}</strong>
+                    <strong style={{ fontSize: 15, color: '#0F172A' }}>{term.locationName}</strong>
                   </div>
-                  <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 4 }}>
+                  <div style={{ fontSize: 12, color: '#64748B', marginTop: 4 }}>
                     Terminal Code: {term.terminalCode} • IP: {term.ipAddress} • Ping: {term.lastPing}
                   </div>
                 </div>
@@ -682,22 +721,22 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
             <img
               src={activeFaculty.avatar}
               alt={activeFaculty.name}
-              style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '3px solid #F59E0B' }}
+              style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '3px solid #2563EB' }}
             />
             <div>
-              <h2 style={{ fontSize: 24, fontWeight: 900, color: '#F8FAFC' }}>{activeFaculty.name}</h2>
-              <div style={{ fontSize: 14, color: '#F59E0B', fontWeight: 800 }}>{activeFaculty.designation}</div>
-              <div style={{ fontSize: 13, color: '#94A3B8' }}>{activeFaculty.department}</div>
+              <h2 style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>{activeFaculty.name}</h2>
+              <div style={{ fontSize: 14, color: '#2563EB', fontWeight: 800 }}>{activeFaculty.designation}</div>
+              <div style={{ fontSize: 13, color: '#64748B' }}>{activeFaculty.department}</div>
             </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, fontSize: 13 }}>
-            <div>Email: <strong style={{ color: '#F8FAFC' }}>{activeFaculty.email}</strong></div>
-            <div>Phone: <strong style={{ color: '#F8FAFC' }}>{activeFaculty.phone}</strong></div>
-            <div>Cabin Office: <strong style={{ color: '#F8FAFC' }}>{activeFaculty.office}</strong></div>
-            <div>Education: <strong style={{ color: '#F8FAFC' }}>{activeFaculty.degree}</strong></div>
-            <div>Student Evaluation Rating: <strong style={{ color: '#F59E0B' }}>{activeFaculty.rating} / 5.0</strong></div>
-            <div>Specializations: <strong style={{ color: '#F8FAFC' }}>{activeFaculty.specialization.join(', ')}</strong></div>
+            <div>Email: <strong style={{ color: '#0F172A' }}>{activeFaculty.email}</strong></div>
+            <div>Phone: <strong style={{ color: '#0F172A' }}>{activeFaculty.phone}</strong></div>
+            <div>Cabin Office: <strong style={{ color: '#0F172A' }}>{activeFaculty.office}</strong></div>
+            <div>Education: <strong style={{ color: '#0F172A' }}>{activeFaculty.degree}</strong></div>
+            <div>Student Evaluation Rating: <strong style={{ color: '#D97706' }}>{activeFaculty.rating} / 5.0</strong></div>
+            <div>Specializations: <strong style={{ color: '#0F172A' }}>{activeFaculty.specialization.join(', ')}</strong></div>
           </div>
         </div>
       )}
@@ -756,6 +795,111 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ======================================================== */}
+      {/* CREATE ASSIGNMENT MODAL */}
+      {/* ======================================================== */}
+      {showCreateAsgModal && (
+        <div className="modal-backdrop" onClick={() => setShowCreateAsgModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 540, padding: 24 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
+              <div>
+                <h3 style={{ fontSize: 18, fontWeight: 900 }}>Create New Course Assignment</h3>
+                <p style={{ fontSize: 12, color: '#64748B' }}>Publish a problem set or project to enrolled students</p>
+              </div>
+              <button onClick={() => setShowCreateAsgModal(false)} className="btn btn-ghost btn-icon btn-sm">
+                <XSquare size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateAssignmentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div>
+                <label style={{ fontSize: 11, fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'block', marginBottom: 4 }}>
+                  Assigned Course
+                </label>
+                <select
+                  value={newAsgCourseCode}
+                  onChange={(e) => setNewAsgCourseCode(e.target.value)}
+                  className="input-field"
+                  style={{ fontWeight: 700 }}
+                >
+                  {activeFaculty.courses.map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.code} — {c.name} ({c.studentsCount} students)
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label style={{ fontSize: 11, fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'block', marginBottom: 4 }}>
+                  Assignment Title *
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g., Assignment 3: Distributed Consensus & Raft Protocol"
+                  value={newAsgTitle}
+                  onChange={(e) => setNewAsgTitle(e.target.value)}
+                  className="input-field"
+                  required
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: 11, fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'block', marginBottom: 4 }}>
+                  Instructions & Requirements
+                </label>
+                <textarea
+                  placeholder="Provide detailed submission requirements, rubric, format (PDF/Zip), and guidelines..."
+                  value={newAsgDesc}
+                  onChange={(e) => setNewAsgDesc(e.target.value)}
+                  className="input-field"
+                  rows={3}
+                  style={{ resize: 'vertical' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div>
+                  <label style={{ fontSize: 11, fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'block', marginBottom: 4 }}>
+                    Submission Due Date *
+                  </label>
+                  <input
+                    type="date"
+                    value={newAsgDueDate}
+                    onChange={(e) => setNewAsgDueDate(e.target.value)}
+                    className="input-field"
+                    required
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: 11, fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'block', marginBottom: 4 }}>
+                    Maximum Marks *
+                  </label>
+                  <input
+                    type="number"
+                    min="10"
+                    max="500"
+                    value={newAsgMaxMarks}
+                    onChange={(e) => setNewAsgMaxMarks(Number(e.target.value))}
+                    className="input-field"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 12 }}>
+                <button type="button" onClick={() => setShowCreateAsgModal(false)} className="btn btn-secondary">
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-primary" style={{ fontWeight: 800 }}>
+                  Publish Assignment & Notify Students
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

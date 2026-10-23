@@ -15,12 +15,12 @@ export const PlacementsPage: React.FC = () => {
       </div>
 
       {/* Student CGPA Status */}
-      <div className="noir-card" style={{ background: 'linear-gradient(135deg, rgba(20, 26, 38, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%)', border: '1px solid rgba(245, 158, 11, 0.35)', color: '#F8FAFC' }}>
+      <div className="noir-card" style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #EFF6FF 100%)', border: '1px solid #BFDBFE', boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.05)', color: '#0F172A' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: '#94A3B8' }}>OFFICIAL CUMULATIVE GPA (CGPA)</div>
-            <div style={{ fontSize: 36, fontWeight: 800, marginTop: 4, color: '#FBBF24' }}>{student.cgpa} / 4.00</div>
-            <div style={{ fontSize: 13, color: '#CBD5E1' }}>Eligible for 100% of Tier-1 Corporate Campus Drives</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: '#64748B' }}>OFFICIAL CUMULATIVE GPA (CGPA)</div>
+            <div style={{ fontSize: 36, fontWeight: 800, marginTop: 4, color: '#2563EB' }}>{student.cgpa} / 4.00</div>
+            <div style={{ fontSize: 13, color: '#475569' }}>Eligible for 100% of Tier-1 Corporate Campus Drives</div>
           </div>
         </div>
       </div>

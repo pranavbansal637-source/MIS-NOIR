@@ -52,7 +52,7 @@ export const HostelPage: React.FC = () => {
         <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 12 }}>Active Gate Passes</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {hostelDetails.gatePasses.map((gp) => (
-            <div key={gp.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 12, backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)' }}>
+            <div key={gp.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 12, backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 'var(--radius-md)' }}>
               <div>
                 <strong style={{ fontSize: 14 }}>{gp.reason}</strong>
                 <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Depart: {gp.departureTime} • Return: {gp.returnTime}</div>

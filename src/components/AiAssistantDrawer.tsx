@@ -38,20 +38,20 @@ export const AiAssistantDrawer: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           padding: 0,
-          background: 'rgba(10, 13, 20, 0.98)',
-          border: '1px solid rgba(245, 158, 11, 0.35)',
-          boxShadow: '0 25px 70px rgba(0, 0, 0, 0.8), 0 0 35px rgba(245, 158, 11, 0.2)'
+          background: '#FFFFFF',
+          border: '1px solid #E2E8F0',
+          boxShadow: '0 25px 70px rgba(15, 23, 42, 0.15), 0 0 35px rgba(37, 99, 235, 0.08)'
         }}
       >
         {/* Header */}
         <div
           style={{
             padding: '16px 20px',
-            borderBottom: '1px solid rgba(245, 158, 11, 0.2)',
+            borderBottom: '1px solid #E2E8F0',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: 'rgba(16, 21, 32, 0.95)'
+            backgroundColor: '#F8FAFC'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -60,25 +60,25 @@ export const AiAssistantDrawer: React.FC = () => {
                 width: 36,
                 height: 36,
                 borderRadius: '50%',
-                backgroundColor: 'rgba(245, 158, 11, 0.2)',
-                border: '1px solid rgba(245, 158, 11, 0.4)',
+                backgroundColor: '#EFF6FF',
+                border: '1px solid #BFDBFE',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 12px rgba(245, 158, 11, 0.3)'
+                boxShadow: '0 0 12px rgba(37, 99, 235, 0.15)'
               }}
             >
-              <Sparkles size={18} color="#FBBF24" />
+              <Sparkles size={18} color="#2563EB" />
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: 15, color: '#F8FAFC' }}>NEXORA AI Intelligence</div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>
+              <div style={{ fontWeight: 800, fontSize: 15, color: '#0F172A' }}>NEXORA AI Intelligence</div>
+              <div style={{ fontSize: 11, color: '#64748B' }}>
                 Autonomous Campus Neural Core • Permission-Aware
               </div>
             </div>
           </div>
           <button onClick={() => setModal(null)} className="btn btn-ghost btn-icon btn-sm">
-            <X size={18} color="#94A3B8" />
+            <X size={18} color="#64748B" />
           </button>
         </div>
 
@@ -109,8 +109,8 @@ export const AiAssistantDrawer: React.FC = () => {
                     width: 30,
                     height: 30,
                     borderRadius: '50%',
-                    backgroundColor: isBot ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.1)',
-                    border: isBot ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid rgba(255, 255, 255, 0.2)',
+                    backgroundColor: isBot ? '#EFF6FF' : '#F1F5F9',
+                    border: isBot ? '1px solid #BFDBFE' : '1px solid #CBD5E1',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -118,9 +118,9 @@ export const AiAssistantDrawer: React.FC = () => {
                   }}
                 >
                   {isBot ? (
-                    <Bot size={16} color="#FBBF24" />
+                    <Bot size={16} color="#2563EB" />
                   ) : (
-                    <UserIcon size={16} color="#F8FAFC" />
+                    <UserIcon size={16} color="#0F172A" />
                   )}
                 </div>
 
@@ -129,14 +129,14 @@ export const AiAssistantDrawer: React.FC = () => {
                     style={{
                       padding: '12px 16px',
                       borderRadius: 'var(--radius-lg)',
-                      backgroundColor: isBot ? 'rgba(18, 23, 34, 0.95)' : 'var(--grad-primary)',
-                      color: isBot ? '#F8FAFC' : '#000000',
+                      backgroundColor: isBot ? '#F1F5F9' : '#2563EB',
+                      color: isBot ? '#0F172A' : '#FFFFFF',
                       fontWeight: isBot ? 500 : 700,
-                      border: isBot ? '1px solid rgba(245, 158, 11, 0.2)' : 'none',
+                      border: isBot ? '1px solid #E2E8F0' : 'none',
                       fontSize: 13,
                       lineHeight: 1.5,
                       whiteSpace: 'pre-line',
-                      boxShadow: isBot ? '0 4px 15px rgba(0,0,0,0.4)' : '0 4px 18px rgba(245, 158, 11, 0.3)'
+                      boxShadow: isBot ? '0 2px 6px rgba(0,0,0,0.03)' : '0 4px 14px rgba(37, 99, 235, 0.3)'
                     }}
                   >
                     {msg.text}
@@ -147,20 +147,20 @@ export const AiAssistantDrawer: React.FC = () => {
                     <div
                       style={{
                         marginTop: 10,
-                        backgroundColor: 'rgba(20, 26, 38, 0.95)',
-                        border: '1px solid rgba(245, 158, 11, 0.3)',
+                        backgroundColor: '#EFF6FF',
+                        border: '1px solid #BFDBFE',
                         borderRadius: 'var(--radius-md)',
                         padding: 14,
                         boxShadow: 'var(--shadow-sm)'
                       }}
                     >
-                      <div style={{ fontSize: 12, fontWeight: 700, color: '#F8FAFC', marginBottom: 4 }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: '#0F172A', marginBottom: 4 }}>
                         Payment Action Requested
                       </div>
-                      <div style={{ fontSize: 12, color: '#CBD5E1' }}>
-                        Amount: <strong style={{ color: '#FBBF24' }}>₹{msg.actionRequired.details.amount}</strong>
+                      <div style={{ fontSize: 12, color: '#334155' }}>
+                        Amount: <strong style={{ color: '#059669' }}>₹{msg.actionRequired.details.amount}</strong>
                       </div>
-                      <div style={{ fontSize: 12, color: '#94A3B8', marginBottom: 10 }}>
+                      <div style={{ fontSize: 12, color: '#64748B', marginBottom: 10 }}>
                         Purpose: {msg.actionRequired.details.purpose}
                       </div>
 
@@ -183,7 +183,7 @@ export const AiAssistantDrawer: React.FC = () => {
                   <div
                     style={{
                       fontSize: 10,
-                      color: '#64748B',
+                      color: '#94A3B8',
                       marginTop: 4,
                       textAlign: isBot ? 'left' : 'right'
                     }}
@@ -196,7 +196,7 @@ export const AiAssistantDrawer: React.FC = () => {
           })}
 
           {loading && (
-            <div style={{ fontSize: 12, color: '#F59E0B', fontStyle: 'italic', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ fontSize: 12, color: '#2563EB', fontStyle: 'italic', display: 'flex', alignItems: 'center', gap: 6 }}>
               <Sparkles size={14} /> NEXORA AI is querying campus systems...
             </div>
           )}
@@ -209,8 +209,8 @@ export const AiAssistantDrawer: React.FC = () => {
             display: 'flex',
             gap: 6,
             overflowX: 'auto',
-            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-            backgroundColor: 'rgba(12, 16, 24, 0.95)'
+            borderTop: '1px solid #E2E8F0',
+            backgroundColor: '#F8FAFC'
           }}
         >
           {suggestions.map((s, i) => (
@@ -220,10 +220,10 @@ export const AiAssistantDrawer: React.FC = () => {
               style={{
                 padding: '5px 12px',
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(245, 158, 11, 0.25)',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #CBD5E1',
                 fontSize: 11,
-                color: '#CBD5E1',
+                color: '#334155',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
                 transition: 'all 150ms'
@@ -242,10 +242,10 @@ export const AiAssistantDrawer: React.FC = () => {
           }}
           style={{
             padding: '12px 16px',
-            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+            borderTop: '1px solid #E2E8F0',
             display: 'flex',
             gap: 8,
-            backgroundColor: 'rgba(10, 13, 20, 0.98)'
+            backgroundColor: '#FFFFFF'
           }}
         >
           <input
