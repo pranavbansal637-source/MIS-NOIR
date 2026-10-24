@@ -65,7 +65,13 @@ export const INITIAL_STUDENT_PROFILE: StudentProfile = {
   phone: '+91 98765 43210',
   bloodGroup: 'O+ Positive',
   hostelRoom: 'Hostel Block B • Room 304',
-  busRoute: 'Route #4 (South Campus Express)'
+  busRoute: 'Route #4 (South Campus Express)',
+  alternateEmail: 'pranav.personal@gmail.com',
+  emergencyPhone: '+91 98111 22334',
+  bio: 'Undergraduate student passionate about business operations, financial modeling and digital campus systems.',
+  interests: ['Business Analytics', 'Digital Fintech', 'Supply Chain', 'Venture Capital'],
+  studentPin: '1111',
+  nickname: 'Pranav'
 };
 
 export const MOCK_SUBJECTS_ATTENDANCE: SubjectAttendance[] = [

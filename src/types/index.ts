@@ -44,6 +44,12 @@ export interface StudentProfile {
   bloodGroup: string;
   hostelRoom: string;
   busRoute: string;
+  alternateEmail?: string;
+  emergencyPhone?: string;
+  bio?: string;
+  interests?: string[];
+  studentPin?: string;
+  nickname?: string;
 }
 
 export interface SubjectAttendance {

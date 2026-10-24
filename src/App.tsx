@@ -219,6 +219,7 @@ const AppContent: React.FC = () => {
       case 'nexora-id':
         return <NoirIdPage onNavigate={(t) => setCurrentTab(t)} />;
       case 'profile':
+      case 'settings':
         return <StudentProfilePage />;
 
       // Sub-pages with Back Navigation
@@ -275,7 +276,10 @@ const AppContent: React.FC = () => {
 
       {/* Main Column */}
       <div className="noir-main-content">
-        <TopHeader onOpenLanding={() => setShowLanding(true)} />
+        <TopHeader
+          onOpenLanding={() => setShowLanding(true)}
+          onNavigate={(t) => setCurrentTab(t)}
+        />
 
         <main
           className="noir-page-container"

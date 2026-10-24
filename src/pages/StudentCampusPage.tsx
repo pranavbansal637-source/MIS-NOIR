@@ -142,9 +142,9 @@ export const StudentCampusPage: React.FC = () => {
           <ArrowLeft size={16} /> Back to Campus Gateway
         </button>
         <div className="noir-card" style={{ padding: 28, textAlign: 'center' }}>
-          <Printer size={48} color="#2563EB" style={{ margin: '0 auto 14px' }} />
-          <h2 style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>NEXORA Cloud Printing Services</h2>
-          <p style={{ fontSize: 14, color: '#64748B', maxWidth: 480, margin: '8px auto 20px' }}>
+          <Printer size={48} color="var(--brand-primary)" style={{ margin: '0 auto 14px' }} />
+          <h2 style={{ fontSize: 24, fontWeight: 900, color: 'var(--text-primary)' }}>NEXORA Cloud Printing Services</h2>
+          <p style={{ fontSize: 14, color: 'var(--text-muted)', maxWidth: 480, margin: '8px auto 20px' }}>
             Upload PDFs from NEXORA Document Vault & release print jobs at any Campus Palm Terminal in Block A, B, or Library.
           </p>
           <div className="badge badge-success" style={{ padding: '8px 20px', fontSize: 13, border: '1px solid rgba(16, 185, 129, 0.3)' }}>
@@ -158,19 +158,19 @@ export const StudentCampusPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <div>
-        <div style={{ fontSize: 12, fontWeight: 900, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+        <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--brand-primary)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
           CAMPUS SERVICES GATEWAY
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 900, color: 'var(--text-primary)', marginTop: 4 }}>
           Campus Experience
         </h1>
-        <p style={{ fontSize: 14, color: '#64748B', marginTop: 4 }}>
+        <p style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 4 }}>
           Access food court orders, campus store, library catalogue, cloud printing, maps and facilities.
         </p>
       </div>
 
       {/* Visual Category Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
         {categories.map((cat) => {
           const Icon = cat.icon;
           return (
@@ -179,17 +179,17 @@ export const StudentCampusPage: React.FC = () => {
               onClick={() => setActiveCategory(cat.id)}
               className="noir-card noir-card-interactive"
               style={{
-                padding: 24,
+                padding: 22,
                 display: 'flex',
                 alignItems: 'flex-start',
-                gap: 18,
+                gap: 16,
                 borderRadius: 16
               }}
             >
               <div
                 style={{
-                  width: 52,
-                  height: 52,
+                  width: 50,
+                  height: 50,
                   borderRadius: 14,
                   backgroundColor: cat.bgColor,
                   display: 'flex',
@@ -198,14 +198,14 @@ export const StudentCampusPage: React.FC = () => {
                   flexShrink: 0
                 }}
               >
-                <Icon size={26} color={cat.color} />
+                <Icon size={24} color={cat.color} />
               </div>
 
               <div>
-                <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A' }}>
+                <h3 style={{ fontSize: 17, fontWeight: 900, color: 'var(--text-primary)' }}>
                   {cat.title}
                 </h3>
-                <p style={{ fontSize: 13, color: '#64748B', marginTop: 4, lineHeight: 1.4 }}>
+                <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.4 }}>
                   {cat.desc}
                 </p>
               </div>

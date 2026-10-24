@@ -190,16 +190,16 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => onNavigate('attendance')}
-          style={{ borderLeft: '4px solid #2563EB' }}
+          style={{ borderLeft: '4px solid var(--brand-primary)' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             ATTENDANCE
           </div>
-          <div style={{ fontSize: 34, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
+          <div style={{ fontSize: 34, fontWeight: 900, color: 'var(--text-primary)', marginTop: 4 }}>
             {student.attendanceOverall}%
           </div>
-          <div style={{ fontSize: 12, color: '#059669', marginTop: 6, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700 }}>
-            <TrendingUp size={14} color="#059669" /> Satisfies 75% policy limit
+          <div style={{ fontSize: 12, color: 'var(--brand-emerald)', marginTop: 6, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700 }}>
+            <TrendingUp size={14} color="var(--brand-emerald)" /> Satisfies 75% policy limit
           </div>
         </div>
 
@@ -207,15 +207,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => onNavigate('attendance')}
-          style={{ borderLeft: '4px solid #3B82F6' }}
+          style={{ borderLeft: '4px solid var(--brand-secondary)' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             NEXT CLASS
           </div>
-          <div style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ fontSize: 17, fontWeight: 900, color: 'var(--text-primary)', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {nextClass.subject}
           </div>
-          <div style={{ fontSize: 12, color: '#475569', marginTop: 6, fontWeight: 700 }}>
+          <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 6, fontWeight: 700 }}>
             {nextClass.time} • Room {nextClass.room}
           </div>
         </div>
@@ -224,15 +224,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => onNavigate('events')}
-          style={{ borderLeft: '4px solid #D97706' }}
+          style={{ borderLeft: '4px solid var(--brand-amber)' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             UPCOMING EVENT
           </div>
-          <div style={{ fontSize: 16, fontWeight: 900, color: '#0F172A', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ fontSize: 16, fontWeight: 900, color: 'var(--text-primary)', marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {upcomingEvent.title}
           </div>
-          <div style={{ fontSize: 12, color: '#D97706', marginTop: 6, fontWeight: 700 }}>
+          <div style={{ fontSize: 12, color: 'var(--brand-amber)', marginTop: 6, fontWeight: 700 }}>
             14 OCT • Registered
           </div>
         </div>
@@ -241,15 +241,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         <div
           className="noir-card noir-card-interactive"
           onClick={() => setModal('TOPUP')}
-          style={{ borderLeft: '4px solid #059669' }}
+          style={{ borderLeft: '4px solid var(--brand-emerald)' }}
         >
-          <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             NEXORA WALLET
           </div>
-          <div style={{ fontSize: 34, fontWeight: 900, color: '#059669', marginTop: 4 }}>
+          <div style={{ fontSize: 34, fontWeight: 900, color: 'var(--brand-emerald)', marginTop: 4 }}>
             ₹{student.walletBalance}
           </div>
-          <div style={{ fontSize: 12, color: '#2563EB', marginTop: 6, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+          <div style={{ fontSize: 12, color: 'var(--brand-primary)', marginTop: 6, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
             <Wallet size={14} /> Quick Top-Up
           </div>
         </div>
@@ -257,17 +257,17 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
 
       {/* 4 Quick Actions */}
       <div>
-        <h3 style={{ fontSize: 17, fontWeight: 900, marginBottom: 14, color: '#0F172A' }}>Quick Operating Actions</h3>
+        <h3 style={{ fontSize: 17, fontWeight: 900, marginBottom: 14, color: 'var(--text-primary)' }}>Quick Operating Actions</h3>
         <div className="grid-4">
           <button
             onClick={() => onNavigate('attendance')}
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <CheckSquare size={22} color="#2563EB" />
+            <CheckSquare size={22} color="var(--brand-primary)" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>Attendance</div>
-              <div style={{ fontSize: 11, color: '#64748B' }}>Breakdown & trends</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)' }}>Attendance</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Breakdown & trends</div>
             </div>
           </button>
 
@@ -276,10 +276,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <ShoppingBag size={22} color="#059669" />
+            <ShoppingBag size={22} color="var(--brand-emerald)" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>Campus</div>
-              <div style={{ fontSize: 11, color: '#64748B' }}>Food, shops & library</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)' }}>Campus</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Food, shops & library</div>
             </div>
           </button>
 
@@ -288,10 +288,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <Calendar size={22} color="#D97706" />
+            <Calendar size={22} color="var(--brand-amber)" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>Events</div>
-              <div style={{ fontSize: 11, color: '#64748B' }}>Tickets & check-ins</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)' }}>Events</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Tickets & check-ins</div>
             </div>
           </button>
 
@@ -300,10 +300,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             className="btn btn-secondary"
             style={{ padding: 18, justifyContent: 'flex-start', gap: 14, borderRadius: 14 }}
           >
-            <QrCode size={22} color="#4F46E5" />
+            <QrCode size={22} color="var(--brand-accent)" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>NEXORA ID</div>
-              <div style={{ fontSize: 11, color: '#64748B' }}>Digital ID & vault</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)' }}>NEXORA ID</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Digital ID & vault</div>
             </div>
           </button>
         </div>
@@ -314,10 +314,10 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         {/* TODAY */}
         <div className="noir-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Clock size={18} color="#2563EB" /> TODAY'S SCHEDULE
+            <h3 style={{ fontSize: 17, fontWeight: 900, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Clock size={18} color="var(--brand-primary)" /> TODAY'S SCHEDULE
             </h3>
-            <span style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>Semester 2 Roster</span>
+            <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>Semester 2 Roster</span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -329,21 +329,21 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: 14,
-                  background: i === 0 ? '#EFF6FF' : '#F8FAFC',
-                  border: i === 0 ? '1px solid #BFDBFE' : '1px solid #E2E8F0',
+                  background: 'var(--bg-subtle)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: 12
                 }}
               >
                 <div>
-                  <div style={{ fontWeight: 800, fontSize: 14, color: '#0F172A' }}>
+                  <div style={{ fontWeight: 800, fontSize: 14, color: 'var(--text-primary)' }}>
                     {sub.subjectName}
                   </div>
-                  <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
                     {sub.code} • Room A403 • {sub.instructor}
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 13, fontWeight: 900, color: i === 0 ? '#1D4ED8' : '#0F172A' }}>
+                  <div style={{ fontSize: 13, fontWeight: 900, color: i === 0 ? 'var(--brand-primary)' : 'var(--text-primary)' }}>
                     {i === 0 ? '10:00 AM' : i === 1 ? '11:30 AM' : '02:00 PM'}
                   </div>
                   {i === 0 && <span className="badge badge-primary" style={{ marginTop: 2 }}>NEXT CLASS</span>}
@@ -356,8 +356,8 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
         {/* IMPORTANT Notifications */}
         <div className="noir-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Bell size={18} color="#D97706" /> IMPORTANT NOTIFICATIONS
+            <h3 style={{ fontSize: 17, fontWeight: 900, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Bell size={18} color="var(--brand-amber)" /> IMPORTANT NOTIFICATIONS
             </h3>
           </div>
 
@@ -365,15 +365,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             <div
               style={{
                 padding: 14,
-                backgroundColor: '#EFF6FF',
-                border: '1px solid #BFDBFE',
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                border: '1px solid var(--border-color)',
                 borderRadius: 12
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 800, color: '#1D4ED8' }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--brand-primary)' }}>
                 Mid-Semester Exam Timetable Published
               </div>
-              <div style={{ fontSize: 12, color: '#475569', marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4 }}>
                 Mid-term examinations start October 24th. Verify clearances in NEXORA ID Vault.
               </div>
             </div>
@@ -381,15 +381,15 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             <div
               style={{
                 padding: 14,
-                backgroundColor: '#FFFBEB',
-                border: '1px solid #FDE68A',
+                backgroundColor: 'rgba(217, 119, 6, 0.1)',
+                border: '1px solid var(--border-color)',
                 borderRadius: 12
               }}
             >
-              <div style={{ fontSize: 13, fontWeight: 800, color: '#B45309' }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--brand-amber)' }}>
                 Library Book Return Due Today
               </div>
-              <div style={{ fontSize: 12, color: '#475569', marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4 }}>
                 "Principles of Marketing" is due at Central Library by 05:00 PM.
               </div>
             </div>
