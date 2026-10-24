@@ -1,4 +1,4 @@
-import type { StudentProfile } from '../types';
+import type { StudentProfile, Role } from '../types';
 
 export interface PalmScanResult {
   success: boolean;
@@ -6,18 +6,29 @@ export interface PalmScanResult {
   hash: string;
   matchedStudent?: StudentProfile;
   message: string;
+  role?: Role;
+  livenessScore?: number;
+  antiSpoofScore?: number;
+  veinPatternId?: string;
+  telemetry?: {
+    wavelength: string;
+    hemoglobinAbsorption: string;
+    bifurcationPoints: number;
+    matchGrade: 'EXCELLENT' | 'HIGH' | 'SUSPICIOUS' | 'FAILED';
+  };
 }
 
 export interface IPalmService {
   enrollPalm(userId: string): Promise<{ success: boolean; hash: string }>;
   detectPalm(): Promise<boolean>;
   verifyPalm(userId: string): Promise<PalmScanResult>;
+  verifyPalmForRole(targetRole: Role, personaName?: string): Promise<PalmScanResult>;
   identifyPalm(demoStudent: StudentProfile): Promise<PalmScanResult>;
   getEnrollmentStatus(userId: string): boolean;
 }
 
 class PalmServiceImpl implements IPalmService {
-  private enrolledUsers = new Set<string>(['usr-001', 'std-8891']);
+  private enrolledUsers = new Set<string>(['usr-001', 'std-8891', 'fac-01', 'biz-01', 'mgmt-01', 'kiosk-01']);
 
   async enrollPalm(userId: string): Promise<{ success: boolean; hash: string }> {
     await new Promise((res) => setTimeout(res, 800));
@@ -34,7 +45,7 @@ class PalmServiceImpl implements IPalmService {
   }
 
   async verifyPalm(userId: string): Promise<PalmScanResult> {
-    await new Promise((res) => setTimeout(res, 1200));
+    await new Promise((res) => setTimeout(res, 1000));
     if (this.enrolledUsers.has(userId)) {
       return {
         success: true,
@@ -51,8 +62,39 @@ class PalmServiceImpl implements IPalmService {
     };
   }
 
+  async verifyPalmForRole(targetRole: Role, personaName = 'Authorized Personnel'): Promise<PalmScanResult> {
+    // High-precision subdermal vascular scan simulation
+    await new Promise((res) => setTimeout(res, 900));
+
+    const roleHashes: Record<string, string> = {
+      STUDENT: 'PALM_HASH_PRANAV_99812_SEC',
+      FACULTY: 'PALM_HASH_FACULTY_MALHOTRA_4403_SEC',
+      BUSINESS: 'PALM_HASH_MERCHANT_RAMESH_8821_SEC',
+      MANAGEMENT: 'PALM_HASH_ADMIN_THORNE_9900_SEC',
+      SUPER_ADMIN: 'PALM_HASH_ROOT_MASTER_9900_SEC',
+      KIOSK: 'PALM_HASH_KIOSK_NODE04_1234_SEC'
+    };
+
+    return {
+      success: true,
+      confidence: 0.9992,
+      hash: roleHashes[targetRole] || `PALM_HASH_${targetRole}_VERIFIED_256`,
+      role: targetRole,
+      livenessScore: 0.998,
+      antiSpoofScore: 0.999,
+      veinPatternId: `VEIN-BIFURCATION-${targetRole}-${Math.floor(1000 + Math.random() * 9000)}`,
+      telemetry: {
+        wavelength: '850nm Near-Infrared',
+        hemoglobinAbsorption: 'Optimal Deoxygenated Contrast',
+        bifurcationPoints: 48,
+        matchGrade: 'EXCELLENT'
+      },
+      message: `Biometric Palm Match Verified (99.92%) for ${personaName} [${targetRole}].`
+    };
+  }
+
   async identifyPalm(demoStudent: StudentProfile): Promise<PalmScanResult> {
-    await new Promise((res) => setTimeout(res, 1500));
+    await new Promise((res) => setTimeout(res, 1200));
     return {
       success: true,
       confidence: 0.9991,
@@ -68,3 +110,4 @@ class PalmServiceImpl implements IPalmService {
 }
 
 export const PalmService = new PalmServiceImpl();
+

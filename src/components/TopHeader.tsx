@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { NoirLogo } from './NoirLogo';
-import { PortalGateModal } from './PortalGateModal';
 import type { Role } from '../types';
 import {
   Search,
@@ -30,17 +29,17 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
     student,
     role,
     switchRole,
-    showToast,
     setModal,
     demoNotification,
     isAuthenticated,
     theme,
     toggleTheme,
     unreadNotificationCount,
-    liveAttendanceSession
+    liveAttendanceSession,
+    lockSession,
+    isSessionLocked
   } = useApp();
 
-  const [showGateModal, setShowGateModal] = useState(false);
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
 
   const roleLabels: Record<Role, string> = {
@@ -162,6 +161,29 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
               Switch Interface
               <ChevronDown size={14} color="#64748B" />
             </button>
+
+            {/* Lock Workspace Button */}
+            <button
+              onClick={() => lockSession()}
+              className="btn btn-secondary btn-sm"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                fontSize: 12,
+                fontWeight: 800,
+                borderRadius: 'var(--radius-full)',
+                padding: '7px 14px',
+                backgroundColor: isSessionLocked ? '#FEF2F2' : '#FFFFFF',
+                border: isSessionLocked ? '1px solid #FCA5A5' : '1px solid #CBD5E1',
+                color: isSessionLocked ? '#DC2626' : '#475569',
+                cursor: 'pointer'
+              }}
+              title="Lock interface to protect confidential data. Requires Palm Scan to resume."
+            >
+              <Lock size={13} color={isSessionLocked ? '#DC2626' : '#2563EB'} />
+              {isSessionLocked ? 'Locked' : 'Lock Session'}
+            </button>
           </div>
 
           {/* Quick Portal Switcher Dropdown */}
@@ -171,7 +193,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 position: 'absolute',
                 top: 48,
                 left: 0,
-                width: 320,
+                width: 340,
                 background: '#FFFFFF',
                 backdropFilter: 'blur(24px)',
                 WebkitBackdropFilter: 'blur(24px)',
@@ -185,16 +207,21 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 gap: 4
               }}
             >
-              <div style={{ fontSize: 10, fontWeight: 900, color: '#2563EB', padding: '6px 12px', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-                SELECT INTERFACE (1-CLICK SWITCH)
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 10px' }}>
+                <span style={{ fontSize: 10, fontWeight: 900, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+                  SWITCH INTERFACE (2FA GUARDED)
+                </span>
+                <span style={{ fontSize: 9, fontWeight: 800, color: '#059669', backgroundColor: '#ECFDF5', padding: '2px 6px', borderRadius: 10 }}>
+                  🔒 Palm Scan Required
+                </span>
               </div>
 
               {[
-                { r: 'STUDENT' as Role, label: '🎓 Student OS', desc: 'Personal Student Dashboard, Attendance & Wallet' },
-                { r: 'BUSINESS' as Role, label: '🏪 Shopkeeper POS', desc: 'Merchant Canteen Register & Stock Inventory' },
-                { r: 'MANAGEMENT' as Role, label: '🏛️ Campus Management', desc: 'Admin Console, Student Registry & NAAC' },
-                { r: 'FACULTY' as Role, label: '👨‍🏫 Faculty Instructor OS', desc: 'Class Roll Call, Grading & Course Roster' },
-                { r: 'KIOSK' as Role, label: '📱 Palm Hardware Terminal', desc: 'Optical Biometric Touch Kiosk Screen' }
+                { r: 'STUDENT' as Role, label: '🎓 Student OS', desc: 'Protected: CGPA, Wallet Balance (₹450) & Docs' },
+                { r: 'FACULTY' as Role, label: '👨‍🏫 Faculty Instructor OS', desc: 'Protected: Class Grading, Roster & Roll Call' },
+                { r: 'BUSINESS' as Role, label: '🏪 Shopkeeper POS', desc: 'Protected: POS Cash Drawer & Inventory Stock' },
+                { r: 'MANAGEMENT' as Role, label: '🏛️ Campus Management', desc: 'Protected: University Ledger & Audit Security' },
+                { r: 'KIOSK' as Role, label: '📱 Palm Hardware Terminal', desc: 'Protected: Optical Biometric Touch Station' }
               ].map((item) => {
                 const isCurrent = role === item.r;
                 return (
@@ -203,7 +230,6 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                     onClick={() => {
                       setShowRoleDropdown(false);
                       switchRole(item.r);
-                      showToast(`✓ Switched to ${item.label}`);
                     }}
                     style={{
                       display: 'flex',
@@ -219,8 +245,11 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 800, color: isCurrent ? '#1D4ED8' : '#0F172A' }}>
-                        {item.label}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontSize: 13, fontWeight: 800, color: isCurrent ? '#1D4ED8' : '#0F172A' }}>
+                          {item.label}
+                        </span>
+                        {!isCurrent && <Lock size={11} color="#64748B" />}
                       </div>
                       <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>
                         {item.desc}
@@ -241,12 +270,12 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
                 <button
                   onClick={() => {
                     setShowRoleDropdown(false);
-                    setShowGateModal(true);
+                    setModal('INTERFACE_GATE');
                   }}
                   className="btn btn-secondary btn-sm"
                   style={{ flex: 1, justifyContent: 'center', gap: 6, fontSize: 11, fontWeight: 700 }}
                 >
-                  <Lock size={12} color="#2563EB" /> Security Passkey Gate
+                  <Lock size={12} color="#2563EB" /> Security Biometric Gate
                 </button>
 
                 {onOpenLanding && (
@@ -476,13 +505,6 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding }) => {
           />
         </div>
       </div>
-
-      {/* Secure Role Isolation Gateway Modal */}
-      <PortalGateModal
-        isOpen={showGateModal}
-        onClose={() => setShowGateModal(false)}
-        onSuccess={() => setShowGateModal(false)}
-      />
     </header>
   );
 };

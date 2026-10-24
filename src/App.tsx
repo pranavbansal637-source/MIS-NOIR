@@ -59,7 +59,7 @@ import { ShopkeeperDashboard } from './pages/ShopkeeperDashboard';
 import { KioskApp } from './pages/KioskApp';
 
 const AppContent: React.FC = () => {
-  const { role, switchRole } = useApp();
+  const { role, switchRole, activeModal, pendingRoleTarget, isSessionLocked, cancelRoleSwitch } = useApp();
   const [currentTab, setCurrentTab] = useState('home');
   const [showLanding, setShowLanding] = useState(false);
   const [deniedAuthTarget, setDeniedAuthTarget] = useState<Role | null>(null);
@@ -97,6 +97,7 @@ const AppContent: React.FC = () => {
         <PalmModal />
         <EmergencyModal />
         <AuthModal />
+        <PortalGateModal />
       </>
     );
   }
@@ -276,7 +277,19 @@ const AppContent: React.FC = () => {
       <div className="noir-main-content">
         <TopHeader onOpenLanding={() => setShowLanding(true)} />
 
-        <main className="noir-page-container">
+        <main
+          className="noir-page-container"
+          style={
+            isSessionLocked
+              ? {
+                  filter: 'blur(16px)',
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                  transition: 'filter 200ms ease'
+                }
+              : undefined
+          }
+        >
           {renderTabContent()}
         </main>
       </div>
@@ -298,10 +311,15 @@ const AppContent: React.FC = () => {
       <PayFeeModal />
       <AuthModal />
       <PortalGateModal
-        isOpen={Boolean(deniedAuthTarget)}
-        targetRole={deniedAuthTarget}
-        onClose={() => setDeniedAuthTarget(null)}
-        onSuccess={() => setDeniedAuthTarget(null)}
+        isOpen={Boolean(deniedAuthTarget) || activeModal === 'INTERFACE_GATE' || Boolean(pendingRoleTarget)}
+        targetRole={deniedAuthTarget || pendingRoleTarget}
+        onClose={() => {
+          setDeniedAuthTarget(null);
+          cancelRoleSwitch();
+        }}
+        onSuccess={() => {
+          setDeniedAuthTarget(null);
+        }}
       />
     </div>
   );

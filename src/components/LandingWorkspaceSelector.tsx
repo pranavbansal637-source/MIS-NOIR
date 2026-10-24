@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useApp } from '../context/AppContext';
 import { NoirLogo } from './NoirLogo';
 import { PortalGateModal } from './PortalGateModal';
 import type { Role } from '../types';
@@ -21,16 +20,10 @@ interface LandingWorkspaceSelectorProps {
 export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> = ({
   onSelectWorkspace
 }) => {
-  const { switchRole } = useApp();
   const [gateTargetRole, setGateTargetRole] = useState<Role | null>(null);
 
   const handleLaunch = (role: Role) => {
-    if (role === 'STUDENT') {
-      switchRole('STUDENT');
-      onSelectWorkspace('STUDENT');
-    } else {
-      setGateTargetRole(role);
-    }
+    setGateTargetRole(role);
   };
 
   const interfaces = [

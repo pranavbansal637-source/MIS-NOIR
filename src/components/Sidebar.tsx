@@ -24,7 +24,8 @@ import {
   Monitor,
   Package,
   Clock,
-  Tag
+  Tag,
+  Lock
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -33,7 +34,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => {
-  const { role, switchRole, setModal, showToast, unreadNotificationCount, activeFaculty } = useApp();
+  const { role, switchRole, setModal, unreadNotificationCount, activeFaculty, lockSession, isSessionLocked } = useApp();
 
   if (role === 'KIOSK') return null;
 
@@ -54,22 +55,40 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
     <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: 14, marginTop: 14 }}>
       <div
         style={{
-          fontSize: 10,
-          fontWeight: 900,
-          color: '#2563EB',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           padding: '0 4px 8px 4px'
         }}
       >
-        SWITCH INTERFACE
+        <span
+          style={{
+            fontSize: 10,
+            fontWeight: 900,
+            color: '#2563EB',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em'
+          }}
+        >
+          SWITCH INTERFACE
+        </span>
+        <span
+          style={{
+            fontSize: 9,
+            fontWeight: 800,
+            color: '#059669',
+            backgroundColor: '#ECFDF5',
+            padding: '2px 6px',
+            borderRadius: 10
+          }}
+        >
+          🔒 2FA Palm Scan
+        </span>
       </div>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
         <button
-          onClick={() => {
-            switchRole('STUDENT');
-            showToast('✓ Switched to Student OS');
-          }}
+          onClick={() => switchRole('STUDENT')}
           className="btn btn-secondary btn-sm"
           style={{
             fontSize: 11,
@@ -77,18 +96,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             justifyContent: 'center',
             backgroundColor: role === 'STUDENT' ? '#EFF6FF' : '#FFFFFF',
             borderColor: role === 'STUDENT' ? '#2563EB' : '#CBD5E1',
-            color: role === 'STUDENT' ? '#1D4ED8' : '#334155'
+            color: role === 'STUDENT' ? '#1D4ED8' : '#334155',
+            fontWeight: role === 'STUDENT' ? 800 : 600
           }}
-          title="Switch to Student Dashboard"
+          title="Switch to Student Dashboard (Requires Palm Scan & PIN: 1111)"
         >
           🎓 Student
         </button>
 
         <button
-          onClick={() => {
-            switchRole('BUSINESS');
-            showToast('✓ Switched to Shopkeeper POS');
-          }}
+          onClick={() => switchRole('BUSINESS')}
           className="btn btn-secondary btn-sm"
           style={{
             fontSize: 11,
@@ -96,18 +113,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             justifyContent: 'center',
             backgroundColor: role === 'BUSINESS' ? '#ECFDF5' : '#FFFFFF',
             borderColor: role === 'BUSINESS' ? '#10B981' : '#CBD5E1',
-            color: role === 'BUSINESS' ? '#047857' : '#334155'
+            color: role === 'BUSINESS' ? '#047857' : '#334155',
+            fontWeight: role === 'BUSINESS' ? 800 : 600
           }}
-          title="Switch to Merchant POS"
+          title="Switch to Merchant POS (Requires Palm Scan & PIN: 8821)"
         >
           🏪 Shop POS
         </button>
 
         <button
-          onClick={() => {
-            switchRole('MANAGEMENT');
-            showToast('✓ Switched to Management Console');
-          }}
+          onClick={() => switchRole('MANAGEMENT')}
           className="btn btn-secondary btn-sm"
           style={{
             fontSize: 11,
@@ -115,18 +130,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             justifyContent: 'center',
             backgroundColor: role === 'MANAGEMENT' ? '#EFF6FF' : '#FFFFFF',
             borderColor: role === 'MANAGEMENT' ? '#2563EB' : '#CBD5E1',
-            color: role === 'MANAGEMENT' ? '#1D4ED8' : '#334155'
+            color: role === 'MANAGEMENT' ? '#1D4ED8' : '#334155',
+            fontWeight: role === 'MANAGEMENT' ? 800 : 600
           }}
-          title="Switch to Management Portal"
+          title="Switch to Management Portal (Requires Palm Scan & PIN: 9900)"
         >
           🏛️ Mgmt
         </button>
 
         <button
-          onClick={() => {
-            switchRole('FACULTY');
-            showToast('✓ Switched to Faculty Instructor OS');
-          }}
+          onClick={() => switchRole('FACULTY')}
           className="btn btn-secondary btn-sm"
           style={{
             fontSize: 11,
@@ -134,18 +147,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             justifyContent: 'center',
             backgroundColor: role === 'FACULTY' ? '#EFF6FF' : '#FFFFFF',
             borderColor: role === 'FACULTY' ? '#2563EB' : '#CBD5E1',
-            color: role === 'FACULTY' ? '#1D4ED8' : '#334155'
+            color: role === 'FACULTY' ? '#1D4ED8' : '#334155',
+            fontWeight: role === 'FACULTY' ? 800 : 600
           }}
-          title="Switch to Faculty Portal"
+          title="Switch to Faculty Portal (Requires Palm Scan & PIN: 4403)"
         >
           👨‍🏫 Faculty
         </button>
 
         <button
-          onClick={() => {
-            switchRole('KIOSK');
-            showToast('✓ Launched Palm Hardware Terminal Screen');
-          }}
+          onClick={() => switchRole('KIOSK')}
           className="btn btn-secondary btn-sm"
           style={{
             fontSize: 11,
@@ -156,11 +167,34 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             backgroundColor: '#FFFFFF',
             borderColor: '#CBD5E1'
           }}
-          title="Open Palm Terminal Hardware Simulation"
+          title="Open Palm Terminal Hardware Simulation (Requires Palm Scan & PIN: 1234)"
         >
           📱 Palm Touch Terminal Kiosk
         </button>
       </div>
+
+      {/* Lock Interface Button */}
+      <button
+        type="button"
+        onClick={() => lockSession()}
+        className="btn btn-secondary btn-sm"
+        style={{
+          width: '100%',
+          marginTop: 8,
+          fontSize: 11,
+          fontWeight: 800,
+          padding: '7px 10px',
+          justifyContent: 'center',
+          gap: 6,
+          backgroundColor: isSessionLocked ? '#FEF2F2' : '#F8FAFC',
+          borderColor: isSessionLocked ? '#FCA5A5' : '#CBD5E1',
+          color: isSessionLocked ? '#DC2626' : '#475569'
+        }}
+        title="Lock workspace to protect confidential data from unauthorized viewers"
+      >
+        <Lock size={13} color={isSessionLocked ? '#DC2626' : '#2563EB'} />
+        {isSessionLocked ? 'Interface Session Locked' : '🔒 Lock Workspace (Palm Guard)'}
+      </button>
     </div>
   );
 

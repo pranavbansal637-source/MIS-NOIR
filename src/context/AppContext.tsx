@@ -92,7 +92,325 @@ export type ModalType =
   | 'ISSUE_BOOK'
   | 'MAINTENANCE_TERMINAL'
   | 'REGISTER_TERMINAL_DETAILED'
+  | 'INTERFACE_GATE'
   | null;
+
+export interface RoleSecurityConfig {
+  role: Role;
+  title: string;
+  tagline: string;
+  authorizedUser: string;
+  authorizedId: string;
+  demoPin: string;
+  pinLabel: string;
+  themeColor: string;
+  iconName: string;
+  protectedDataTitle: string;
+  confidentialItems: string[];
+}
+
+export const ROLE_SECURITY_REGISTRY: Record<Role, RoleSecurityConfig> = {
+  STUDENT: {
+    role: 'STUDENT',
+    title: 'NEXORA Student OS',
+    tagline: 'Personal Digital Campus Workspace',
+    authorizedUser: 'Pranav Bansal (Roll #22BCS10892)',
+    authorizedId: 'NR-2026-8891',
+    demoPin: '1111',
+    pinLabel: 'Student Passcode (PIN: 1111)',
+    themeColor: '#2563EB',
+    iconName: 'Smartphone',
+    protectedDataTitle: 'Confidential Student Profile & Assets',
+    confidentialItems: [
+      'Personal Academic Grades & Semester CGPA Dossier',
+      'Campus Digital Wallet Balance (₹450) & Private Ledger',
+      'Confidential Medical Dossier, Blood Group & Prescription History',
+      'Encrypted Personal Document Vault & Academic Transcripts'
+    ]
+  },
+  FACULTY: {
+    role: 'FACULTY',
+    title: 'Faculty Instructor OS',
+    tagline: 'Academic Evaluation & Classroom Authority',
+    authorizedUser: 'Prof. Vikram Malhotra (CSE Faculty)',
+    authorizedId: 'FAC-CS-403',
+    demoPin: '4403',
+    pinLabel: 'Faculty Passcode (PIN: 4403)',
+    themeColor: '#D97706',
+    iconName: 'GraduationCap',
+    protectedDataTitle: 'Restricted Faculty & Evaluation Data',
+    confidentialItems: [
+      'Class Grading Master Sheet & Examination Score Submissions',
+      'Student Disciplinary Records & Academic Attendance Overrides',
+      'Active Course Roster, Syllabus Materials & Assignment Keys',
+      'Classroom Live Attendance Broadcast Control Beacon'
+    ]
+  },
+  BUSINESS: {
+    role: 'BUSINESS',
+    title: 'Shopkeeper & Merchant POS OS',
+    tagline: 'Commercial Canteen Register & Stock Control',
+    authorizedUser: 'Ramesh Kumar (Canteen Store Manager)',
+    authorizedId: 'SHP-CANTEEN-01',
+    demoPin: '8821',
+    pinLabel: 'Merchant Key (PIN: 8821)',
+    themeColor: '#059669',
+    iconName: 'Store',
+    protectedDataTitle: 'Commercial POS & Cash Vault Data',
+    confidentialItems: [
+      'Daily Merchant POS Cash Register & Revenue Ledgers',
+      'Canteen Inventory Movement & Stock Reorder Telemetry',
+      'Live Palm Biometric Charge Approvals & Customer Receipts',
+      'Merchant Settlement Account & Commercial Withdrawal Ledger'
+    ]
+  },
+  MANAGEMENT: {
+    role: 'MANAGEMENT',
+    title: 'University Management & Governance',
+    tagline: 'Institutional Administration & NAAC Telemetry',
+    authorizedUser: 'Dr. Aris Thorne (Registrar & Dean)',
+    authorizedId: 'ADM-REG-001',
+    demoPin: '9900',
+    pinLabel: 'Admin Master Passkey (PIN: 9900)',
+    themeColor: '#7C3AED',
+    iconName: 'Building2',
+    protectedDataTitle: 'University Institutional & Security Data',
+    confidentialItems: [
+      'University Revenue Ledger & Institutional Tuition Analytics',
+      'Central Student & Staff Master Encrypted Registry',
+      'Campus-wide Palm Biometric Terminal Network Controls',
+      'Cryptographic RBAC Security Audit Trail & Telemetry'
+    ]
+  },
+  KIOSK: {
+    role: 'KIOSK',
+    title: 'Touch Terminal Hardware Kiosk',
+    tagline: 'Physical Optical Biometric Hardware Terminal',
+    authorizedUser: 'Terminal Node 04 Operator',
+    authorizedId: 'NODE-SEC-TERM-04',
+    demoPin: '1234',
+    pinLabel: 'Terminal Operator Lock (PIN: 1234)',
+    themeColor: '#EA580C',
+    iconName: 'Hand',
+    protectedDataTitle: 'Physical Biometric Node Calibration',
+    confidentialItems: [
+      'Physical Optical Palm Vein Hardware Telemetry & Sensor Calibration',
+      'Campus Turnstile Gate Lock State Controller',
+      'SOS Campus Security Hardware Alarm Overrides'
+    ]
+  },
+  SUPER_ADMIN: {
+    role: 'SUPER_ADMIN',
+    title: 'NEXORA Root Master Admin',
+    tagline: 'Full System Root Oversight & Infrastructure',
+    authorizedUser: 'Root Security Controller',
+    authorizedId: 'SYS-ROOT-000',
+    demoPin: '9900',
+    pinLabel: 'Root Master Key (PIN: 9900)',
+    themeColor: '#DC2626',
+    iconName: 'ShieldAlert',
+    protectedDataTitle: 'Full Institutional Core Infrastructure',
+    confidentialItems: [
+      'System-wide Root Cryptographic Key Vault',
+      'Database Schema Migration & Hardware Registry',
+      'Master Override Authority on all Campus Terminals'
+    ]
+  },
+  DEPARTMENT_ADMIN: {
+    role: 'DEPARTMENT_ADMIN',
+    title: 'Department Head Console',
+    tagline: 'Academic Department Operations',
+    authorizedUser: 'Dr. Neha Sharma (HOD CS)',
+    authorizedId: 'HOD-CS-002',
+    demoPin: '9900',
+    pinLabel: 'HOD Key (PIN: 9900)',
+    themeColor: '#2563EB',
+    iconName: 'Building2',
+    protectedDataTitle: 'Department Operational Data',
+    confidentialItems: ['Faculty Teaching Loads', 'Department Budget Ledger']
+  },
+  CLUB_ADMIN: {
+    role: 'CLUB_ADMIN',
+    title: 'Student Society Console',
+    tagline: 'Campus Activities Governance',
+    authorizedUser: 'Aanya Verma (Council President)',
+    authorizedId: 'NR-2026-CLUB-01',
+    demoPin: '1111',
+    pinLabel: 'PIN: 1111',
+    themeColor: '#F59E0B',
+    iconName: 'Users',
+    protectedDataTitle: 'Club Activity Data',
+    confidentialItems: ['Event Budgets', 'Society Approvals']
+  },
+  LIBRARY_STAFF: {
+    role: 'LIBRARY_STAFF',
+    title: 'Library Circulation Desk',
+    tagline: 'Book Inventory & Issue Console',
+    authorizedUser: 'Sunil Mathur (Librarian)',
+    authorizedId: 'LIB-CIRC-09',
+    demoPin: '9900',
+    pinLabel: 'Staff PIN: 9900',
+    themeColor: '#0284C7',
+    iconName: 'BookOpen',
+    protectedDataTitle: 'Circulation Data',
+    confidentialItems: ['Overdue Fine Registry', 'Restricted Archives']
+  },
+  HOSTEL_ADMIN: {
+    role: 'HOSTEL_ADMIN',
+    title: 'Hostel Warden Console',
+    tagline: 'Residential Clearance & Curfew Control',
+    authorizedUser: 'Col. R. S. Rathore (Chief Warden)',
+    authorizedId: 'WARDEN-RES-01',
+    demoPin: '9900',
+    pinLabel: 'Warden PIN: 9900',
+    themeColor: '#B45309',
+    iconName: 'Building2',
+    protectedDataTitle: 'Residential Data',
+    confidentialItems: ['Night Outing Gate Passes', 'Hostel Disciplinary Ledger']
+  },
+  SECURITY: {
+    role: 'SECURITY',
+    title: 'Campus Perimeter Security Console',
+    tagline: 'Turnstile & Biometric Gate Watch',
+    authorizedUser: 'Inspector Daljit Singh',
+    authorizedId: 'SEC-GATE-01',
+    demoPin: '9900',
+    pinLabel: 'Security PIN: 9900',
+    themeColor: '#EF4444',
+    iconName: 'ShieldAlert',
+    protectedDataTitle: 'Turnstile Telemetry',
+    confidentialItems: ['Campus Gate Entry Logs', 'Blacklisted Badges']
+  }
+};
+
+export const ROLE_PERSONAS: Record<Role, User> = {
+  STUDENT: {
+    id: 'usr-001',
+    name: 'PRANAV',
+    email: 'pranav.student@nexora.edu',
+    role: 'STUDENT',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    department: 'School of Business',
+    noirId: 'NR-2026-8891',
+    phone: '+91 98765 43210',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_PRANAV_99812'
+  },
+  FACULTY: {
+    id: 'fac-01',
+    name: 'Prof. Vikram Malhotra',
+    email: 'v.malhotra@nexora.edu',
+    role: 'FACULTY',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    department: 'Computer Science & Engineering',
+    noirId: 'FAC-CS-403',
+    phone: '+91 98112 34567',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_FACULTY_MALHOTRA_4403'
+  },
+  BUSINESS: {
+    id: 'biz-01',
+    name: 'Ramesh Kumar (Canteen POS)',
+    email: 'canteen.pos@nexora.edu',
+    role: 'BUSINESS',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    department: 'Campus Commerce & Food Court POS',
+    noirId: 'SHP-CANTEEN-01',
+    phone: '+91 98223 45678',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_MERCHANT_RAMESH_8821'
+  },
+  MANAGEMENT: {
+    id: 'mgmt-01',
+    name: 'Dr. Aris Thorne (Registrar & Dean)',
+    email: 'registrar@nexora.edu',
+    role: 'MANAGEMENT',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    department: 'University Academic Governance & Registry',
+    noirId: 'ADM-REG-001',
+    phone: '+91 98334 56789',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_ADMIN_THORNE_9900'
+  },
+  KIOSK: {
+    id: 'kiosk-01',
+    name: 'Terminal Node 04 (Touch Station)',
+    email: 'terminal.04@nexora.edu',
+    role: 'KIOSK',
+    avatar: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80',
+    department: 'Hardware Terminal Infrastructure',
+    noirId: 'NODE-SEC-TERM-04',
+    phone: 'Ext: 404',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_KIOSK_NODE04_1234'
+  },
+  SUPER_ADMIN: {
+    id: 'admin-root',
+    name: 'Root Administrator',
+    email: 'root.admin@nexora.edu',
+    role: 'SUPER_ADMIN',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+    department: 'Central Cyber Infrastructure & Security',
+    noirId: 'SYS-ROOT-000',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_ROOT_MASTER_9900'
+  },
+  DEPARTMENT_ADMIN: {
+    id: 'dept-01',
+    name: 'Dr. Neha Sharma',
+    email: 'hod.cs@nexora.edu',
+    role: 'DEPARTMENT_ADMIN',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    department: 'Computer Science & Engineering',
+    noirId: 'HOD-CS-002',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_HOD_SHARMA_9900'
+  },
+  CLUB_ADMIN: {
+    id: 'club-01',
+    name: 'Aanya Verma',
+    email: 'council.lead@nexora.edu',
+    role: 'CLUB_ADMIN',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    department: 'Student Affairs & Societies',
+    noirId: 'NR-2026-CLUB-01',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_CLUB_AANYA_1111'
+  },
+  LIBRARY_STAFF: {
+    id: 'lib-01',
+    name: 'Sunil Mathur',
+    email: 'librarian@nexora.edu',
+    role: 'LIBRARY_STAFF',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+    department: 'Central University Library',
+    noirId: 'LIB-CIRC-09',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_LIB_MATHUR_9900'
+  },
+  HOSTEL_ADMIN: {
+    id: 'hostel-01',
+    name: 'Col. R. S. Rathore',
+    email: 'warden@nexora.edu',
+    role: 'HOSTEL_ADMIN',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    department: 'Campus Residential & Hostels',
+    noirId: 'WARDEN-RES-01',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_WARDEN_RATHORE_9900'
+  },
+  SECURITY: {
+    id: 'sec-01',
+    name: 'Inspector Daljit Singh',
+    email: 'security.lead@nexora.edu',
+    role: 'SECURITY',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+    department: 'Campus Security',
+    noirId: 'SEC-GATE-01',
+    palmEnrolled: true,
+    palmHash: 'PALM_HASH_SEC_DALJIT_9900'
+  }
+};
 
 interface AppContextType {
   // Authentication & Profile
@@ -103,6 +421,13 @@ interface AppContextType {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
   setTheme: (t: 'light' | 'dark') => void;
+
+  // Session Security & Role Gate
+  isSessionLocked: boolean;
+  lockSession: () => void;
+  unlockSession: () => void;
+  requestRoleSwitch: (targetRole: Role) => void;
+  verifyAndUnlockRole: (targetRole: Role, pin: string, palmResult: any) => { success: boolean; error?: string };
 
   // Academic & Core Modules
   subjects: SubjectAttendance[];
@@ -763,6 +1088,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [selectedFeeForPay, setSelectedFeeForPay] = useState<FeeItem | null>(null);
   const [demoNotification, setDemoNotification] = useState<string | null>(null);
   const [pendingRoleTarget, setPendingRoleTarget] = useState<Role | null>(null);
+  const [isSessionLocked, setIsSessionLocked] = useState(false);
 
   const [aiMessages, setAiMessages] = useState<AiChatMessage[]>([
     {
@@ -784,9 +1110,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setIsAuthenticated(true);
     if (pendingRoleTarget) {
       const target = pendingRoleTarget;
+      const newPersona = ROLE_PERSONAS[target] || ROLE_PERSONAS.STUDENT;
       setRole(target);
-      setUser((prev) => ({ ...prev, role: target }));
+      setUser(newPersona);
       setPendingRoleTarget(null);
+      setIsSessionLocked(false);
       showToast(`✓ Identity verified via Palm Biometrics. Unlocked [${target}] Interface!`);
     } else {
       showToast('✓ Identity verified via Palm Biometrics. Welcome back!');
@@ -803,21 +1131,163 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     showToast('Signed out of NEXORA Operating System.');
   };
 
-  const switchRole = (newRole: Role) => {
-    setRole(newRole);
-    setUser((prev) => ({ ...prev, role: newRole }));
-    showToast(`Switched workspace view to [${newRole}] mode.`);
-  };
-
-  const requestRoleSwitchWithPalm = (targetRole: Role) => {
+  const requestRoleSwitch = (targetRole: Role) => {
+    if (targetRole === role && !isSessionLocked) {
+      showToast(`Already viewing [${targetRole}] workspace.`);
+      return;
+    }
     setPendingRoleTarget(targetRole);
-    setActiveModal('PALM_SCAN');
-    showToast(`🖐️ Biometric Palm Verification required to access [${targetRole}] interface.`);
+    setActiveModal('INTERFACE_GATE');
+    const targetConfig = ROLE_SECURITY_REGISTRY[targetRole] || ROLE_SECURITY_REGISTRY.STUDENT;
+    const logItem: AuditLogItem = {
+      id: `log-chal-${Date.now()}`,
+      user: `${user.name} (${user.role})`,
+      role: role,
+      action: 'INTERFACE_SECURITY_CHALLENGE',
+      target: `Biometric Palm Scan & 2FA challenge triggered for switch to [${targetConfig.title}].`,
+      timestamp: 'Just now',
+      result: 'FLAGGED'
+    };
+    setAuditLogs((prev) => [logItem, ...prev]);
+    showToast(`🔒 Biometric Palm Scan & Login Required: Switching to [${targetConfig.title}].`);
   };
 
   const cancelRoleSwitch = () => {
+    const cancelledTarget = pendingRoleTarget;
     setPendingRoleTarget(null);
     setActiveModal(null);
+    if (cancelledTarget) {
+      const logItem: AuditLogItem = {
+        id: `log-cncl-${Date.now()}`,
+        user: `${user.name} (${user.role})`,
+        role: role,
+        action: 'INTERFACE_CHALLENGE_CANCELLED',
+        target: `User aborted access challenge for [${cancelledTarget}]. Kept in current workspace.`,
+        timestamp: 'Just now',
+        result: 'DENIED'
+      };
+      setAuditLogs((prev) => [logItem, ...prev]);
+      showToast(`Access challenge cancelled. Retained active [${role}] workspace.`);
+    }
+  };
+
+  const lockSession = () => {
+    setIsSessionLocked(true);
+    setPendingRoleTarget(role);
+    setActiveModal('INTERFACE_GATE');
+    const logItem: AuditLogItem = {
+      id: `log-lock-${Date.now()}`,
+      user: `${user.name} (${user.role})`,
+      role: role,
+      action: 'WORKSPACE_MANUAL_LOCKDOWN',
+      target: `Workspace locked down. Screen protected by optical palm biometric shield.`,
+      timestamp: 'Just now',
+      result: 'SUCCESS'
+    };
+    setAuditLogs((prev) => [logItem, ...prev]);
+    showToast(`🔒 Workspace locked. Subdermal Palm Scan required to resume session.`);
+  };
+
+  const unlockSession = () => {
+    setIsSessionLocked(false);
+    setPendingRoleTarget(null);
+    setActiveModal(null);
+  };
+
+  const verifyAndUnlockRole = (
+    targetRole: Role,
+    pin: string,
+    palmResult: any
+  ): { success: boolean; error?: string } => {
+    const config = ROLE_SECURITY_REGISTRY[targetRole] || ROLE_SECURITY_REGISTRY.STUDENT;
+
+    // 1. Mandatory Biometric Palm Scan Verification
+    if (!palmResult || !palmResult.success) {
+      const logItem: AuditLogItem = {
+        id: `log-fail-palm-${Date.now()}`,
+        user: `${user.name} (${user.role})`,
+        role: role,
+        action: 'BIOMETRIC_CHECK_FAILED',
+        target: `Unauthorized attempt to access [${targetRole}]: Optical palm scan was not verified.`,
+        timestamp: 'Just now',
+        result: 'DENIED'
+      };
+      setAuditLogs((prev) => [logItem, ...prev]);
+      return {
+        success: false,
+        error: 'Biometric Palm Scan Required: Subdermal vascular scan has not been verified.'
+      };
+    }
+
+    // 2. Mandatory Role Passcode / PIN Check
+    const normalizedPin = pin.trim();
+    const expectedPin = config.demoPin;
+    if (normalizedPin !== expectedPin) {
+      const logItem: AuditLogItem = {
+        id: `log-fail-pin-${Date.now()}`,
+        user: `${user.name} (${user.role})`,
+        role: role,
+        action: 'CREDENTIAL_CHECK_FAILED',
+        target: `Unauthorized attempt to access [${targetRole}]: Invalid passcode entered for ${config.title}.`,
+        timestamp: 'Just now',
+        result: 'DENIED'
+      };
+      setAuditLogs((prev) => [logItem, ...prev]);
+      return {
+        success: false,
+        error: `Access Denied: Invalid security passcode for ${config.title}. Expected: ${expectedPin}`
+      };
+    }
+
+    // 3. Both Multi-Factor Authentications Cleared -> Execute Switch
+    const newPersona = ROLE_PERSONAS[targetRole] || ROLE_PERSONAS.STUDENT;
+    setRole(targetRole);
+    setUser(newPersona);
+    setIsAuthenticated(true);
+    setIsSessionLocked(false);
+    setPendingRoleTarget(null);
+    setActiveModal(null);
+
+    const logItem: AuditLogItem = {
+      id: `log-unlock-${Date.now()}`,
+      user: `${newPersona.name} (${newPersona.role})`,
+      role: targetRole,
+      action: 'BIOMETRIC_INTERFACE_UNLOCKED',
+      target: `Optical Palm Vascular Scan (${palmResult.hash || 'AES256'}) + 2FA PIN verified. Entered [${config.title}].`,
+      timestamp: 'Just now',
+      result: 'SUCCESS'
+    };
+    setAuditLogs((prev) => [logItem, ...prev]);
+
+    try {
+      confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
+    } catch {}
+
+    showToast(`✓ Identity & Palm Biometrics Verified. Entered [${config.title}]!`);
+    return { success: true };
+  };
+
+  const switchRole = (newRole: Role, bypassSecurity = false) => {
+    if (newRole === role && !isSessionLocked) {
+      showToast(`Already active in [${newRole}] Workspace.`);
+      return;
+    }
+    if (bypassSecurity) {
+      const newPersona = ROLE_PERSONAS[newRole] || ROLE_PERSONAS.STUDENT;
+      setRole(newRole);
+      setUser(newPersona);
+      setPendingRoleTarget(null);
+      setIsSessionLocked(false);
+      setActiveModal(null);
+      showToast(`Switched workspace to [${newRole}].`);
+      return;
+    }
+    // Universal Security Guard: Intercept any role switch and require Palm Scan + Login!
+    requestRoleSwitch(newRole);
+  };
+
+  const requestRoleSwitchWithPalm = (targetRole: Role) => {
+    requestRoleSwitch(targetRole);
   };
 
   const setModal = (modal: ModalType) => {
@@ -1483,6 +1953,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         activePosPaymentRequest,
         activeTerminalLocation,
         activeTerminalType,
+        // Session Security & Role Gate
+        isSessionLocked,
+        lockSession,
+        unlockSession,
+        requestRoleSwitch,
+        verifyAndUnlockRole,
+
         loginWithPalm,
         loginWithCredentials,
         logout,

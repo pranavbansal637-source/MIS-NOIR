@@ -130,7 +130,6 @@ export const KioskApp: React.FC = () => {
           <button
             onClick={() => {
               switchRole('STUDENT');
-              showToast('✓ Exited Kiosk Node. Returned to Student OS.');
             }}
             className="btn btn-secondary"
             style={{ padding: '10px 18px', borderRadius: 20, fontSize: 13, gap: 6, fontWeight: 800 }}
