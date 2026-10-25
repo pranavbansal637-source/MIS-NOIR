@@ -42,8 +42,7 @@ export const DocumentVaultPage: React.FC = () => {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`btn ${selectedCategory === cat ? 'btn-primary' : 'btn-secondary'}`}
-            style={{ borderRadius: 'var(--radius-full)', padding: '6px 18px', fontSize: 13 }}
+            className={`noir-tab-pill ${selectedCategory === cat ? 'active' : ''}`}
           >
             {cat}
           </button>

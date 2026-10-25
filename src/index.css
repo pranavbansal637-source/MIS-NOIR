@@ -375,12 +375,21 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-.btn-primary {
+.btn-primary,
+.btn.btn-primary {
   background: var(--grad-primary);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   font-weight: 700;
   border: 1px solid transparent;
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+}
+
+.btn-primary svg,
+.btn.btn-primary svg,
+.btn-primary *,
+.btn.btn-primary * {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
 }
 
 .btn-primary:hover {
@@ -419,8 +428,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-danger {
   background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25);
+}
+
+.btn-danger svg,
+.btn-danger * {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
 }
 
 .btn-danger:hover {
@@ -445,6 +460,131 @@ h1, h2, h3, h4, h5, h6 {
   padding: 6px 14px;
   font-size: 12px;
   border-radius: var(--radius-sm);
+}
+
+/* ====================================================
+   UNIFIED HIGH-CONTRAST TAB PILLS & NAV CHIPS
+   Guarantees selected tabs are 100% visible and vivid across all pages & themes
+   ==================================================== */
+.noir-tab-pill,
+.tab-pill,
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  white-space: nowrap;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  text-decoration: none;
+}
+
+.noir-tab-pill:hover,
+.tab-pill:hover,
+.filter-pill:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  border-color: var(--brand-primary);
+}
+
+/* SELECTED / ACTIVE TAB STATE: Vibrant Solid/Gradient Fill with Crisp Pure White Text & Icons */
+.noir-tab-pill.active,
+.tab-pill.active,
+.filter-pill.active {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
+  background-color: #2563EB !important;
+  color: #FFFFFF !important;
+  border-color: #1D4ED8 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+}
+
+.noir-tab-pill.active svg,
+.noir-tab-pill.active *,
+.tab-pill.active svg,
+.tab-pill.active *,
+.filter-pill.active svg,
+.filter-pill.active * {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+  fill: none;
+}
+
+[data-theme="dark"] .noir-tab-pill.active,
+[data-theme="dark"] .tab-pill.active,
+[data-theme="dark"] .filter-pill.active {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%) !important;
+  background-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5) !important;
+}
+
+[data-theme="dark"] .noir-tab-pill.active svg,
+[data-theme="dark"] .noir-tab-pill.active *,
+[data-theme="dark"] .tab-pill.active svg,
+[data-theme="dark"] .tab-pill.active *,
+[data-theme="dark"] .filter-pill.active svg,
+[data-theme="dark"] .filter-pill.active * {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+
+/* Sidebar Navigation Item High-Contrast Active State */
+.noir-sidebar-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: all 150ms ease;
+  width: 100%;
+}
+
+.noir-sidebar-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.noir-sidebar-btn.active {
+  font-weight: 800 !important;
+  color: #1D4ED8 !important;
+  background-color: #EFF6FF !important;
+  border: 1px solid #BFDBFE !important;
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.08) !important;
+}
+
+.noir-sidebar-btn.active svg {
+  color: #2563EB !important;
+  stroke: #2563EB !important;
+}
+
+[data-theme="dark"] .noir-sidebar-btn.active {
+  color: #93C5FD !important;
+  background-color: rgba(37, 99, 235, 0.22) !important;
+  border: 1px solid rgba(96, 165, 250, 0.4) !important;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.25) !important;
+}
+
+[data-theme="dark"] .noir-sidebar-btn.active svg {
+  color: #60A5FA !important;
+  stroke: #60A5FA !important;
 }
 
 /* ----------------------------------------------------

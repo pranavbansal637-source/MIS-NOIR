@@ -35,18 +35,18 @@ export const TimetablePage: React.FC = () => {
         </div>
 
         {/* View Switcher Mode */}
-        <div style={{ display: 'flex', gap: 8, backgroundColor: 'var(--bg-subtle)', padding: 4, borderRadius: 12, border: '1px solid var(--border-color)' }}>
+        <div style={{ display: 'flex', gap: 6, backgroundColor: 'var(--bg-subtle)', padding: 4, borderRadius: 12, border: '1px solid var(--border-color)' }}>
           <button
             onClick={() => setViewMode('DAY')}
-            className={`btn btn-sm ${viewMode === 'DAY' ? 'btn-primary' : 'btn-ghost'}`}
-            style={{ borderRadius: 8, fontSize: 12 }}
+            className={`noir-tab-pill ${viewMode === 'DAY' ? 'active' : ''}`}
+            style={{ fontSize: 12, padding: '6px 14px' }}
           >
             Day Schedule
           </button>
           <button
             onClick={() => setViewMode('WEEK')}
-            className={`btn btn-sm ${viewMode === 'WEEK' ? 'btn-primary' : 'btn-ghost'}`}
-            style={{ borderRadius: 8, fontSize: 12 }}
+            className={`noir-tab-pill ${viewMode === 'WEEK' ? 'active' : ''}`}
+            style={{ fontSize: 12, padding: '6px 14px' }}
           >
             Full Week Matrix
           </button>
@@ -71,17 +71,17 @@ export const TimetablePage: React.FC = () => {
                   alignItems: 'center',
                   padding: '10px 18px',
                   borderRadius: 14,
-                  backgroundColor: isSelected ? 'var(--brand-primary)' : 'var(--bg-surface)',
+                  background: isSelected ? 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)' : 'var(--bg-surface)',
                   color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
-                  border: isSelected ? '1px solid var(--brand-primary)' : '1px solid var(--border-color)',
-                  boxShadow: isSelected ? 'var(--shadow-brand)' : 'var(--shadow-xs)',
+                  border: isSelected ? '1px solid #1D4ED8' : '1px solid var(--border-color)',
+                  boxShadow: isSelected ? '0 4px 14px rgba(37, 99, 235, 0.35)' : 'var(--shadow-xs)',
                   cursor: 'pointer',
                   minWidth: 100,
                   transition: 'all 120ms ease'
                 }}
               >
-                <div style={{ fontSize: 13, fontWeight: 800 }}>{day}</div>
-                <div style={{ fontSize: 11, opacity: isSelected ? 0.9 : 0.6, marginTop: 2 }}>
+                <div style={{ fontSize: 13, fontWeight: 800, color: isSelected ? '#FFFFFF' : 'inherit' }}>{day}</div>
+                <div style={{ fontSize: 11, fontWeight: isSelected ? 700 : 500, color: isSelected ? '#FFFFFF' : 'var(--text-secondary)', opacity: isSelected ? 1 : 0.8, marginTop: 2 }}>
                   {isToday ? '★ Today' : `${count} Lectures`}
                 </div>
               </button>

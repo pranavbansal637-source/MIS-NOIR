@@ -43,8 +43,7 @@ export const CampusMarketplacePage: React.FC = () => {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`btn ${activeCategory === cat ? 'btn-primary' : 'btn-secondary'}`}
-            style={{ borderRadius: 'var(--radius-full)', padding: '6px 18px', fontSize: 13 }}
+            className={`noir-tab-pill ${activeCategory === cat ? 'active' : ''}`}
           >
             {cat === 'Food' && <Coffee size={14} />}
             {cat === 'Printing' && <Printer size={14} />}

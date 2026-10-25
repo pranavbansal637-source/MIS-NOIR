@@ -312,20 +312,9 @@ export const ManagementDashboard: React.FC<ManagementDashboardProps> = ({
             <button
               key={tab.id}
               onClick={() => setTab(tab.id)}
-              className={`btn ${isActive ? 'btn-primary' : 'btn-secondary'}`}
-              style={{
-                borderRadius: 20,
-                fontSize: 13,
-                fontWeight: isActive ? 800 : 600,
-                padding: '8px 18px',
-                whiteSpace: 'nowrap',
-                backgroundColor: isActive ? '#0284C7' : '#FFFFFF',
-                borderColor: isActive ? '#0284C7' : '#CBD5E1',
-                color: isActive ? '#FFFFFF' : '#334155',
-                boxShadow: isActive ? '0 2px 8px rgba(2, 132, 199, 0.25)' : 'none'
-              }}
+              className={`noir-tab-pill ${isActive ? 'active' : ''}`}
             >
-              <Icon size={15} color={isActive ? '#FFFFFF' : '#64748B'} />
+              <Icon size={15} color={isActive ? '#FFFFFF' : 'var(--text-muted)'} />
               {tab.label}
             </button>
           );

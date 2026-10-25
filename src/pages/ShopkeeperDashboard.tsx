@@ -393,19 +393,9 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
             <button
               key={tab.id}
               onClick={() => setTab(tab.id)}
-              className={`btn ${isActive ? 'btn-primary' : 'btn-secondary'}`}
-              style={{
-                borderRadius: 20,
-                fontSize: 13,
-                fontWeight: isActive ? 800 : 600,
-                padding: '8px 18px',
-                whiteSpace: 'nowrap',
-                backgroundColor: isActive ? '#D1FAE5' : 'var(--bg-surface)',
-                borderColor: isActive ? '#059669' : 'var(--border-color)',
-                color: isActive ? '#065F46' : 'var(--text-secondary)'
-              }}
+              className={`noir-tab-pill ${isActive ? 'active' : ''}`}
             >
-              <Icon size={15} color={isActive ? '#059669' : '#64748B'} />
+              <Icon size={15} color={isActive ? '#FFFFFF' : 'var(--text-muted)'} />
               {tab.label}
             </button>
           );
@@ -426,15 +416,8 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className="btn btn-secondary btn-sm"
-                    style={{
-                      borderRadius: 16,
-                      fontSize: 12,
-                      fontWeight: activeCategory === cat ? 800 : 600,
-                      backgroundColor: activeCategory === cat ? '#D1FAE5' : 'var(--bg-surface)',
-                      borderColor: activeCategory === cat ? '#059669' : 'var(--border-color)',
-                      color: activeCategory === cat ? '#065F46' : 'var(--text-secondary)'
-                    }}
+                    className={`noir-tab-pill ${activeCategory === cat ? 'active' : ''}`}
+                    style={{ fontSize: 12, padding: '5px 14px' }}
                   >
                     {cat}
                   </button>
@@ -619,8 +602,8 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
                 <button
                   key={st}
                   onClick={() => setOrderFilter(st)}
-                  className={`btn ${orderFilter === st ? 'btn-primary' : 'btn-secondary'} btn-sm`}
-                  style={{ borderRadius: 16, fontSize: 11, padding: '4px 12px' }}
+                  className={`noir-tab-pill ${orderFilter === st ? 'active' : ''}`}
+                  style={{ fontSize: 11, padding: '4px 12px' }}
                 >
                   {st}
                 </button>

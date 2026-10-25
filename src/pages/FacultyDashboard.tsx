@@ -239,19 +239,9 @@ export const FacultyDashboard: React.FC<FacultyDashboardProps> = ({
             <button
               key={tab.id}
               onClick={() => setTab(tab.id)}
-              className={`btn ${isActive ? 'btn-primary' : 'btn-secondary'}`}
-              style={{
-                borderRadius: 20,
-                fontSize: 13,
-                fontWeight: isActive ? 800 : 600,
-                padding: '8px 18px',
-                whiteSpace: 'nowrap',
-                backgroundColor: isActive ? '#EFF6FF' : '#FFFFFF',
-                borderColor: isActive ? '#BFDBFE' : '#E2E8F0',
-                color: isActive ? '#1D4ED8' : '#475569'
-              }}
+              className={`noir-tab-pill ${isActive ? 'active' : ''}`}
             >
-              <Icon size={15} color={isActive ? '#2563EB' : '#64748B'} />
+              <Icon size={15} color={isActive ? '#FFFFFF' : 'var(--text-muted)'} />
               {tab.label}
             </button>
           );

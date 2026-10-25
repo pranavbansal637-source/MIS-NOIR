@@ -293,8 +293,8 @@ export const AttendancePage: React.FC = () => {
                 <button
                   key={st}
                   onClick={() => setStatusFilter(st)}
-                  className={`btn ${statusFilter === st ? 'btn-primary' : 'btn-secondary'} btn-sm`}
-                  style={{ borderRadius: 16, fontSize: 11, padding: '4px 12px' }}
+                  className={`noir-tab-pill ${statusFilter === st ? 'active' : ''}`}
+                  style={{ fontSize: 11, padding: '4px 12px' }}
                 >
                   {st}
                 </button>

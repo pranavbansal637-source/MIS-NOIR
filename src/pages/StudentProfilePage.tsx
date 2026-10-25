@@ -477,32 +477,32 @@ export const StudentProfilePage: React.FC = () => {
       >
         <button
           onClick={() => setActiveTab('profile')}
-          className={`btn btn-sm ${activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
+          className={`noir-tab-pill ${activeTab === 'profile' ? 'active' : ''}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
         >
           <User size={15} /> Personal & Contact
         </button>
 
         <button
           onClick={() => setActiveTab('appearance')}
-          className={`btn btn-sm ${activeTab === 'appearance' ? 'btn-primary' : 'btn-secondary'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
+          className={`noir-tab-pill ${activeTab === 'appearance' ? 'active' : ''}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
         >
           <Palette size={15} /> Appearance & Mode
         </button>
 
         <button
           onClick={() => setActiveTab('notifications')}
-          className={`btn btn-sm ${activeTab === 'notifications' ? 'btn-primary' : 'btn-secondary'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
+          className={`noir-tab-pill ${activeTab === 'notifications' ? 'active' : ''}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
         >
           <Bell size={15} /> Notifications & Alerts
         </button>
 
         <button
           onClick={() => setActiveTab('security')}
-          className={`btn btn-sm ${activeTab === 'security' ? 'btn-primary' : 'btn-secondary'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
+          className={`noir-tab-pill ${activeTab === 'security' ? 'active' : ''}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
         >
           <Shield size={15} /> Security & Passcode
         </button>

@@ -93,17 +93,7 @@ export const StudentActivityPage: React.FC = () => {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              style={{
-                padding: '8px 18px',
-                borderRadius: 20,
-                fontSize: 13,
-                fontWeight: isActive ? 800 : 600,
-                color: isActive ? 'var(--brand-primary)' : 'var(--text-muted)',
-                backgroundColor: isActive ? 'var(--bg-subtle)' : 'var(--bg-surface)',
-                border: isActive ? '1px solid var(--brand-primary)' : '1px solid var(--border-color)',
-                cursor: 'pointer',
-                transition: 'all 150ms ease'
-              }}
+              className={`noir-tab-pill ${isActive ? 'active' : ''}`}
             >
               {f.charAt(0) + f.slice(1).toLowerCase()}
             </button>

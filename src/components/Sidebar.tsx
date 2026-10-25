@@ -260,24 +260,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpe
                 <button
                   key={item.id}
                   onClick={() => handleNav(item.id)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    padding: '10px 14px',
-                    borderRadius: 12,
-                    fontSize: 13,
-                    fontWeight: isActive ? 800 : 600,
-                    color: isActive ? '#1D4ED8' : 'var(--text-secondary)',
-                    backgroundColor: isActive ? '#EFF6FF' : 'transparent',
-                    border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
-                    boxShadow: isActive ? '0 1px 4px rgba(37, 99, 235, 0.08)' : 'none',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'all 150ms ease'
-                  }}
+                  className={`noir-sidebar-btn ${isActive ? 'active' : ''}`}
                 >
-                  <Icon size={18} color={isActive ? '#2563EB' : '#64748B'} />
+                  <Icon size={18} />
                   {item.label}
                 </button>
               );
@@ -305,23 +290,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpe
                 <button
                   key={item.id}
                   onClick={() => handleNav(item.id)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    padding: '9px 14px',
-                    borderRadius: 10,
-                    fontSize: 13,
-                    fontWeight: isActive ? 800 : 600,
-                    color: isActive ? '#1D4ED8' : 'var(--text-secondary)',
-                    backgroundColor: isActive ? '#EFF6FF' : 'transparent',
-                    border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'all 150ms ease'
-                  }}
+                  className={`noir-sidebar-btn ${isActive ? 'active' : ''}`}
                 >
-                  <Icon size={17} color={isActive ? '#2563EB' : '#64748B'} />
+                  <Icon size={17} />
                   {item.label}
                 </button>
               );
@@ -450,22 +421,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpe
                     <button
                       key={item.id}
                       onClick={() => handleNav(item.id)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 10,
-                        padding: '9px 12px',
-                        borderRadius: 8,
-                        fontSize: 13,
-                        fontWeight: isActive ? 800 : 600,
-                        color: isActive ? '#1D4ED8' : 'var(--text-secondary)',
-                        backgroundColor: isActive ? '#EFF6FF' : 'transparent',
-                        border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
-                        cursor: 'pointer',
-                        textAlign: 'left'
-                      }}
+                      className={`noir-sidebar-btn ${isActive ? 'active' : ''}`}
                     >
-                      <Icon size={17} color={isActive ? '#2563EB' : '#64748B'} />
+                      <Icon size={17} />
                       {item.label}
                     </button>
                   );
@@ -524,22 +482,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpe
               <button
                 key={item.id}
                 onClick={() => handleNav(item.id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  padding: '11px 14px',
-                  borderRadius: 10,
-                  fontSize: 13,
-                  fontWeight: isActive ? 800 : 600,
-                  color: isActive ? '#065F46' : '#475569',
-                  backgroundColor: isActive ? '#ECFDF5' : 'transparent',
-                  border: isActive ? '1px solid #A7F3D0' : '1px solid transparent',
-                  cursor: 'pointer',
-                  textAlign: 'left'
-                }}
+                className={`noir-sidebar-btn ${isActive ? 'active' : ''}`}
               >
-                <Icon size={18} color={isActive ? '#059669' : '#64748B'} />
+                <Icon size={18} />
                 {item.label}
               </button>
             );
@@ -631,22 +576,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpe
               <button
                 key={item.id}
                 onClick={() => handleNav(item.id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  padding: '11px 14px',
-                  borderRadius: 10,
-                  fontSize: 13,
-                  fontWeight: isActive ? 800 : 600,
-                  color: isActive ? '#1D4ED8' : '#475569',
-                  backgroundColor: isActive ? '#EFF6FF' : 'transparent',
-                  border: isActive ? '1px solid #BFDBFE' : '1px solid transparent',
-                  cursor: 'pointer',
-                  textAlign: 'left'
-                }}
+                className={`noir-sidebar-btn ${isActive ? 'active' : ''}`}
               >
-                <Icon size={18} color={isActive ? '#2563EB' : '#64748B'} />
+                <Icon size={18} />
                 {item.label}
               </button>
             );
