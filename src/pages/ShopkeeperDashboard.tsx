@@ -100,7 +100,7 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
   // Profile Form State
   const [profileStoreName, setProfileStoreName] = useState(shopProfile.name || shopProfile.shopName || 'The Central Quad Cafe & Campus Store');
   const [profileManager, setProfileManager] = useState(shopProfile.managerName || 'Mr. Suresh Nair');
-  const [profileEmail, setProfileEmail] = useState(shopProfile.email || shopProfile.contactEmail || 'canteen@nexora.edu');
+  const [profileEmail, setProfileEmail] = useState(shopProfile.email || shopProfile.contactEmail || 'canteen@vascenova.edu');
   const [profilePhone, setProfilePhone] = useState(shopProfile.phone || shopProfile.contactPhone || '+91 98112 99001');
   const [profileHours, setProfileHours] = useState(shopProfile.operatingHours || '08:00 AM - 10:00 PM');
   const [profileVpa, setProfileVpa] = useState(shopProfile.upiVpa || 'merchant.quad@icici');
@@ -353,7 +353,7 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
       >
         <div>
           <div style={{ fontSize: 11, fontWeight: 900, color: '#059669', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
-            NEXORA BUSINESS OS • CAMPUS MERCHANT CONSOLE
+            VASCENOVA BUSINESS OS • CAMPUS MERCHANT CONSOLE
           </div>
           <h1 style={{ fontSize: 26, fontWeight: 900, color: 'var(--text-primary)', marginTop: 2 }}>
             {profileStoreName}
@@ -592,7 +592,7 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
                 Live Canteen & Store Orders Queue
               </h2>
               <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-                Incoming orders placed by students on the NEXORA Campus Marketplace
+                Incoming orders placed by students on the VASCENOVA Campus Marketplace
               </p>
             </div>
 
@@ -644,7 +644,7 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
                     </div>
 
                     <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4 }}>
-                      Ordered: {ord.timestamp} • Total Bill: <strong style={{ color: '#059669' }}>₹{ord.totalAmount}</strong> (Paid via NEXORA Wallet)
+                      Ordered: {ord.timestamp} • Total Bill: <strong style={{ color: '#059669' }}>₹{ord.totalAmount}</strong> (Paid via VASCENOVA Wallet)
                     </div>
                   </div>
 
@@ -980,7 +980,7 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
-                  <span style={{ color: 'var(--text-primary)' }}>🖐️ NEXORA Palm Biometric Settlement:</span>
+                  <span style={{ color: 'var(--text-primary)' }}>🖐️ VASCENOVA Palm Biometric Settlement:</span>
                   <strong style={{ color: '#059669' }}>88.4% of volume</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
@@ -1221,7 +1221,7 @@ export const ShopkeeperDashboard: React.FC<ShopkeeperDashboardProps> = ({
               <div style={{ backgroundColor: 'var(--bg-main)', padding: 18, borderRadius: 12, border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>Terminal Hardware Code:</span>
-                  <strong style={{ color: 'var(--text-primary)' }}>{canteenTerm ? canteenTerm.terminalCode : 'NEXORA-TERM-CANTEEN-POS'}</strong>
+                  <strong style={{ color: 'var(--text-primary)' }}>{canteenTerm ? canteenTerm.terminalCode : 'VASCENOVA-TERM-CANTEEN-POS'}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>Operating Status:</span>

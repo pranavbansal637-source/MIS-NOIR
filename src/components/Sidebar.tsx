@@ -471,7 +471,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpe
             padding: '0 10px 10px 10px'
           }}
         >
-          NEXORA Merchant POS OS
+          VASCENOVA Merchant POS OS
         </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -565,7 +565,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpe
             padding: '0 10px 10px 10px'
           }}
         >
-          NEXORA Instructor OS
+          VASCENOVA Instructor OS
         </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>

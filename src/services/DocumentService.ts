@@ -27,7 +27,7 @@ export class DocumentService {
   static generateSecureShareLink(docId: string, _recipient: string, durationMinutes: number = 30): ShareLinkResult {
     const code = `SHARE-${docId.toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
     return {
-      shareUrl: `https://nexora.campus/verify/doc?code=${code}`,
+      shareUrl: `https://vascenova.campus/verify/doc?code=${code}`,
       shareCode: code,
       expiresInMinutes: durationMinutes
     };
@@ -38,20 +38,20 @@ export class DocumentService {
       return {
         valid: true,
         docTitle: 'Semester Official Academic Transcript',
-        verifiedBy: 'NEXORA Cryptographic Issuer Signatory'
+        verifiedBy: 'VASCENOVA Cryptographic Issuer Signatory'
       };
     }
     return { valid: false };
   }
 
   static getDocumentPreview(doc: DocumentItem, student: StudentProfile): DocumentPreviewData {
-    const docNumber = `NEXORA-DOC-${doc.id.toUpperCase()}-${student.studentId}`;
+    const docNumber = `VASCENOVA-DOC-${doc.id.toUpperCase()}-${student.studentId}`;
     
     let bodySections: { heading: string; content: string }[] = [];
     if (doc.category === 'Identity') {
       bodySections = [
         { heading: 'Identity Specification', content: `This document certifies that ${student.name} (Student ID: ${student.studentId}) is a verified bona fide student of ${student.department}, enrolled in ${student.program} (Batch: ${student.batch}).` },
-        { heading: 'Biometric Credentials', content: 'Subdermal vascular palm pattern has been securely registered with NEXORA Pehchaan Biometric Core.' },
+        { heading: 'Biometric Credentials', content: 'Subdermal vascular palm pattern has been securely registered with VASCENOVA Pehchaan Biometric Core.' },
         { heading: 'Validity & Institutional Clearance', content: `Current Semester: ${student.semester} • Disciplinary Record: Clear • Library Dues: Settled` }
       ];
     } else if (doc.category === 'Academic') {
@@ -81,14 +81,14 @@ export class DocumentService {
       program: student.program,
       department: student.department,
       bodySections,
-      sealText: 'OFFICIAL SEAL • NEXORA UNIVERSITY • VERIFIED CRYPTOGRAPHIC RECORD'
+      sealText: 'OFFICIAL SEAL • VASCENOVA UNIVERSITY • VERIFIED CRYPTOGRAPHIC RECORD'
     };
   }
 
   static downloadDocument(doc: DocumentItem, student: StudentProfile): void {
     const preview = this.getDocumentPreview(doc, student);
     const textContent = `========================================================================
-                      NEXORA CAMPUS OPERATING SYSTEM
+                      VASCENOVA CAMPUS OPERATING SYSTEM
                    OFFICIAL DIGITALLY VERIFIED DOCUMENT
 ========================================================================
 Document Title   : ${preview.title}

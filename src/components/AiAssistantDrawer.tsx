@@ -71,9 +71,9 @@ export const AiAssistantDrawer: React.FC = () => {
               <Sparkles size={18} color="#2563EB" />
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: 15, color: '#0F172A' }}>NEXORA AI Intelligence</div>
+              <div style={{ fontWeight: 800, fontSize: 15, color: '#0F172A' }}>VASCENOVA AI Intelligence</div>
               <div style={{ fontSize: 11, color: '#64748B' }}>
-                Autonomous Campus Neural Core • Permission-Aware
+                Beyond Biometrics. Beyond Boundaries.
               </div>
             </div>
           </div>

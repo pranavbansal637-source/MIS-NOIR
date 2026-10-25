@@ -45,7 +45,7 @@ export const PlacementsPage: React.FC = () => {
                 </span>
               ) : (
                 <button onClick={() => applyPlacementDrive(drive.id)} className="btn btn-primary">
-                  Apply via NEXORA Resume Vault <ArrowRight size={14} />
+                  Apply via VASCENOVA Resume Vault <ArrowRight size={14} />
                 </button>
               )}
             </div>

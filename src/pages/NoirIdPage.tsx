@@ -15,14 +15,14 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
       {/* Page Title */}
       <div style={{ textAlign: 'center' }}>
         <h1 style={{ fontSize: 26, fontWeight: 900, color: 'var(--text-primary)' }}>
-          NEXORA ID Digital Identity
+          VASCENOVA ID Digital Identity
         </h1>
         <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 4 }}>
           Verified campus digital pass & cryptographically signed credentials
         </p>
       </div>
 
-      {/* Main NEXORA ID Card */}
+      {/* Main VASCENOVA ID Card */}
       <div
         className="noir-card"
         style={{
@@ -103,11 +103,11 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
           >
             <img
               src={`https://api.qrserver.com/v1/create-qr-code/?size=85x85&data=${encodeURIComponent(student.qrCode)}`}
-              alt="NEXORA Student QR"
+              alt="VASCENOVA Student QR"
               style={{ width: 85, height: 85, display: 'block' }}
             />
             <div style={{ fontSize: 10, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
-              NEXORA QR
+              VASCENOVA QR
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
       {/* Responsive Buttons Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 10 }}>
         <button
-          onClick={() => showToast('✓ NEXORA Digital ID link copied to clipboard.')}
+          onClick={() => showToast('✓ VASCENOVA Digital ID link copied to clipboard.')}
           className="btn btn-secondary"
           style={{ flexDirection: 'column', padding: 14, gap: 6, fontSize: 12, fontWeight: 800 }}
         >
@@ -132,7 +132,7 @@ export const NoirIdPage: React.FC<NoirIdPageProps> = ({ onNavigate }) => {
         </button>
 
         <button
-          onClick={() => showToast('📜 3 Verified Academic & Event Certificates available in NEXORA Vault.')}
+          onClick={() => showToast('📜 3 Verified Academic & Event Certificates available in VASCENOVA Vault.')}
           className="btn btn-secondary"
           style={{ flexDirection: 'column', padding: 14, gap: 6, fontSize: 12, fontWeight: 800 }}
         >

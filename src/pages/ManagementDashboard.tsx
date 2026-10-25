@@ -258,7 +258,7 @@ export const ManagementDashboard: React.FC<ManagementDashboardProps> = ({
       >
         <div>
           <div style={{ fontSize: 11, fontWeight: 900, color: '#D97706', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
-            NEXORA MANAGEMENT OS • INSTITUTIONAL EXECUTIVE CONSOLE
+            VASCENOVA MANAGEMENT OS • INSTITUTIONAL EXECUTIVE CONSOLE
           </div>
           <h1 style={{ fontSize: 26, fontWeight: 900, color: '#0F172A', marginTop: 2 }}>
             University Operations & Academic Telemetry
@@ -279,7 +279,7 @@ export const ManagementDashboard: React.FC<ManagementDashboardProps> = ({
                 ['Campus Finance', 'Total POS Volume Today', '₹1,48,250', 'Reconciled', new Date().toISOString()],
                 ['Hostel Infrastructure', 'Hostel Occupancy Rate', '95.2%', 'Optimal', new Date().toISOString()]
               ];
-              exportCSV('NEXORA_Executive_NAAC_NIRF_Report.csv', headers, rows);
+              exportCSV('VASCENOVA_Executive_NAAC_NIRF_Report.csv', headers, rows);
             }}
             className="btn btn-primary"
             style={{ gap: 6, fontWeight: 800 }}
@@ -1166,7 +1166,7 @@ export const ManagementDashboard: React.FC<ManagementDashboardProps> = ({
             <div className="noir-card">
               <div style={{ fontSize: 11, fontWeight: 900, color: '#64748B', textTransform: 'uppercase' }}>CAMPUS WALLET ESCROW</div>
               <div style={{ fontSize: 32, fontWeight: 900, color: '#059669', marginTop: 4 }}>₹24,80,000</div>
-              <div style={{ fontSize: 12, color: '#64748B', marginTop: 4 }}>Held in reserve pool (State Bank of India NEXORA)</div>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 4 }}>Held in reserve pool (State Bank of India VASCENOVA)</div>
             </div>
 
             <div className="noir-card">

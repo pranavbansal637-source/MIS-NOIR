@@ -25,7 +25,7 @@ export class AiService {
         actionRequired: {
           type: 'PAYMENT_CONFIRMATION',
           details: {
-            merchantName: 'NEXORA Fee & Services Desk',
+            merchantName: 'VASCENOVA Fee & Services Desk',
             category: 'FEES',
             amount,
             purpose: 'Library / Academic Fee Clearances'
@@ -60,7 +60,7 @@ export class AiService {
       return {
         id: messageId,
         sender: 'NEXORA_AI',
-        text: `Upcoming featured event: **NEXORA HackSphere 2026: National AI & Systems Hackathon** on **14 OCT** at **09:30 AM** in the Main Auditorium. You are currently registered!`,
+        text: `Upcoming featured event: **VASCENOVA HackSphere 2026: National AI & Systems Hackathon** on **14 OCT** at **09:30 AM** in the Main Auditorium. You are currently registered!`,
         timestamp
       };
     }
@@ -69,7 +69,7 @@ export class AiService {
       return {
         id: messageId,
         sender: 'NEXORA_AI',
-        text: `Your current NEXORA Wallet balance is **₹${student.walletBalance}**. Recent transaction: ₹120 at Central Campus Canteen (Today, 08:45 AM).`,
+        text: `Your current VASCENOVA Wallet balance is **₹${student.walletBalance}**. Recent transaction: ₹120 at Central Campus Canteen (Today, 08:45 AM).`,
         timestamp
       };
     }
@@ -79,7 +79,7 @@ export class AiService {
         return {
           id: messageId,
           sender: 'NEXORA_AI',
-          text: `NEXORA Campus Telemetry Summary (Today):
+          text: `VASCENOVA Campus Telemetry Summary (Today):
 • Overall Student Attendance: **89.4%** across 45 running sessions
 • Active Kiosk Terminals: **4/4 Online**
 • Payments Processed Today: **₹42,850** across 318 POS transactions
@@ -92,7 +92,7 @@ export class AiService {
     return {
       id: messageId,
       sender: 'NEXORA_AI',
-      text: `NEXORA OS Intelligence active. You can ask me about class schedules, attendance insights, campus directions (A403), event registration, wallet payments, or verified document requests.`,
+      text: `VASCENOVA Intelligence active. Beyond Biometrics. Beyond Boundaries. You can ask me about class schedules, attendance insights, campus directions (A403), event registration, wallet payments, or verified document requests.`,
       timestamp
     };
   }

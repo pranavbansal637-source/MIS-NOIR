@@ -50,7 +50,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate,
   const [showUserDropdown, setShowUserDropdown] = useState(false);
 
   const roleLabels: Record<Role, string> = {
-    STUDENT: 'NEXORA Student OS',
+    STUDENT: 'VASCENOVA Student OS',
     FACULTY: 'Faculty Portal',
     MANAGEMENT: 'Campus Management',
     DEPARTMENT_ADMIN: 'Department Admin',
@@ -358,7 +358,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate,
                 fontSize: 12,
                 flexShrink: 0
               }}
-              title="Click to Top Up NEXORA Wallet"
+              title="Click to Top Up VASCENOVA Wallet"
             >
               <Wallet size={14} color="var(--brand-primary)" />
               ₹{student.walletBalance}
@@ -418,7 +418,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate,
           <button
             onClick={() => setModal('AI_ASSISTANT')}
             className="header-action-btn header-btn-assistant"
-            title="Launch NEXORA AI Copilot"
+            title="Launch VASCENOVA AI Copilot"
             aria-label="Launch AI Assistant"
           >
             <Sparkles size={17} />

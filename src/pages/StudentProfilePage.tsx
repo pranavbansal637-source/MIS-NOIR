@@ -42,7 +42,7 @@ export const StudentProfilePage: React.FC = () => {
     department: student.department || 'School of Business',
     semester: student.semester || 2,
     batch: student.batch || '2025–2028',
-    email: student.email || 'pranav.student@nexora.edu',
+    email: student.email || 'pranav.student@vascenova.edu',
     alternateEmail: student.alternateEmail || 'pranav.personal@gmail.com',
     phone: student.phone || '+91 98765 43210',
     emergencyPhone: student.emergencyPhone || '+91 98111 22334',
@@ -102,7 +102,7 @@ export const StudentProfilePage: React.FC = () => {
       department: student.department || 'School of Business',
       semester: student.semester || 2,
       batch: student.batch || '2025–2028',
-      email: student.email || 'pranav.student@nexora.edu',
+      email: student.email || 'pranav.student@vascenova.edu',
       alternateEmail: student.alternateEmail || 'pranav.personal@gmail.com',
       phone: student.phone || '+91 98765 43210',
       emergencyPhone: student.emergencyPhone || '+91 98111 22334',
@@ -185,7 +185,7 @@ export const StudentProfilePage: React.FC = () => {
     // 2. Validate Official Email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      setValidationError('Please enter a valid official university email (e.g. name@nexora.edu).');
+      setValidationError('Please enter a valid official university email (e.g. name@vascenova.edu).');
       setActiveTab('profile');
       return;
     }
@@ -422,7 +422,7 @@ export const StudentProfilePage: React.FC = () => {
               onClick={() => setModal('AI_ASSISTANT')}
               className="btn btn-sm header-btn-assistant"
               style={{ gap: 6, borderRadius: 12, fontWeight: 900 }}
-              title="Launch NEXORA AI Copilot"
+              title="Launch VASCENOVA AI Copilot"
             >
               <Sparkles size={15} /> AI Assistant
             </button>
@@ -588,7 +588,7 @@ export const StudentProfilePage: React.FC = () => {
                   className="input-field"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  placeholder="student@nexora.edu"
+                  placeholder="student@vascenova.edu"
                 />
                 <span style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
                   Official university notifications and exam receipts are sent here.

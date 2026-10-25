@@ -31,7 +31,7 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
   };
 
   const upcomingEvent = events[0] || {
-    title: 'NEXORA HackSphere 2026',
+    title: 'VASCENOVA HackSphere 2026',
     date: '14 OCT',
     organizer: 'Tech Innovation Society'
   };
@@ -60,7 +60,7 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
             Good morning, {student.name}
           </h1>
           <p style={{ fontSize: 14, color: 'var(--text-secondary)', marginTop: 4, fontWeight: 600 }}>
-            {student.program} • Semester {student.semester} • NEXORA Student Node
+            {student.program} • Semester {student.semester} • VASCENOVA Student Node
           </p>
         </div>
 
@@ -237,14 +237,14 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* NEXORA BALANCE Card */}
+        {/* VASCENOVA BALANCE Card */}
         <div
           className="noir-card noir-card-interactive"
           onClick={() => setModal('TOPUP')}
           style={{ borderLeft: '4px solid var(--brand-emerald)' }}
         >
           <div style={{ fontSize: 11, fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-            NEXORA WALLET
+            VASCENOVA WALLET
           </div>
           <div style={{ fontSize: 34, fontWeight: 900, color: 'var(--brand-emerald)', marginTop: 4 }}>
             ₹{student.walletBalance}
@@ -302,7 +302,7 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
           >
             <QrCode size={22} color="var(--brand-accent)" />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)' }}>NEXORA ID</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)' }}>VASCENOVA ID</div>
               <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Digital ID & vault</div>
             </div>
           </button>
@@ -374,7 +374,7 @@ export const StudentHome: React.FC<StudentHomeProps> = ({ onNavigate }) => {
                 Mid-Semester Exam Timetable Published
               </div>
               <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4 }}>
-                Mid-term examinations start October 24th. Verify clearances in NEXORA ID Vault.
+                Mid-term examinations start October 24th. Verify clearances in VASCENOVA ID Vault.
               </div>
             </div>
 

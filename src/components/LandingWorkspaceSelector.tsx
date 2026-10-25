@@ -103,7 +103,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
         <NoirLogo size="lg" showSubtitle={true} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span className="badge badge-primary" style={{ padding: '6px 16px', fontSize: 12 }}>
-            <Server size={14} style={{ marginRight: 6 }} /> NEXORA CORE BACKEND ONLINE
+            <Server size={14} style={{ marginRight: 6 }} /> VASCENOVA CORE BACKEND ONLINE
           </span>
         </div>
       </div>
@@ -120,13 +120,13 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
           style={{
             fontSize: 12,
             fontWeight: 900,
-            color: '#2563EB',
+            color: '#00E5FF',
             textTransform: 'uppercase',
             letterSpacing: '0.18em',
             marginBottom: 10
           }}
         >
-          AUTONOMOUS CAMPUS OPERATING SYSTEM ARCHITECTURE
+          BEYOND BIOMETRICS. BEYOND BOUNDARIES.
         </div>
         <h1
           style={{
@@ -138,7 +138,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
             lineHeight: 1.2
           }}
         >
-          One Central Backend. Purpose-Built Workspaces.
+          Beyond Biometrics. Beyond Boundaries.
         </h1>
         <p
           style={{
@@ -148,7 +148,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
             fontWeight: 500
           }}
         >
-          NEXORA separates student identity, institutional management, campus commerce, teaching operations, and physical palm terminals into modular applications connected to a single biometric-verified core.
+          VASCENOVA separates student identity, institutional management, campus commerce, teaching operations, and physical palm terminals into modular applications connected to a single biometric-verified core.
         </p>
       </div>
 
@@ -178,7 +178,7 @@ export const LandingWorkspaceSelector: React.FC<LandingWorkspaceSelectorProps> =
               textTransform: 'uppercase'
             }}
           >
-            NEXORA CORE CENTRAL BACKEND
+            VASCENOVA CORE CENTRAL BACKEND
           </div>
           <div style={{ fontSize: 22, fontWeight: 800, marginTop: 4, color: '#0F172A' }}>
             Shared APIs • Granular RBAC • Biometric Identity Vault

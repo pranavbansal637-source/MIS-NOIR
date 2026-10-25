@@ -96,7 +96,7 @@ class PaymentServiceImpl implements IPaymentService {
       id: `topup-${Date.now().toString().slice(-6)}`,
       userId: req.userId,
       merchantName: req.method === 'UPI' 
-        ? `NEXORA UPI Gateway (${req.upiVpa || 'Instant QR'})`
+        ? `VASCENOVA UPI Gateway (${req.upiVpa || 'Instant QR'})`
         : req.method === 'CARD'
         ? `Razorpay / Visa Gateway (Card •••• ${req.cardLast4 || '4242'})`
         : 'Campus NetBanking Gateway',

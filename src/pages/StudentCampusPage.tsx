@@ -143,9 +143,9 @@ export const StudentCampusPage: React.FC = () => {
         </button>
         <div className="noir-card" style={{ padding: 28, textAlign: 'center' }}>
           <Printer size={48} color="var(--brand-primary)" style={{ margin: '0 auto 14px' }} />
-          <h2 style={{ fontSize: 24, fontWeight: 900, color: 'var(--text-primary)' }}>NEXORA Cloud Printing Services</h2>
+          <h2 style={{ fontSize: 24, fontWeight: 900, color: 'var(--text-primary)' }}>VASCENOVA Cloud Printing Services</h2>
           <p style={{ fontSize: 14, color: 'var(--text-muted)', maxWidth: 480, margin: '8px auto 20px' }}>
-            Upload PDFs from NEXORA Document Vault & release print jobs at any Campus Palm Terminal in Block A, B, or Library.
+            Upload PDFs from VASCENOVA Document Vault & release print jobs at any Campus Palm Terminal in Block A, B, or Library.
           </p>
           <div className="badge badge-success" style={{ padding: '8px 20px', fontSize: 13, border: '1px solid rgba(16, 185, 129, 0.3)' }}>
             ✓ 3 Cloud Print Kiosks Online • ₹2.00 / page

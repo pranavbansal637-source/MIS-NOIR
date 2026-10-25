@@ -171,7 +171,7 @@ export const KioskApp: React.FC = () => {
                 PLACE YOUR PALM
               </h1>
               <p style={{ fontSize: 16, color: '#64748B', marginTop: 8, margin: '8px auto 28px' }}>
-                NEXORA Subdermal Biometric Identity Node • {activeTerminalLocation} ({activeTerminalType})
+                VASCENOVA Subdermal Biometric Identity Node • {activeTerminalLocation} ({activeTerminalType})
               </p>
 
               {/* DEMO PALM SCAN BUTTON */}
@@ -202,7 +202,7 @@ export const KioskApp: React.FC = () => {
                 PALM DETECTED
               </h1>
               <p style={{ fontSize: 16, color: '#64748B', marginTop: 8 }}>
-                Verifying vascular match with NEXORA identity vault...
+                Verifying vascular match with VASCENOVA identity vault...
               </p>
             </div>
           )}
@@ -286,7 +286,7 @@ export const KioskApp: React.FC = () => {
                           ✓ SHOP IDENTIFICATION VERIFIED
                         </div>
                         <div style={{ fontSize: 14, color: '#64748B', marginTop: 4 }}>
-                          NEXORA Balance: ₹{student.walletBalance}
+                          VASCENOVA Balance: ₹{student.walletBalance}
                         </div>
                         <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 8 }}>
                           Awaiting merchant payment request from POS...

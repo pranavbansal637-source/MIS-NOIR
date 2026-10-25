@@ -11,7 +11,7 @@ export const PaymentsPage: React.FC = () => {
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
         <div>
           <div style={{ fontSize: 12, fontWeight: 900, color: 'var(--brand-primary, #2563EB)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-            NEXORA WALLET & CLEARANCE GATEWAY
+            VASCENOVA WALLET & CLEARANCE GATEWAY
           </div>
           <h1 style={{ fontSize: 28, fontWeight: 900, color: 'var(--text-primary, #0F172A)', marginTop: 4 }}>
             Campus Pay & Wallet
@@ -44,7 +44,7 @@ export const PaymentsPage: React.FC = () => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
           <div>
             <div style={{ fontSize: 11, fontWeight: 800, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
-              AVAILABLE NEXORA WALLET BALANCE
+              AVAILABLE VASCENOVA WALLET BALANCE
             </div>
             <div style={{ fontSize: 44, fontWeight: 900, marginTop: 4, color: '#0F172A', letterSpacing: '-0.02em' }}>
               <span style={{ color: '#2563EB', marginRight: 4 }}>₹</span>{student.walletBalance}
@@ -57,9 +57,9 @@ export const PaymentsPage: React.FC = () => {
           </div>
 
           <div style={{ textAlign: 'right' }}>
-            <img src="/nexora-logo.png" alt="NEXORA" style={{ width: 64, height: 64, borderRadius: 12, objectFit: 'cover', border: '1px solid #BFDBFE', boxShadow: '0 2px 8px rgba(37, 99, 235, 0.15)' }} />
+            <img src="./vascenova-icon.png" alt="VASCENOVA" style={{ width: 64, height: 64, borderRadius: 12, objectFit: 'cover', border: '1.5px solid rgba(0, 229, 255, 0.4)', boxShadow: '0 2px 10px rgba(11, 37, 89, 0.4)' }} />
             <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: '0.16em', color: '#2563EB', marginTop: 6, textTransform: 'uppercase' }}>
-              NEXORA PAY
+              VASCENOVA PAY
             </div>
           </div>
         </div>
