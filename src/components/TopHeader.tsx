@@ -195,7 +195,9 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate 
               >
                 <Lock size={11} color="var(--brand-primary)" />
                 <span className="header-hide-mobile">{roleLabels[role]}</span>
-                <span className="mobile-only">{role}</span>
+                <span className="mobile-only" style={{ maxWidth: 65, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {role === 'STUDENT' ? 'Student' : role === 'BUSINESS' ? 'POS' : role === 'FACULTY' ? 'Faculty' : 'Admin'}
+                </span>
                 <ChevronDown size={12} color="var(--text-muted)" />
               </div>
 
@@ -393,12 +395,12 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate 
         </div>
 
         {/* Right section: Wallet, Live Checkin, Notifications, Theme & Profile Avatar */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
           {/* Wallet Balance (Student) */}
           {role === 'STUDENT' && (
             <button
               onClick={() => setModal('TOPUP')}
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary btn-sm header-hide-mobile"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -409,7 +411,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate 
                 borderColor: 'var(--border-color)',
                 color: 'var(--brand-primary)',
                 fontWeight: 900,
-                fontSize: 12
+                fontSize: 12,
+                flexShrink: 0
               }}
               title="Click to Top Up NEXORA Wallet"
             >
@@ -433,7 +436,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate 
                 gap: 6,
                 fontWeight: 800,
                 fontSize: 11,
-                padding: '6px 12px'
+                padding: '6px 12px',
+                flexShrink: 0
               }}
             >
               <span style={{ width: 7, height: 7, borderRadius: '50%', backgroundColor: '#34D399', boxShadow: '0 0 6px #34D399' }} />
@@ -444,91 +448,51 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenLanding, onNavigate 
           {/* Notifications Button */}
           <button
             onClick={() => setModal('NOTIFICATIONS')}
-            className="btn btn-secondary btn-icon btn-sm"
+            className="header-action-btn header-btn-notification"
             title="Notifications Center"
-            style={{
-              borderRadius: 'var(--radius-full)',
-              position: 'relative',
-              width: 36,
-              height: 36
-            }}
+            aria-label="Open notifications"
           >
-            <Bell size={16} color="var(--brand-primary)" />
+            <Bell size={17} />
             {unreadNotificationCount > 0 && (
-              <span
-                style={{
-                  position: 'absolute',
-                  top: -2,
-                  right: -2,
-                  minWidth: 16,
-                  height: 16,
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--state-danger)',
-                  color: '#FFFFFF',
-                  fontSize: 9,
-                  fontWeight: 900,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '0 3px'
-                }}
-              >
+              <span className="notification-badge-pulse">
                 {unreadNotificationCount}
               </span>
             )}
           </button>
 
-          {/* Theme Switcher Toggle */}
+          {/* Theme Switcher Toggle (Light / Dark Mode) */}
           <button
             onClick={toggleTheme}
-            className="btn btn-secondary btn-icon btn-sm"
+            className={`header-action-btn header-btn-theme ${theme === 'dark' ? 'header-btn-theme-dark' : 'header-btn-theme-light'}`}
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-            style={{ borderRadius: 'var(--radius-full)', width: 36, height: 36 }}
+            aria-label="Toggle theme"
           >
-            {theme === 'dark' ? <Sun size={16} color="#F59E0B" /> : <Moon size={16} color="#6366F1" />}
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {/* AI Assistant button (Desktop Only) */}
+          {/* AI Assistant button (Available on All Screens) */}
           <button
             onClick={() => setModal('AI_ASSISTANT')}
-            className="btn btn-secondary btn-icon btn-sm header-hide-mobile"
-            title="Launch NEXORA AI Assistant"
-            style={{
-              borderRadius: 'var(--radius-full)',
-              position: 'relative',
-              width: 36,
-              height: 36
-            }}
+            className="header-action-btn header-btn-assistant"
+            title="Launch NEXORA AI Copilot"
+            aria-label="Launch AI Assistant"
           >
-            <Sparkles size={16} color="var(--brand-primary)" />
-            <span
-              style={{
-                position: 'absolute',
-                top: 2,
-                right: 2,
-                width: 7,
-                height: 7,
-                borderRadius: '50%',
-                backgroundColor: 'var(--brand-primary)',
-                boxShadow: '0 0 6px var(--brand-primary)'
-              }}
-            />
+            <Sparkles size={17} />
+            <span className="assistant-beacon-dot" />
           </button>
 
           {/* Emergency SOS button (Desktop Only) */}
           <button
             onClick={() => setModal('EMERGENCY')}
-            className="btn btn-secondary btn-icon btn-sm header-hide-mobile"
+            className="header-action-btn header-hide-mobile"
             title="Campus Emergency SOS"
             style={{
-              borderRadius: 'var(--radius-full)',
               borderColor: 'rgba(239, 68, 68, 0.4)',
-              backgroundColor: 'rgba(239, 68, 68, 0.1)',
-              width: 36,
-              height: 36
+              backgroundColor: 'rgba(239, 68, 68, 0.12)',
+              color: 'var(--state-danger)'
             }}
           >
-            <ShieldAlert size={16} color="var(--state-danger)" />
+            <ShieldAlert size={17} color="var(--state-danger)" />
           </button>
 
           {/* User Avatar with Clickable Profile & Settings Dropdown */}

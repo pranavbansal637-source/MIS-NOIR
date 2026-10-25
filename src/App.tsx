@@ -6,7 +6,7 @@ import { BottomNav } from './components/BottomNav';
 import { LandingWorkspaceSelector } from './components/LandingWorkspaceSelector';
 import { AccessDeniedView } from './components/AccessDeniedView';
 import { PortalGateModal } from './components/PortalGateModal';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import type { Role } from './types';
 
 // Modals
@@ -59,7 +59,7 @@ import { ShopkeeperDashboard } from './pages/ShopkeeperDashboard';
 import { KioskApp } from './pages/KioskApp';
 
 const AppContent: React.FC = () => {
-  const { role, switchRole, activeModal, pendingRoleTarget, isSessionLocked, cancelRoleSwitch } = useApp();
+  const { role, switchRole, activeModal, pendingRoleTarget, isSessionLocked, cancelRoleSwitch, setModal } = useApp();
   const [currentTab, setCurrentTab] = useState('home');
   const [showLanding, setShowLanding] = useState(false);
   const [deniedAuthTarget, setDeniedAuthTarget] = useState<Role | null>(null);
@@ -300,6 +300,18 @@ const AppContent: React.FC = () => {
 
       {/* Mobile Bottom Navigation (5 tabs ONLY) */}
       <BottomNav currentTab={currentTab} onTabChange={(t) => setCurrentTab(t)} />
+
+      {/* Global Floating AI Copilot FAB (Always Visible & Accessible) */}
+      <button
+        onClick={() => setModal('AI_ASSISTANT')}
+        className="global-ai-fab"
+        title="Launch NEXORA AI Copilot"
+        aria-label="Launch AI Assistant"
+      >
+        <Sparkles size={18} />
+        <span className="global-ai-fab-label">Ask AI</span>
+        <span className="global-ai-fab-badge">Copilot</span>
+      </button>
 
       {/* Global Modals & Drawers */}
       <PalmModal />

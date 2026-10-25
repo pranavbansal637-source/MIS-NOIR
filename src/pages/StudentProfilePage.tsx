@@ -401,13 +401,30 @@ export const StudentProfilePage: React.FC = () => {
             </button>
 
             <button
+              type="button"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="btn btn-secondary btn-sm"
-              style={{ gap: 6, borderRadius: 12, fontWeight: 800 }}
-              title="Toggle Theme"
+              className={`btn btn-sm ${theme === 'dark' ? 'header-btn-theme-dark' : 'header-btn-theme-light'}`}
+              style={{
+                gap: 7,
+                borderRadius: 12,
+                fontWeight: 900,
+                border: '1.5px solid var(--border-color)',
+                boxShadow: theme === 'dark' ? '0 0 14px rgba(245, 158, 11, 0.25)' : '0 2px 8px rgba(99, 102, 241, 0.15)'
+              }}
+              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
             >
-              {theme === 'dark' ? <Sun size={14} color="#F59E0B" /> : <Moon size={14} color="#6366F1" />}
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
               {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setModal('AI_ASSISTANT')}
+              className="btn btn-sm header-btn-assistant"
+              style={{ gap: 6, borderRadius: 12, fontWeight: 900 }}
+              title="Launch NEXORA AI Copilot"
+            >
+              <Sparkles size={15} /> AI Assistant
             </button>
 
             <button
@@ -460,32 +477,32 @@ export const StudentProfilePage: React.FC = () => {
       >
         <button
           onClick={() => setActiveTab('profile')}
-          className={`btn btn-sm ${activeTab === 'profile' ? 'btn-primary' : 'btn-ghost'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13 }}
+          className={`btn btn-sm ${activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
         >
           <User size={15} /> Personal & Contact
         </button>
 
         <button
           onClick={() => setActiveTab('appearance')}
-          className={`btn btn-sm ${activeTab === 'appearance' ? 'btn-primary' : 'btn-ghost'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13 }}
+          className={`btn btn-sm ${activeTab === 'appearance' ? 'btn-primary' : 'btn-secondary'}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
         >
           <Palette size={15} /> Appearance & Mode
         </button>
 
         <button
           onClick={() => setActiveTab('notifications')}
-          className={`btn btn-sm ${activeTab === 'notifications' ? 'btn-primary' : 'btn-ghost'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13 }}
+          className={`btn btn-sm ${activeTab === 'notifications' ? 'btn-primary' : 'btn-secondary'}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
         >
           <Bell size={15} /> Notifications & Alerts
         </button>
 
         <button
           onClick={() => setActiveTab('security')}
-          className={`btn btn-sm ${activeTab === 'security' ? 'btn-primary' : 'btn-ghost'}`}
-          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13 }}
+          className={`btn btn-sm ${activeTab === 'security' ? 'btn-primary' : 'btn-secondary'}`}
+          style={{ flex: 1, minWidth: 140, justifyContent: 'center', gap: 6, borderRadius: 10, fontSize: 13, fontWeight: 800 }}
         >
           <Shield size={15} /> Security & Passcode
         </button>
