@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { TopHeader } from './components/TopHeader';
 import { Sidebar } from './components/Sidebar';
-import { BottomNav } from './components/BottomNav';
 import { LandingWorkspaceSelector } from './components/LandingWorkspaceSelector';
 import { AccessDeniedView } from './components/AccessDeniedView';
 import { PortalGateModal } from './components/PortalGateModal';
@@ -63,6 +62,7 @@ const AppContent: React.FC = () => {
   const [currentTab, setCurrentTab] = useState('home');
   const [showLanding, setShowLanding] = useState(false);
   const [deniedAuthTarget, setDeniedAuthTarget] = useState<Role | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Synchronize default tab whenever active workspace role switches
   useEffect(() => {
@@ -271,14 +271,24 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="noir-layout">
-      {/* Sidebar Desktop */}
-      <Sidebar currentTab={currentTab} onTabChange={(t) => setCurrentTab(t)} />
+      {/* Universal Responsive Sidebar - Persistent on Desktop/Tablet, Slide-Over on Mobile */}
+      <Sidebar
+        currentTab={currentTab}
+        onTabChange={(t) => {
+          setCurrentTab(t);
+          setSidebarOpen(false);
+        }}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
       {/* Main Column */}
       <div className="noir-main-content">
         <TopHeader
           onOpenLanding={() => setShowLanding(true)}
           onNavigate={(t) => setCurrentTab(t)}
+          onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+          isSidebarOpen={sidebarOpen}
         />
 
         <main
@@ -297,9 +307,6 @@ const AppContent: React.FC = () => {
           {renderTabContent()}
         </main>
       </div>
-
-      {/* Mobile Bottom Navigation (5 tabs ONLY) */}
-      <BottomNav currentTab={currentTab} onTabChange={(t) => setCurrentTab(t)} />
 
       {/* Global Floating AI Copilot FAB (Always Visible & Accessible) */}
       <button

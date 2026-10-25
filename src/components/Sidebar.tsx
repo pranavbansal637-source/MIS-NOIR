@@ -25,31 +25,44 @@ import {
   Package,
   Clock,
   Tag,
-  Lock
+  Lock,
+  X
 } from 'lucide-react';
 
 interface SidebarProps {
   currentTab: string;
   onTabChange: (tab: string) => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange, isOpen, onClose }) => {
   const { role, switchRole, setModal, unreadNotificationCount, activeFaculty, lockSession, isSessionLocked } = useApp();
 
   if (role === 'KIOSK') return null;
 
-  const sidebarStyle: React.CSSProperties = {
-    backgroundColor: 'var(--bg-surface)',
-    borderRight: '1px solid var(--border-color)',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    padding: '24px 16px',
-    flexShrink: 0,
-    zIndex: 20,
-    boxShadow: '2px 0 12px rgba(15, 23, 42, 0.04)',
-    overflowY: 'auto'
+  const handleNav = (tabId: string) => {
+    onTabChange(tabId);
+    if (onClose) onClose();
   };
+
+  const renderSidebarHeader = () => (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px 18px 8px' }}>
+      <NoirLogo size="sm" showSubtitle={true} />
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="btn btn-ghost btn-icon btn-sm mobile-only"
+          title="Close Navigation"
+          style={{ width: 32, height: 32, borderRadius: 8, padding: 0 }}
+        >
+          <X size={18} />
+        </button>
+      )}
+    </div>
+  );
+
+
 
   const renderInterfaceSwitcher = () => (
     <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: 14, marginTop: 14 }}>
@@ -220,12 +233,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
     ];
 
     return (
-      <aside style={{ ...sidebarStyle, width: 240, overflowY: 'auto' }} className="desktop-sidebar-only">
-        <div>
-          {/* NEXORA Logo */}
-          <div style={{ padding: '0 8px 24px 8px' }}>
-            <NoirLogo size="sm" showSubtitle={true} />
-          </div>
+      <>
+        {isOpen && <div className="sidebar-overlay-backdrop mobile-only" onClick={onClose} />}
+        <aside className={`noir-app-sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+          <div>
+            {renderSidebarHeader()}
 
           <div
             style={{
@@ -247,7 +259,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
               return (
                 <button
                   key={item.id}
-                  onClick={() => onTabChange(item.id)}
+                  onClick={() => handleNav(item.id)}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -292,7 +304,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
               return (
                 <button
                   key={item.id}
-                  onClick={() => onTabChange(item.id)}
+                  onClick={() => handleNav(item.id)}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -369,7 +381,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
           {renderInterfaceSwitcher()}
         </div>
       </aside>
-    );
+    </>
+  );
   }
 
   // ----------------------------------------------------
@@ -409,17 +422,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
     ];
 
     return (
-      <aside
-        style={{
-          ...sidebarStyle,
-          width: 250,
-          overflowY: 'auto'
-        }}
-        className="desktop-sidebar-only"
-      >
-        <div style={{ padding: '0 8px 16px 8px' }}>
-          <NoirLogo size="sm" showSubtitle={true} />
-        </div>
+      <>
+        {isOpen && <div className="sidebar-overlay-backdrop mobile-only" onClick={onClose} />}
+        <aside className={`noir-app-sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+          {renderSidebarHeader()}
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: 18, flex: 1 }}>
           {mgmtGroups.map((group) => (
@@ -443,7 +449,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
                   return (
                     <button
                       key={item.id}
-                      onClick={() => onTabChange(item.id)}
+                      onClick={() => handleNav(item.id)}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -471,7 +477,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
 
         {renderInterfaceSwitcher()}
       </aside>
-    );
+    </>
+  );
   }
 
   // ----------------------------------------------------
@@ -491,16 +498,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
     ];
 
     return (
-      <aside
-        style={{
-          ...sidebarStyle,
-          width: 240
-        }}
-        className="desktop-sidebar-only"
-      >
-        <div style={{ padding: '0 8px 20px 8px' }}>
-          <NoirLogo size="sm" showSubtitle={true} />
-        </div>
+      <>
+        {isOpen && <div className="sidebar-overlay-backdrop mobile-only" onClick={onClose} />}
+        <aside className={`noir-app-sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+          {renderSidebarHeader()}
 
         <div
           style={{
@@ -522,7 +523,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             return (
               <button
                 key={item.id}
-                onClick={() => onTabChange(item.id)}
+                onClick={() => handleNav(item.id)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -547,7 +548,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
 
         {renderInterfaceSwitcher()}
       </aside>
-    );
+    </>
+  );
   }
 
   // ----------------------------------------------------
@@ -565,16 +567,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
     ];
 
     return (
-      <aside
-        style={{
-          ...sidebarStyle,
-          width: 240
-        }}
-        className="desktop-sidebar-only"
-      >
-        <div style={{ padding: '0 8px 16px 8px' }}>
-          <NoirLogo size="sm" showSubtitle={true} />
-        </div>
+      <>
+        {isOpen && <div className="sidebar-overlay-backdrop mobile-only" onClick={onClose} />}
+        <aside className={`noir-app-sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+          {renderSidebarHeader()}
 
         {/* Aligned Faculty Profile Section (Module 4.1) */}
         <div
@@ -634,7 +630,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
             return (
               <button
                 key={item.id}
-                onClick={() => onTabChange(item.id)}
+                onClick={() => handleNav(item.id)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -659,7 +655,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onTabChange }) => 
 
         {renderInterfaceSwitcher()}
       </aside>
-    );
+    </>
+  );
   }
 
   return null;
